@@ -1,5 +1,5 @@
-import Cards from "@/Component/Cards";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import Advantages from "@/Component/Advantages";
+import TrendingServices from "@/Component/TrendingServices";
 import {
   AlignJustify,
   ArrowRight,
@@ -70,28 +70,28 @@ const Home = () => {
           It's Easy To Get Work Done On Creative Peoples
         </div>
         <div className="flex flex-1/2 flex-col md:flex-row mx-5 md:flex-wrap items-center justify-center  gap-10">
-          <Cards
+          <Advantages
             title={"Post a Job"}
             content={
               "Create your free job posting and start receiving Quotes within hours."
             }
             icon={Briefcase}
           />
-          <Cards
+          <Advantages
             title={"Hire Freelancers"}
             content={
               "Compare the Quotes you receive and hire the best freelance professionals for the job."
             }
             icon={Laptop2}
           />
-          <Cards
+          <Advantages
             title={"Get Work Done"}
             content={
               "Decide on how and when payments will be made and use WorkRooms to collaborate."
             }
             icon={ThumbsUp}
           />
-          <Cards
+          <Advantages
             title={"Pay Safely"}
             content={
               "Choose from multiple payment methods with Stripe payment protection."
@@ -160,97 +160,20 @@ const Home = () => {
         <div className="text-center text-3xl py-10 font-semibold">
           Trending Professional Services
         </div>
-        <div className="flex justify-evenly overflow-x-scroll scrollbar-hide gap-5 mx-5">
-          <div className=" flex flex-col bg-green-950 rounded-md min-w-[30%] h-full">
-            <div className="text-white m-2 font-bold text-xl">Services</div>
-            <div>
-              <img src="/Picccky.png" className="rounded-md p-1" />
-            </div>
-          </div>
-          <div className=" flex flex-col bg-green-950 rounded-md min-w-[30%] h-full">
-            <div className="text-white m-2 font-bold text-xl">Services</div>
-            <div>
-              <img src="/Picccky.png" className="rounded-md p-1" />
-            </div>
-          </div>
-          <div className=" flex flex-col bg-green-950 rounded-md min-w-[30%] h-full">
-            <div className="text-white m-2 font-bold text-xl">Services</div>
-            <div>
-              <img src="/Picccky.png" className="rounded-md p-1" />
-            </div>
-          </div>
-          <div className=" flex flex-col bg-green-950 rounded-md min-w-[30%] h-full">
-            <div className="text-white m-2 font-bold text-xl">Services</div>
-            <div>
-              <img src="/Picccky.png" className="rounded-md p-1" />
-            </div>
-          </div>
-          <div className=" flex flex-col bg-green-950 rounded-md min-w-[30%] h-full">
-            <div className="text-white m-2 font-bold text-xl">Services</div>
-            <div>
-              <img src="/Picccky.png" className="rounded-md p-1" />
-            </div>
-          </div>
-          <div className=" flex flex-col bg-green-950 rounded-md min-w-[30%] h-full">
-            <div className="text-white m-2 font-bold text-xl">Services</div>
-            <div>
-              <img src="/Picccky.png" className="rounded-md p-1" />
-            </div>
-          </div>
-          <div className=" flex flex-col bg-green-950 rounded-md min-w-[30%] h-full">
-            <div className="text-white m-2 font-bold text-xl">Services</div>
-            <div>
-              <img src="/Picccky.png" className="rounded-md p-1" />
-            </div>
-          </div>
-          <div className=" flex flex-col bg-green-950 rounded-md min-w-[30%] h-full">
-            <div className="text-white m-2 font-bold text-xl">Services</div>
-            <div>
-              <img src="/Picccky.png" className="rounded-md p-1" />
-            </div>
-          </div>
-          <div className=" flex flex-col bg-green-950 rounded-md min-w-[30%] h-full">
-            <div className="text-white m-2 font-bold text-xl">Services</div>
-            <div>
-              <img src="/Picccky.png" className="rounded-md p-1" />
-            </div>
-          </div>
-          <div className=" flex flex-col bg-green-950 rounded-md min-w-[30%] h-full">
-            <div className="text-white m-2 font-bold text-xl">Services</div>
-            <div>
-              <img src="/Picccky.png" className="rounded-md p-1" />
-            </div>
-          </div>
-          <div className=" flex flex-col bg-green-950 rounded-md min-w-[30%] h-full">
-            <div className="text-white m-2 font-bold text-xl">Services</div>
-            <div>
-              <img src="/Picccky.png" className="rounded-md p-1" />
-            </div>
-          </div>
-          <div className=" flex flex-col bg-green-950 rounded-md min-w-[30%] h-full">
-            <div className="text-white m-2 font-bold text-xl">Services</div>
-            <div>
-              <img src="/Picccky.png" className="rounded-md p-1" />
-            </div>
-          </div>
-          <div className=" flex flex-col bg-green-950 rounded-md min-w-[30%] h-full">
-            <div className="text-white m-2 font-bold text-xl">Services</div>
-            <div>
-              <img src="/Picccky.png" className="rounded-md p-1" />
-            </div>
-          </div>
-          <div className=" flex flex-col bg-green-950 rounded-md min-w-[30%] h-full">
-            <div className="text-white m-2 font-bold text-xl">Services</div>
-            <div>
-              <img src="/Picccky.png" className="rounded-md p-1" />
-            </div>
-          </div>
-          <div className=" flex flex-col bg-green-950 rounded-md min-w-[30%] h-full">
-            <div className="text-white m-2 font-bold text-xl">Services</div>
-            <div>
-              <img src="/Picccky.png" className="rounded-md p-1" />
-            </div>
-          </div>
+        <div className="flex overflow-x-auto scrollbar-hide gap-5 mx-5">
+          <TrendingServices Service={"Website Development"} image={"WD.png"} />
+          <TrendingServices Service={"Video Editing"} image={"/VE.png"} />
+          <TrendingServices
+            Service={"Software Development"}
+            image={"/SD.png"}
+          />
+          <TrendingServices Service={"SEO"} image={"/SEO.png"} />
+          <TrendingServices Service={"UGC Videos"} image={"/UGC.png"} />
+          <TrendingServices Service={"AI Development"} image={"/AI.png"} />
+          <TrendingServices
+            Service={"Social Media Marketing"}
+            image={"/SMM.png"}
+          />
         </div>
       </div>
     </div>
