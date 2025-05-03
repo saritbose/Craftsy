@@ -1,4 +1,5 @@
 import Advantages from "@/Component/Advantages";
+import Testimonials from "@/Component/Testimonials";
 import TrendingServices from "@/Component/TrendingServices";
 import {
   AlignJustify,
@@ -8,9 +9,8 @@ import {
   CheckCircle,
   ChevronDown,
   ChevronUp,
-  CreditCard,
+  Copyright,
   Laptop2,
-  Search,
   ThumbsUp,
 } from "lucide-react";
 import React from "react";
@@ -20,26 +20,31 @@ const Home = () => {
     <div className="overflow-hidden">
       {/* Header */}
       <div className="flex justify-between m-2">
-        <div className="flex gap-1 ">
+        <div className="flex gap-1 p-2">
           <Box />
           <div className="hidden sm:block">Craftsy</div>
         </div>
-        <div className="hidden sm:flex gap-8">
+        <div className="hidden md:flex gap-8 p-2">
           <div>How It Works</div>
           <div>Categories</div>
           <div>Find a Designer</div>
           <div>Studio</div>
         </div>
         <div className="sm:flex gap-6">
-          <div className="hidden sm:block">Log in</div>
-          <div className="hidden sm:block">Sign up</div>
+          <div className="hidden sm:block rounded-4xl p-2 hover:bg-orange-500 hover:text-white">
+            Log in
+          </div>
+          <div className="hidden sm:block rounded-4xl p-2 hover:bg-orange-500 hover:text-white">
+            Sign up
+          </div>
           <AlignJustify className="sm:hidden" />
         </div>
       </div>
+      <hr className="w-[92%] h-0 bg-neutral-400 translate-x-8" />
 
       {/* Start Point */}
       <div className="flex flex-col sm:flex-row">
-        <div className=" w-full sm:w-1/2 px-6 py-10 flex flex-col justify-center">
+        <div className=" w-full sm:w-1/2 px-6 py-10 lg:-translate-y-25 flex flex-col justify-center">
           <h1 className="text-3xl sm:text-5xl font-bold mb-4">
             World Class <span className="text-blue-600">Design At</span> Your
             Service
@@ -60,7 +65,7 @@ const Home = () => {
           </div>
         </div>
         <div className="w-full sm:w-[55%] sm:h-2/4">
-          <img src="/Picccky.png" className="w-full h-full px-5" />
+          <img src="/Picccky.png" className="w-full h-full px-5 pt-2" />
         </div>
       </div>
 
@@ -174,6 +179,67 @@ const Home = () => {
             Service={"Social Media Marketing"}
             image={"/SMM.png"}
           />
+        </div>
+      </div>
+
+      {/* Reviews */}
+      <div className="my-10 pb-10">
+        <div className="text-center text-3xl py-10 font-semibold">
+          What Our Happy User Says
+        </div>
+        <div className="flex flex-col items-center md:flex-row mx-5 gap-10">
+          <Testimonials />
+          <Testimonials />
+          <Testimonials />
+          <Testimonials />
+        </div>
+      </div>
+
+      {/* Footer */}
+      <div className="bg-black">
+        <div className="flex text-center justify-between gap-10 py-10 px-10 text-white text-xs">
+          <div className="text-left">
+            <div className="mb-7 text-neutral-400 hover:underline">Company</div>
+            <div className="mb-3 hover:underline">About</div>
+            <div className="mb-3 hover:underline">Contact</div>
+            <div className="mb-3 hover:underline">Careers</div>
+          </div>
+          <div className="text-left">
+            <div className="mb-7 text-neutral-400 hover:underline">
+              Design Service
+            </div>
+            <div className="mb-3 hover:underline">1 to 1 Projects</div>
+            <div className="mb-3 hover:underline">Any Hire</div>
+            <div className="mb-3 hover:underline">Inspiration</div>
+          </div>
+          <div className="text-left">
+            <div className="mb-7 text-neutral-400 hover:underline">
+              Freelancer
+            </div>
+            <div className="mb-3 hover:underline">Categories</div>
+            <div className="mb-3 hover:underline">Projects</div>
+            <div className="mb-3 hover:underline">Contests</div>
+          </div>
+          <div className="text-left">
+            <div className="mb-7 text-neutral-400 hover:underline">
+              Resources
+            </div>
+            <div className="mb-3 hover:underline">Help & Support</div>
+            <div className="mb-3 hover:underline">Success stories</div>
+            <div className="mb-3 hover:underline">Affiliate programme</div>
+          </div>
+        </div>
+        <hr className="w-[92%] h-0 bg-neutral-400 translate-x-8" />
+        <div className="text-white flex justify-between py-3 px-7 pb-5">
+          <div className="flex text-xs text-neutral-400">
+            <Copyright className=" h-3 translate-y-1" />
+            <p>2025-2025 Craftsy® Global Inc.</p>
+          </div>
+          <div className="hidden sm:flex gap-5 text-xs">
+            <div className="hover:underline">Terms of Service</div>
+            <div className="hover:underline">Privacy Policy</div>
+            <div className="hover:underline">Accessibility</div>
+          </div>
         </div>
       </div>
     </div>
