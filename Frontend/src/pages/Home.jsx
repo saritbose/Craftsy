@@ -2,13 +2,17 @@ import Advantages from "@/Component/Advantages";
 import Testimonials from "@/Component/Testimonials";
 import TrendingServices from "@/Component/TrendingServices";
 import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import {
   AlignJustify,
   ArrowRight,
   Box,
   Briefcase,
   CheckCircle,
-  ChevronDown,
-  ChevronUp,
   Copyright,
   Laptop2,
   ThumbsUp,
@@ -37,7 +41,7 @@ const Home = () => {
           <div className="hidden sm:block rounded-4xl p-2 hover:bg-orange-500 hover:text-white">
             Sign up
           </div>
-          <AlignJustify className="sm:hidden" />
+          <AlignJustify className="sm:hidden m-2" />
         </div>
       </div>
       <hr className="w-[92%] h-0 bg-neutral-400 translate-x-8" />
@@ -56,8 +60,8 @@ const Home = () => {
           <div className="flex flex-col sm:flex-row gap-3">
             <input
               type="text"
-              placeholder="   Logo,Website,Branding..."
-              className="hidden sm:block rounded-4xl border border-gray-300 w-full sm:w-auto flex-1"
+              placeholder="Logo,Website,Branding..."
+              className="hidden sm:block rounded-4xl border border-gray-300 w-full sm:w-auto flex-1 pl-5"
             />
             <button className="bg-orange-500 text-white px-6 py-3 rounded-4xl">
               Get Started
@@ -109,7 +113,10 @@ const Home = () => {
       {/* Call to action */}
       <div className="flex flex-col sm:flex-row">
         <div className="w-full sm:w-[55%] sm:h-2/4">
-          <img src="/Picccky2.png" className="w-full h-full px-5" />
+          <img
+            src="/Picccky2.png"
+            className="w-full h-full px-5 sm:translate-y-5"
+          />
         </div>
         <div className=" w-full sm:w-1/2 px-6 py-10 flex flex-col justify-center">
           <h1 className="text-3xl sm:text-5xl font-semibold mb-4">
@@ -120,34 +127,40 @@ const Home = () => {
             global community that loves to collaborate, we'll turn your great
             ideas.
           </p>
-          <div className="flex flex-col gap-3">
-            <div>
-              <div className="flex justify-between bg-blue-700 rounded-md p-2 mb-1">
-                <div className="flex items-center pb-5 ">
-                  <div className="rounded-full w-9 h-10 p-2 font-bold text-center bg-orange-200 text-orange-700">
-                    1
+          <div className="flex flex-col">
+            <Accordion type="single" collapsible>
+              <AccordionItem value="item-1">
+                <AccordionTrigger>
+                  <div className="flex items-center">
+                    <div className="rounded-full w-9 h-10 p-2 font-bold text-center bg-orange-100 text-orange-700">
+                      1
+                    </div>
+                    <div className="ml-3 font-bold">Work Directly</div>
                   </div>
-                  <div className="ml-3 font-bold">Work Directly</div>
-                </div>
-                <div className="">
-                  <ChevronDown />
-                  <ChevronUp />
-                </div>
-              </div>
-              <div className="flex justify-between bg-blue-700 rounded-md p-2 mb-1">
-                <div className="flex items-center pb-5">
-                  <div className="rounded-full w-9 h-10 p-2 font-bold text-center bg-orange-200 text-orange-700">
-                    2
+                </AccordionTrigger>
+                <AccordionContent className="ml-12">
+                  Invite our entire creative community to participate in your
+                  project Designers submit ideas and you pick your favourite.
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+            <Accordion type="single" collapsible>
+              <AccordionItem value="item-2">
+                <AccordionTrigger>
+                  <div className="flex items-center">
+                    <div className="rounded-full w-9 h-10 p-2 font-bold text-center bg-orange-100 text-orange-700">
+                      2
+                    </div>
+                    <div className="ml-3 font-bold">Start a Contest</div>
                   </div>
-                  <div className="ml-3 font-bold">Start a Contest</div>
-                </div>
-                <div>
-                  <ChevronDown />
-                  <ChevronUp />
-                </div>
-              </div>
-            </div>
-            <div className="flex">
+                </AccordionTrigger>
+                <AccordionContent className="ml-12">
+                  Invite our entire creative community to participate in your
+                  project Designers submit ideas and you pick your favourite.
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+            <div className="flex mt-5">
               <button className="bg-orange-500 text-white px-6 py-3 rounded-4xl">
                 Get Started
               </button>
@@ -187,7 +200,9 @@ const Home = () => {
         <div className="text-center text-3xl py-10 font-semibold">
           What Our Happy User Says
         </div>
-        <div className="flex flex-col items-center md:flex-row mx-5 gap-10">
+        <div className="flex flex-col items-center justify-center md:flex-row md:flex-wrap mx-5 gap-10">
+          <Testimonials />
+          <Testimonials />
           <Testimonials />
           <Testimonials />
           <Testimonials />
@@ -197,7 +212,7 @@ const Home = () => {
 
       {/* Footer */}
       <div className="bg-black">
-        <div className="flex text-center justify-between gap-10 py-10 px-10 text-white text-xs">
+        <div className="flex text-center justify-evenly gap-10 py-10 px-10 text-white text-xs">
           <div className="text-left">
             <div className="mb-7 text-neutral-400 hover:underline">Company</div>
             <div className="mb-3 hover:underline">About</div>
@@ -229,7 +244,7 @@ const Home = () => {
             <div className="mb-3 hover:underline">Affiliate programme</div>
           </div>
         </div>
-        <hr className="w-[92%] h-0 bg-neutral-400 translate-x-8" />
+        <hr className="w-[90%] md:w-[94%] h-0 bg-neutral-400 translate-x-7" />
         <div className="text-white flex justify-between py-3 px-7 pb-5">
           <div className="flex text-xs text-neutral-400">
             <Copyright className=" h-3 translate-y-1" />
