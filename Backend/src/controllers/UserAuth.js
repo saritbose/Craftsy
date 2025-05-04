@@ -16,6 +16,8 @@ export const loginUser = async (req, res) => {
     const verify = bcrypt.compare(password, user.password);
     if (verify) {
       const token = createToken(user._id);
+      console.log("Successfully logged in.");
+
       return res.json({ success: true, message: "User logged in.", token });
     }
   } catch (error) {

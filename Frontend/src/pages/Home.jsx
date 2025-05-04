@@ -18,6 +18,7 @@ import {
   ThumbsUp,
 } from "lucide-react";
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   return (
@@ -26,7 +27,9 @@ const Home = () => {
       <div className="flex justify-between m-2">
         <div className="flex gap-1 p-2">
           <Box />
-          <div className="hidden sm:block">Craftsy</div>
+          <Link to={"/"} className="hidden sm:block">
+            Craftsy
+          </Link>
         </div>
         <div className="hidden md:flex gap-8 p-2">
           <div>How It Works</div>
@@ -35,12 +38,18 @@ const Home = () => {
           <div>Studio</div>
         </div>
         <div className="sm:flex gap-6">
-          <div className="hidden sm:block rounded-4xl p-2 hover:bg-orange-500 hover:text-white">
+          <Link
+            to={"/login"}
+            className="hidden sm:block rounded-4xl p-2 hover:bg-orange-500 hover:text-white"
+          >
             Log in
-          </div>
-          <div className="hidden sm:block rounded-4xl p-2 hover:bg-orange-500 hover:text-white">
+          </Link>
+          <Link
+            to={"/register"}
+            className="hidden sm:block rounded-4xl p-2 hover:bg-orange-500 hover:text-white"
+          >
             Sign up
-          </div>
+          </Link>
           <AlignJustify className="sm:hidden m-2" />
         </div>
       </div>
