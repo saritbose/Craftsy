@@ -16,11 +16,14 @@ import {
   Copyright,
   Laptop2,
   ThumbsUp,
+  X,
 } from "lucide-react";
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 const Home = () => {
+  const [nav, setNav] = useState(false);
+
   return (
     <div className="overflow-hidden">
       {/* Header */}
@@ -37,7 +40,7 @@ const Home = () => {
           <div>Find a Designer</div>
           <div>Studio</div>
         </div>
-        <div className="sm:flex gap-6">
+        <div className="sm:flex gap-6 relative">
           <Link
             to={"/login"}
             className="hidden sm:block rounded-4xl p-2 hover:bg-orange-500 hover:text-white"
@@ -50,7 +53,36 @@ const Home = () => {
           >
             Sign up
           </Link>
-          <AlignJustify className="sm:hidden m-2" />
+          <div onClick={() => setNav(!nav)}>
+            {nav === true ? (
+              <>
+                <X className="sm:hidden m-2" />
+                <div className="fixed top-14 right-0 bg-white w-[50%] border-2 shadow-md">
+                  <div className="m-5">Find talent</div>
+                  <div className="m-5">Find Work</div>
+                  <div className="m-5">Why Craftsy</div>
+                  <div className="m-5">What's new</div>
+                  <hr className="w-full bg-neutral-400 " />
+                  <div className="my-5 mx-3 flex flex-col gap-3">
+                    <Link
+                      to={"/login"}
+                      className="hover:bg-orange-400 hover:text-white text-center p-2 rounded-3xl w-fit"
+                    >
+                      Log in
+                    </Link>
+                    <Link
+                      to={"/register"}
+                      className="hover:bg-orange-400 hover:text-white text-center p-2 rounded-3xl w-fit"
+                    >
+                      Sign up
+                    </Link>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <AlignJustify className="sm:hidden m-2" />
+            )}
+          </div>
         </div>
       </div>
       <hr className="w-[92%] h-0 bg-neutral-400 translate-x-8" />
@@ -72,9 +104,12 @@ const Home = () => {
               placeholder="Logo,Website,Branding..."
               className="hidden sm:block rounded-4xl border border-gray-300 w-full sm:w-auto flex-1 pl-5"
             />
-            <button className="bg-orange-500 text-white px-6 py-3 rounded-4xl">
+            <Link
+              to={"/register"}
+              className="bg-orange-500 text-white text-center px-6 py-3 rounded-4xl"
+            >
               Get Started
-            </button>
+            </Link>
           </div>
         </div>
         <div className="w-full sm:w-[55%] sm:h-2/4">
@@ -170,9 +205,12 @@ const Home = () => {
               </AccordionItem>
             </Accordion>
             <div className="flex mt-5">
-              <button className="bg-orange-500 text-white px-6 py-3 rounded-4xl">
+              <Link
+                to={"/register"}
+                className="bg-orange-500 text-white px-6 py-3 rounded-4xl"
+              >
                 Get Started
-              </button>
+              </Link>
               <div className=" flex gap-1 px-6 py-3 hover:underline">
                 How it Works
                 <ArrowRight />
