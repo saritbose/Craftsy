@@ -3,6 +3,8 @@ import cors from "cors";
 import "dotenv/config";
 import connectDB from "./libs/connectDB.js";
 import authRoutes from "./routes/authRoutes.js";
+import authUser from "./middleware/auth.js";
+import role from "./middleware/role.js";
 
 connectDB();
 const app = express();
