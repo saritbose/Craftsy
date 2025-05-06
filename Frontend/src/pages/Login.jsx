@@ -33,10 +33,10 @@ const Login = () => {
           <Box />
           Craftsy
         </Link>
-        <div className="flex flex-col items-center text-center justify-center bg-white w-90 px-10 border-2 rounded-2xl shadow-md">
+        <div className="flex flex-col items-center text-center justify-center bg-white/30 shadow-lg backdrop-blur-lg border border-white/10 w-90 px-10 rounded-2xl">
           <div className="my-7">
             <h3 className="font-bold ">Welcome Back!</h3>
-            <p className="text-neutral-400 text-xs">
+            <p className="text-white text-xs">
               We missed you! Please enter your details.
             </p>
           </div>
@@ -47,7 +47,7 @@ const Login = () => {
                 placeholder="Enter your Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="rounded-lg "
+                className="rounded-lg text-white"
               />
             </div>
             <div className="mb-3">
@@ -56,15 +56,15 @@ const Login = () => {
                 placeholder="Enter Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="rounded-lg"
+                className="rounded-lg text-white"
               />
             </div>
             <div className="flex justify-between items-center mb-10 px-3 -translate-y-1">
               <div className="text-xs flex ">
-                <Checkbox className="border-2 border-stone-400" />
-                <label className="mx-2 text-neutral-400">Remember me</label>
+                <Checkbox className="border-2 border-orange-400" />
+                <label className="mx-2 text-white">Remember me</label>
               </div>
-              <div className="text-xs text-orange-300">Forgot password?</div>
+              <div className="text-xs text-orange-500">Forgot password?</div>
             </div>
           </div>
           <Button
@@ -73,9 +73,9 @@ const Login = () => {
           >
             Sign in
           </Button>
-          <p className="my-5 text-xs text-neutral-400">
+          <p className="my-5 text-xs text-white">
             Don't have an account?
-            <Link to={"/register"} className="text-orange-300">
+            <Link to={"/register"} className="text-orange-500">
               Sign up
             </Link>
           </p>

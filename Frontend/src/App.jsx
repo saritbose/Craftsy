@@ -4,6 +4,8 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import FreelancerDashboard from "./pages/FreelancerDashboard";
 import ClientDashboard from "./pages/ClientDashboard";
+import NotFound from "./pages/NotFound";
+import PostJob from "./pages/PostAJob";
 
 export default function App() {
   return (
@@ -13,6 +15,8 @@ export default function App() {
       <Route path="/register" element={<Register />} />
       <Route path="/freelancer/dashboard" element={<FreelancerDashboard />} />
       <Route path="/client/dashboard" element={<ClientDashboard />} />
+      <Route path="/client/post-job" element={<PostJob />} />
+      <Route path="/error" element={<NotFound />} />
     </Routes>
   );
 }

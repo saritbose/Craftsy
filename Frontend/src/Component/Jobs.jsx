@@ -3,7 +3,7 @@ import React from "react";
 
 const Jobs = () => {
   return (
-    <div className="pt-5 pb-3 px-4 group hover:bg-gray-100">
+    <div className="pt-5 pb-3 px-4 group hover:bg-neutral-100 hover:shadow-lg">
       <p className="text-neutral-800 text-xs mb-1">Posted Date</p>
       <p className="text-xl font-semibold hover:underline group-hover:text-orange-400">
         Job Title
