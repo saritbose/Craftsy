@@ -38,10 +38,10 @@ const Register = () => {
           <Box />
           Craftsy
         </Link>
-        <div className="flex flex-col items-center text-center justify-center bg-white w-90 px-10 border-2 rounded-2xl shadow-md">
+        <div className="flex flex-col items-center text-center justify-center bg-white/30 shadow-lg backdrop-blur-lg border border-white/10 w-90 px-10 rounded-2xl">
           <div className="my-7">
             <h3 className="font-bold ">New Here?</h3>
-            <p className="text-neutral-400 text-xs">
+            <p className="text-white text-xs">
               Have a nice day! Please enter your details.
             </p>
           </div>
@@ -52,7 +52,7 @@ const Register = () => {
                 placeholder="Enter your Name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="rounded-lg"
+                className="rounded-lg text-white"
               />
             </div>
             <div className="my-3">
@@ -61,7 +61,7 @@ const Register = () => {
                 placeholder="Enter your Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="rounded-lg "
+                className="rounded-lg text-white"
               />
             </div>
             <div className="mb-3">
@@ -70,7 +70,7 @@ const Register = () => {
                 placeholder="Enter Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="rounded-lg"
+                className="rounded-lg text-white"
               />
             </div>
             <div>
@@ -80,7 +80,7 @@ const Register = () => {
                   onClick={() => setRole("Client")}
                   disabled={role === "Client"}
                   className={`bg-orange-300 p-2 w-1/2 rounded-2xl font-semibold text-white ${
-                    role === "Client" ? "bg-orange-400" : "bg-orange-300"
+                    role === "Client" ? "bg-orange-400" : "bg-orange-200"
                   }`}
                 >
                   Client
@@ -89,7 +89,7 @@ const Register = () => {
                   onClick={() => setRole("Freelancer")}
                   disabled={role === "Freelancer"}
                   className={`bg-orange-300 p-2 w-1/2 rounded-2xl font-semibold text-white ${
-                    role === "Freelancer" ? "bg-orange-400" : "bg-orange-300"
+                    role === "Freelancer" ? "bg-orange-400" : "bg-orange-200"
                   }`}
                 >
                   Freelancer
@@ -103,9 +103,9 @@ const Register = () => {
           >
             Sign up
           </Button>
-          <p className="my-5 text-xs text-neutral-400">
+          <p className="my-5 text-xs text-white">
             Don't have an account?
-            <Link to={"/login"} className="text-orange-300">
+            <Link to={"/login"} className="text-orange-500">
               {" "}
               Sign in
             </Link>

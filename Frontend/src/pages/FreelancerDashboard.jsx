@@ -107,13 +107,13 @@ const FreelancerDashboard = () => {
           <div className="hover:text-orange-300">Messages</div>
         </div>
         <div className="flex items-center gap-5 mx-2">
-          <Search />
+          <Search className="mr-2" />
           <CircleHelp className="hidden md:block" />
           <Bell className="hidden md:block" />
           <Button className="rounded-full h-8 hidden md:block" />
         </div>
       </div>
-      <div className="lg:flex items-baseline justify-between h-screen relative overflow-y-auto scrollbar-hide">
+      <div className=" relative lg:flex items-baseline justify-between h-screen overflow-y-auto scrollbar-hide">
         {/* SideBar */}
         <div className="hidden lg:block border-r-2 h-screen w-[15%] fixed top-15 left-0">
           <div className="m-5">Browse Jobs</div>
@@ -136,7 +136,7 @@ const FreelancerDashboard = () => {
           </div>
         </div>
         {/* Job boards */}
-        <div className="mx-2 flex-1 z-10 absolute top-10 left-56 right-71 scrollbar-hide">
+        <div className="mx-2 mt-15 lg:mt-0 flex-1 z-10 lg:absolute top-10 left-56 right-71 scrollbar-hide">
           <p className="font-medium my-5 text-xl">Jobs you might like</p>
           <Tabs defaultValue="bestmatches">
             <TabsList className="bg-white">
@@ -152,11 +152,6 @@ const FreelancerDashboard = () => {
               <hr className="w-vw mt-2" />
               <div>
                 {/* Jobs */}
-                <Jobs />
-                <Jobs />
-                <Jobs />
-                <Jobs />
-                <Jobs />
                 <Jobs />
                 <Jobs />
                 <Jobs />
