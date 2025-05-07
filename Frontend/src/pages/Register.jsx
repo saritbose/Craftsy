@@ -114,7 +114,6 @@ const Register = () => {
           <p className="my-5 text-xs text-white font-mono">
             Don't have an account?
             <Link to={"/login"} className="text-orange-500">
-              {" "}
               Sign in
             </Link>
           </p>
