@@ -30,6 +30,7 @@
     "react-toastify": "^11.0.5",
     "tailwind-merge": "^3.2.0",
     "tailwind-scrollbar-hide": "^2.0.0",
+    "world-countries": "^5.1.0",
     "zod": "^3.24.3"
   },
   "devDependencies": {
