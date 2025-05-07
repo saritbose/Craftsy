@@ -17,7 +17,7 @@ import countries from "world-countries";
 const PostAJob = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [budget, setBudget] = useState(0);
+  const [budget, setBudget] = useState("");
   const [structure, setStructure] = useState("");
   const [level, setLevel] = useState("");
   const [skills, setSkills] = useState([]);

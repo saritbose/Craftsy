@@ -11,14 +11,16 @@ import {
   X,
 } from "lucide-react";
 import React, { useState } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const FreelancerDashboard = () => {
   const [nav, setNav] = useState(false);
+  const navigate = useNavigate();
 
   const logout = () => {
-    Navigate("/login");
+    navigate("/");
     localStorage.removeItem("token");
+    localStorage.removeItem("role");
   };
 
   return (

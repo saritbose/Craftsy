@@ -18,10 +18,15 @@ export const loginUser = async (req, res) => {
       const token = createToken(user._id);
       console.log("Successfully logged in.");
 
-      return res.json({ success: true, message: "User logged in.", token });
+      return res.json({
+        success: true,
+        message: "User logged in.",
+        token,
+        role: user.role,
+      });
     }
   } catch (error) {
-    return res.json({ success: false, message: "Something went wrong." });
+    return res.json({ success: false, message: error.message });
   }
 };
 
@@ -41,8 +46,13 @@ export const registerUser = async (req, res) => {
     });
     await newUser.save();
     const token = createToken(newUser._id);
-    return res.json({ success: true, message: "User registered.", token });
+    return res.json({
+      success: true,
+      message: "User registered.",
+      token,
+      role: user.role,
+    });
   } catch (error) {
-    return res.json({ success: false, message: "Something went wrong." });
+    return res.json({ success: false, message: error.message });
   }
 };

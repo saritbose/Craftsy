@@ -10,14 +10,16 @@ import {
   X,
 } from "lucide-react";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const ClientDashboard = () => {
   const [nav, setNav] = useState(false);
+  const navigate = useNavigate();
 
   const logout = () => {
-    Navigate("/login");
+    navigate("/");
     localStorage.removeItem("token");
+    localStorage.removeItem("role");
   };
   return (
     <div className="p-3 relative h-screen overflow-hidden">

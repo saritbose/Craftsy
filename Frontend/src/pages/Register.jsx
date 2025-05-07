@@ -3,7 +3,7 @@ import { Input } from "@/components/ui/input";
 import axios from "axios";
 import { Box, ChevronLeft } from "lucide-react";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -13,6 +13,8 @@ const Register = () => {
   const backend_url = import.meta.env.VITE_BACKEND_URL;
 
   const handleSubmit = async (e) => {
+    const navigate = useNavigate();
+
     e.preventDefault();
     const formData = { name, email, password, role };
     try {
@@ -20,8 +22,15 @@ const Register = () => {
         `${backend_url}/api/user/register`,
         formData
       );
-      console.log(res.data);
+      const role = res.data.role;
+
+      if (role === "Client") {
+        navigate("/client/dashboard");
+      } else {
+        navigate("/freelancer/dashboard");
+      }
       localStorage.setItem("token", res.data.token);
+      localStorage.setItem("role", role);
     } catch (error) {
       throw new Error(error);
     }

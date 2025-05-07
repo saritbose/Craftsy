@@ -4,11 +4,12 @@ import { Input } from "@/components/ui/input";
 import axios from "axios";
 import { Box, ChevronLeft } from "lucide-react";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
   const backend_url = import.meta.env.VITE_BACKEND_URL;
 
   const handleSubmit = async (e) => {
@@ -16,7 +17,15 @@ const Login = () => {
     const formData = { email, password };
     try {
       const res = await axios.post(`${backend_url}/api/user/login`, formData);
+      const role = res.data.role;
+
+      if (role === "Client") {
+        navigate("/client/dashboard");
+      } else {
+        navigate("/freelancer/dashboard");
+      }
       localStorage.setItem("token", res.data.token);
+      localStorage.setItem("role", role);
     } catch (error) {
       throw new Error(error);
     }
