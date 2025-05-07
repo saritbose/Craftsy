@@ -8,16 +8,25 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import axios from "axios";
 import { Box, ChevronLeft, X } from "lucide-react";
-import React, { use, useState } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import countries from "world-countries";
 
 const PostAJob = () => {
-  const [country, setCountry] = useState("");
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [budget, setBudget] = useState(0);
+  const [structure, setStructure] = useState("");
+  const [level, setLevel] = useState("");
   const [skills, setSkills] = useState([]);
   const [inputValue, setInputValue] = useState("");
+  const [location, setLocation] = useState("");
+
   const navigate = useNavigate();
+  const token = localStorage.getItem("token");
+  const backend_url = import.meta.env.VITE_BACKEND_URL;
 
   // Fetching country data from the world-countries package
   const countryOptions = countries.map((country) => ({
@@ -35,6 +44,27 @@ const PostAJob = () => {
 
   const removeSkill = (index) => {
     setSkills(skills.filter((_, i) => i !== index)); // Remove the skill from the array
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const jobData = {
+      title,
+      description,
+      structure,
+      budget,
+      level,
+      skills,
+      location,
+    };
+    try {
+      const res = await axios.post(`${backend_url}/api/job/post-job`, jobData, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      console.log(res.data);
+    } catch (error) {
+      console.log("Error posting job:", error);
+    }
   };
 
   return (
@@ -64,13 +94,20 @@ const PostAJob = () => {
               <p className="text-white text-left ml-2 mb-1 text-sm font-mono">
                 Job Title
               </p>
-              <Input placeholder="Role" className="rounded-lg " />
+              <Input
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                placeholder="Role"
+                className="rounded-lg "
+              />
             </div>
             <div className="mb-3">
               <p className="text-white text-left ml-2 mb-1 text-sm font-mono">
                 Description
               </p>
               <Textarea
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
                 placeholder="Enter the job description"
                 className="rounded-lg  h-auto"
               />
@@ -79,25 +116,33 @@ const PostAJob = () => {
               <p className="text-white text-left ml-2 mb-1 text-sm font-mono">
                 Price Structure
               </p>
-              <Select>
-                <SelectTrigger className="w-full">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent className="bg-orange-300">
-                  <SelectItem value="fixed">Fixed</SelectItem>
-                  <SelectItem value="hourly">Hourly</SelectItem>
-                  <SelectItem value="monthly">Monthly</SelectItem>
-                  <SelectItem value="yearly">Yearly</SelectItem>
-                </SelectContent>
-              </Select>
+              <div className="flex">
+                <Input
+                  value={budget}
+                  onChange={(e) => setBudget(e.target.value)}
+                  placeholder="Budget"
+                  className="rounded-r-none w-auto"
+                />
+                <Select onValueChange={(e) => setStructure(e)}>
+                  <SelectTrigger className="w-lg border-l rounded-l-none">
+                    <SelectValue placeholder="Structure" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-orange-300">
+                    <SelectItem value="fixed">Fixed</SelectItem>
+                    <SelectItem value="hourly">Hourly</SelectItem>
+                    <SelectItem value="monthly">Monthly</SelectItem>
+                    <SelectItem value="yearly">Yearly</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
             <div className="mb-3">
               <p className="text-white text-left ml-2 mb-1 text-sm font-mono">
                 Experience Level
               </p>
-              <Select>
+              <Select onValueChange={(e) => setLevel(e)}>
                 <SelectTrigger className="w-full">
-                  <SelectValue />
+                  <SelectValue placeholder="Level" />
                 </SelectTrigger>
                 <SelectContent className="bg-orange-300">
                   <SelectItem value="noexperience">No Experience</SelectItem>
@@ -138,11 +183,11 @@ const PostAJob = () => {
             </div>
             <div className="mb-8">
               <p className="text-white text-left ml-2 mb-1 text-sm font-mono">
-                Country
+                Location
               </p>
-              <Select>
+              <Select onValueChange={(e) => setLocation(e)}>
                 <SelectTrigger className="w-full">
-                  <SelectValue />
+                  <SelectValue placeholder="Country" />
                 </SelectTrigger>
                 <SelectContent className="bg-orange-300">
                   <SelectItem value="worldwide">Worldwide</SelectItem>
@@ -156,7 +201,10 @@ const PostAJob = () => {
               </Select>
             </div>
           </div>
-          <Button className="bg-orange-400 w-full rounded-lg py-5 mb-5 shadow-md hover:bg-orange-600">
+          <Button
+            onClick={handleSubmit}
+            className="bg-orange-400 w-full rounded-lg py-5 mb-5 shadow-md hover:bg-orange-600"
+          >
             POST
           </Button>
         </div>
