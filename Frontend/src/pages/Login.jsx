@@ -35,28 +35,32 @@ const Login = () => {
         </Link>
         <div className="flex flex-col items-center text-center justify-center bg-white/30 shadow-lg backdrop-blur-lg border border-white/10 w-90 px-10 rounded-2xl">
           <div className="my-7">
-            <h3 className="font-bold ">Welcome Back!</h3>
-            <p className="text-white text-xs">
+            <h3 className="font-bold font-mono">Welcome Back!</h3>
+            <p className="text-white font-mono text-xs">
               We missed you! Please enter your details.
             </p>
           </div>
           <div className="w-full">
             <div className="my-3">
-              <p className="text-left ml-2 mb-1 text-xs font-bold">Email</p>
+              <p className="text-left ml-2 mb-1 text-xs font-mono text-white">
+                Email
+              </p>
               <Input
                 placeholder="Enter your Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="rounded-lg text-white"
+                className="rounded-lg text-black"
               />
             </div>
             <div className="mb-3">
-              <p className="text-left ml-2 mb-1 text-xs font-bold">Password</p>
+              <p className="text-left ml-2 mb-1 text-xs font-mono text-white">
+                Password
+              </p>
               <Input
                 placeholder="Enter Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="rounded-lg text-white"
+                className="rounded-lg text-black"
               />
             </div>
             <div className="flex justify-between items-center mb-10 px-3 -translate-y-1">
@@ -73,7 +77,7 @@ const Login = () => {
           >
             Sign in
           </Button>
-          <p className="my-5 text-xs text-white">
+          <p className="my-5 text-xs text-white font-mono">
             Don't have an account?
             <Link to={"/register"} className="text-orange-500">
               Sign up
