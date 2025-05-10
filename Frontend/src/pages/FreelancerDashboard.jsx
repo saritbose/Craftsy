@@ -1,6 +1,7 @@
 import Jobs from "@/Component/Jobs";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import axios from "axios";
 import {
   AlignJustify,
   Bell,
@@ -10,12 +11,30 @@ import {
   Search,
   X,
 } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 const FreelancerDashboard = () => {
   const [nav, setNav] = useState(false);
+  const [jobs, setJobs] = useState([]);
   const navigate = useNavigate();
+  const token = localStorage.getItem("token");
+  const role = localStorage.getItem("role");
+  const backend_url = import.meta.env.VITE_BACKEND_URL;
+
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        const res = await axios.get(`${backend_url}/api/freelancer/get-jobs`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setJobs(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchJobs();
+  }, []);
 
   const logout = () => {
     navigate("/");
@@ -112,7 +131,20 @@ const FreelancerDashboard = () => {
           <Search className="mr-2" />
           <CircleHelp className="hidden md:block" />
           <Bell className="hidden md:block" />
-          <Button className="rounded-full h-8 hidden md:block" />
+          <div className="group relative">
+            <Button className="rounded-full h-8 hidden md:block lg:hidden" />
+            <div className="hidden group-hover:flex flex-col absolute right-0 top-8 bg-white mt-1 py-2 px-2 w-32 text-sm border shadow-md">
+              <Link to={"/login"} className="text-center p-2  w-fit">
+                My Profile
+              </Link>
+              <div
+                onClick={logout}
+                className="text-center p-2  w-fit cursor-pointer"
+              >
+                Log out
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <div className=" relative lg:flex items-baseline justify-between h-screen overflow-y-auto scrollbar-hide">
@@ -167,8 +199,19 @@ const FreelancerDashboard = () => {
               <hr className="w-1vw mt-2" />
               <div>
                 {/* Jobs */}
-                <Jobs />
-                <Jobs />
+                {jobs.map((job) => (
+                  <Jobs
+                    key={job._id}
+                    date={job.createdAt}
+                    skills={job.skills}
+                    title={job.title}
+                    description={job.description}
+                    structure={job.pricing.structure}
+                    budget={job.pricing.budget}
+                    experience={job.experience}
+                    location={job.location}
+                  />
+                ))}
               </div>
             </TabsContent>
             <TabsContent value="savedjobs" className="text-gray-600 my-3">

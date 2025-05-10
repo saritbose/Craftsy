@@ -2,8 +2,8 @@ import User from "../models/User.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-const createToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET_TOKEN, { expiresIn: "1h" });
+const createToken = (id, role) => {
+  return jwt.sign({ id }, process.env.JWT_SECRET_TOKEN, { expiresIn: "7d" });
 };
 
 export const loginUser = async (req, res) => {
