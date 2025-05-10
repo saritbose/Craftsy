@@ -109,7 +109,20 @@ const ClientDashboard = () => {
           <Search className="mr-2" />
           <CircleHelp className="hidden md:block" />
           <Bell className="hidden md:block" />
-          <Button className="rounded-full h-8 hidden md:block" />
+          <div className="group relative">
+            <Button className="rounded-full h-8 hidden md:block lg:hidden" />
+            <div className="hidden group-hover:flex flex-col absolute right-0 top-8 bg-white mt-1 py-2 px-2 w-32 text-sm border shadow-md">
+              <Link to={"/login"} className="text-center p-2  w-fit">
+                My Profile
+              </Link>
+              <div
+                onClick={logout}
+                className="text-center p-2  w-fit cursor-pointer"
+              >
+                Log out
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <div className=" relative lg:flex items-baseline justify-between h-screen overflow-y-auto scrollbar-hide">

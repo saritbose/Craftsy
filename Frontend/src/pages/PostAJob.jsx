@@ -58,9 +58,13 @@ const PostAJob = () => {
       location,
     };
     try {
-      const res = await axios.post(`${backend_url}/api/job/post-job`, jobData, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await axios.post(
+        `${backend_url}/api/client/post-job`,
+        jobData,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       console.log(res.data);
     } catch (error) {
       console.log("Error posting job:", error);

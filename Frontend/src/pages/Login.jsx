@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import axios from "axios";
 import { Box, ChevronLeft } from "lucide-react";
 import React, { useState } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
