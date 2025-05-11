@@ -24,7 +24,7 @@ const FreelancerDashboard = () => {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const res = await axios.get(`${backend_url}/api/freelancer/get-jobs`, {
+        const res = await axios.get(`${backend_url}/api/client/get-jobs`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setJobs(res.data);
@@ -185,9 +185,20 @@ const FreelancerDashboard = () => {
               <hr className="w-vw mt-2" />
               <div>
                 {/* Jobs */}
-                <Jobs />
-                <Jobs />
-                <Jobs />
+                {jobs.map((job) => (
+                  <Jobs
+                    key={job._id}
+                    jobId={job._id}
+                    date={job.createdAt}
+                    skills={job.skills}
+                    title={job.title}
+                    description={job.description}
+                    structure={job.pricing.structure}
+                    budget={job.pricing.budget}
+                    experience={job.experience}
+                    location={job.location}
+                  />
+                ))}
               </div>
             </TabsContent>
             <TabsContent value="mostrecent">
@@ -201,6 +212,7 @@ const FreelancerDashboard = () => {
                 {jobs.map((job) => (
                   <Jobs
                     key={job._id}
+                    jobId={job._id}
                     date={job.createdAt}
                     skills={job.skills}
                     title={job.title}

@@ -35,6 +35,7 @@ export const getJobs = async (req, res) => {
   }
 };
 
+// Edit job function is not implemented yet
 export const editJob = async () => {};
 
 export const deleteJob = async (req, res) => {
