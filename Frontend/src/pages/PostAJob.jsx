@@ -69,6 +69,7 @@ const PostAJob = () => {
     } catch (error) {
       console.log("Error posting job:", error);
     }
+    navigate(-1);
   };
 
   return (

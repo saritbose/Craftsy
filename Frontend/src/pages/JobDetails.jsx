@@ -20,7 +20,6 @@ const JobDetails = () => {
     <div className="bg-orange-400 h-screen overflow-hidden">
       <div className="border-1 border-orange-500 shadow-lg m-6 p-3 h-screen overflow-hidden font-mono bg-orange-400">
         <div className="text-4xl font-medium text-white">{title}</div>
-
         <div className="text-xs my-1">{date.split("T")[0]}</div>
         <div className="my-5">
           Level: <span className="text-white">{experience}</span>

@@ -50,14 +50,22 @@ const FreelancerDashboard = () => {
             <>
               <X className="sm:hidden m-2" />
               <div className="fixed top-14 left-0 bg-white w-[50%] border-2 shadow-md">
-                <div className="m-5">Browse Jobs</div>
-                <div className="m-5">Your Applications</div>
-                <div className="m-5">Ongoing Work</div>
-                <div className="m-5">Earnings</div>
+                <div className="m-5">
+                  <Link to={"/freelancer/dashboard"}>Browse Jobs</Link>
+                </div>
+                <div className="m-5">
+                  <Link to={"/freelancer/applications"}>Your Applications</Link>
+                </div>{" "}
+                <div className="m-5">
+                  <Link to={"/freelancer/ongoing-work"}>Ongoing Work</Link>
+                </div>
+                <div className="m-5">
+                  <Link to={"/freelancer/earnings"}>Earnings</Link>
+                </div>
                 <hr className="w-full bg-neutral-400 " />
                 <div className="my-5 mx-3 flex flex-col gap-3">
                   <Link
-                    to={"/login"}
+                    to={"/profile"}
                     className="hover:bg-orange-400 hover:text-white text-center p-2 rounded-3xl w-fit"
                   >
                     My Profile
