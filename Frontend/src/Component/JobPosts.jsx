@@ -1,10 +1,28 @@
+import axios from "axios";
 import React from "react";
 
-const JobPosts = () => {
+const JobPosts = ({ title, jobId }) => {
+  const token = localStorage.getItem("token");
+  const backend_url = import.meta.env.VITE_BACKEND_URL;
+
+  const handleEdit = async () => {};
+  const handleDelete = async () => {
+    try {
+      const res = await axios.delete(
+        `${backend_url}/api/client/del-job/${jobId}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="border-1 rounded-md pt-5 pb-1.5 px-4 group hover:bg-neutral-100 hover:shadow-lg">
       <p className="text-xl font-semibold group-hover:text-orange-400">
-        Job Title
+        {title}
       </p>
       <p className="text-neutral-800 text-xs my-2">
         Open/In Progress/Completed
@@ -22,8 +40,18 @@ const JobPosts = () => {
           </div>
         </div>
         <div className="flex justify-between gap-2">
-          <div className="text-orange-300 hover:text-orange-500">Edit</div>
-          <div className="text-orange-300 hover:text-orange-500">Delete</div>
+          <div
+            onClick={handleEdit}
+            className="text-orange-300 hover:text-orange-500 cursor-pointer"
+          >
+            Edit
+          </div>
+          <div
+            onClick={handleDelete}
+            className="text-orange-300 hover:text-orange-500 cursor-pointer"
+          >
+            Delete
+          </div>
         </div>
       </div>
     </div>

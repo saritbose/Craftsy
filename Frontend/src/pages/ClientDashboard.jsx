@@ -1,5 +1,6 @@
 import JobPosts from "@/Component/JobPosts";
 import { Button } from "@/components/ui/button";
+import axios from "axios";
 import {
   AlignJustify,
   Bell,
@@ -9,12 +10,29 @@ import {
   Search,
   X,
 } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 const ClientDashboard = () => {
   const [nav, setNav] = useState(false);
+  const [jobs, setJobs] = useState([]);
   const navigate = useNavigate();
+  const token = localStorage.getItem("token");
+  const backend_url = import.meta.env.VITE_BACKEND_URL;
+
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        const res = await axios.get(`${backend_url}/api/client/get-jobs`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setJobs(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchJobs();
+  }, []);
 
   const logout = () => {
     navigate("/");
@@ -155,8 +173,9 @@ const ClientDashboard = () => {
             </Button>
           </div>
           <div className="my-5">
-            <JobPosts />
-            <JobPosts />
+            {jobs.map((job) => (
+              <JobPosts key={job._id} title={job.title} jobId={job._id} />
+            ))}
           </div>
         </div>
       </div>

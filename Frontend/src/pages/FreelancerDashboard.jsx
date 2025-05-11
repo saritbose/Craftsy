@@ -19,7 +19,6 @@ const FreelancerDashboard = () => {
   const [jobs, setJobs] = useState([]);
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
-  const role = localStorage.getItem("role");
   const backend_url = import.meta.env.VITE_BACKEND_URL;
 
   useEffect(() => {

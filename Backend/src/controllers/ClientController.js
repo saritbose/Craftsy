@@ -25,3 +25,22 @@ export const addJob = async (req, res) => {
     return res.json({ success: false, message: "Job not added." });
   }
 };
+
+export const getJobs = async (req, res) => {
+  try {
+    const allJobs = await Job.find();
+    res.json(allJobs);
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
+export const editJob = async () => {};
+
+export const deleteJob = async (req, res) => {
+  try {
+    await Job.findByIdAndDelete(req.params.jobId);
+  } catch (error) {
+    throw new Error(error);
+  }
+};
