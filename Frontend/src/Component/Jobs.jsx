@@ -1,6 +1,7 @@
 import axios from "axios";
 import { MapPin } from "lucide-react";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const Jobs = ({
   jobId,
@@ -14,11 +15,27 @@ const Jobs = ({
   location,
   applicants,
 }) => {
+  const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const backend_url = import.meta.env.VITE_BACKEND_URL;
-
   const applied = applicants.length;
-  console.log(applied);
+
+  const handleJobDetail = () => {
+    navigate(`/freelancer/job/${jobId}`, {
+      state: {
+        jobId,
+        date,
+        title,
+        description,
+        structure,
+        budget,
+        experience,
+        skills,
+        location,
+        applicants,
+      },
+    });
+  };
 
   const handleApply = async () => {
     try {
@@ -36,7 +53,10 @@ const Jobs = ({
   };
 
   return (
-    <div className="pt-5 pb-3 px-4 group hover:bg-neutral-100 hover:shadow-lg">
+    <div
+      onClick={handleJobDetail}
+      className="pt-5 pb-3 px-4 group hover:bg-neutral-100 hover:shadow-lg"
+    >
       <p className="text-neutral-800 text-xs mb-1">{`Posted Date: ${
         date.split("T")[0]
       }`}</p>

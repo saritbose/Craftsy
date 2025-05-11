@@ -17,7 +17,7 @@ const NotFound = () => {
           <h2 className="text-2xl font-semibold text-white">Page not found</h2>
           <p className="text-neutral-400 max-w-md mx-auto">
             Looks like this feature is still not available. Let's get you back
-            to the mood.
+            to where you left.
           </p>
         </div>
 

@@ -7,6 +7,7 @@ import ClientDashboard from "./pages/ClientDashboard";
 import NotFound from "./pages/NotFound";
 import PostJob from "./pages/PostAJob";
 import ProtectedRoutes from "./Component/ProtectedRoutes";
+import JobDetails from "./pages/JobDetails";
 
 export default function App() {
   return (
@@ -30,7 +31,10 @@ export default function App() {
           </ProtectedRoutes>
         }
       />
-      <Route path="/client/post-job" element={<PostJob />} />
+      <Route path="/client/post-job" element={<PostJob />} /> // Client can post
+      a job
+      <Route path="/freelancer/job/:id" element={<JobDetails />} /> //
+      Freelancer can view job details
       <Route path="/*" element={<NotFound />} />
     </Routes>
   );
