@@ -197,6 +197,7 @@ const FreelancerDashboard = () => {
                     budget={job.pricing.budget}
                     experience={job.experience}
                     location={job.location}
+                    applicants={job.applicants}
                   />
                 ))}
               </div>
@@ -221,6 +222,7 @@ const FreelancerDashboard = () => {
                     budget={job.pricing.budget}
                     experience={job.experience}
                     location={job.location}
+                    applicants={job.applicants}
                   />
                 ))}
               </div>

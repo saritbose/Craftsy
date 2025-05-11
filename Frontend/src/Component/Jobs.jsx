@@ -12,9 +12,13 @@ const Jobs = ({
   experience,
   skills,
   location,
+  applicants,
 }) => {
   const token = localStorage.getItem("token");
   const backend_url = import.meta.env.VITE_BACKEND_URL;
+
+  const applied = applicants.length;
+  console.log(applied);
 
   const handleApply = async () => {
     try {
@@ -46,15 +50,23 @@ const Jobs = ({
         {`${description.slice(0, 50)}...`}
         <span className="text-orange-400 underline">more</span>
       </p>
-      <p className="rounded-2xl bg-neutral-200 w-fit px-3 py-0.5 mb-4 my-3 text-neutral-500">
-        Skills
-      </p>
+      <div className="flex gap-2">
+        {skills.map((skill, index) => (
+          <p
+            key={index}
+            className="rounded-2xl bg-neutral-200 w-fit px-3 py-0.5 mb-4 my-3 text-neutral-500"
+          >
+            {skill}
+          </p>
+        ))}
+      </div>
       <p className="flex gap-1 text-neutral-500">
         <MapPin className="w-4 h-5 text-neutral-700" />
         {location}
       </p>
       <p className="text-gray-500 mt-1 mb-4">
-        Proposals:<span className="text-neutral-500"> Applicants</span>
+        Proposals:
+        <span className="text-neutral-500"> {applied} Applicants</span>
       </p>
       <button
         onClick={handleApply}
