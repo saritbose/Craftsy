@@ -5,6 +5,7 @@ import connectDB from "./libs/connectDB.js";
 import userRoutes from "./routes/userRoutes.js";
 import clientRoutes from "./routes/clientRoutes.js";
 import freelancerRoutes from "./routes/freelancerRoutes.js";
+import profileRoutes from "./routes/profileRoutes.js";
 
 connectDB();
 const app = express();
@@ -13,6 +14,7 @@ app.use(cors());
 const port = process.env.PORT;
 
 app.use("/api/user", userRoutes);
+app.use("/api/profile", profileRoutes);
 app.use("/api/client", clientRoutes);
 app.use("/api/freelancer", freelancerRoutes);
 

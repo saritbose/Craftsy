@@ -141,7 +141,7 @@ const FreelancerDashboard = () => {
           <div className="group relative">
             <Button className="rounded-full h-8 hidden md:block lg:hidden" />
             <div className="hidden group-hover:flex flex-col absolute right-0 top-8 bg-white mt-1 py-2 px-2 w-32 text-sm border shadow-md">
-              <Link to={"/login"} className="text-center p-2  w-fit">
+              <Link to={"/profile"} className="text-center p-2  w-fit">
                 My Profile
               </Link>
               <div
@@ -163,7 +163,7 @@ const FreelancerDashboard = () => {
           <div className="m-5">Earnings</div>
           <div className="my-5 mx-3 flex flex-col gap-3">
             <Link
-              to={"/login"}
+              to={"/profile"}
               className="hover:bg-orange-400 hover:text-white text-center p-2 rounded-3xl w-fit"
             >
               My Profile

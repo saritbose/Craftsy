@@ -21,6 +21,11 @@ const userSchema = new mongoose.Schema(
       enum: ["Client", "Freelancer"],
       required: true,
     },
+    profile: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Profile",
+      default: null,
+    },
   },
   { timestamps: true }
 );
