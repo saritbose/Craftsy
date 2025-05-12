@@ -54,7 +54,7 @@ const ClientDashboard = () => {
                 <hr className="w-full bg-neutral-400 " />
                 <div className="my-5 mx-3 flex flex-col gap-3">
                   <Link
-                    to={"/login"}
+                    to={"/profile"}
                     className="hover:bg-orange-400 hover:text-white text-center p-2 rounded-3xl w-fit"
                   >
                     My Profile

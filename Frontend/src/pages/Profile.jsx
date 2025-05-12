@@ -3,6 +3,7 @@ import { Textarea } from "@/components/ui/textarea";
 import axios from "axios";
 import { X } from "lucide-react";
 import React, { useEffect, useState } from "react";
+import { set } from "react-hook-form";
 
 const Profile = () => {
   const [user, setUser] = useState("");
@@ -17,8 +18,6 @@ const Profile = () => {
   const role = localStorage.getItem("role");
   const token = localStorage.getItem("token");
   const backend_url = import.meta.env.VITE_BACKEND_URL;
-  let meData = user;
-  let profileData = profile;
 
   const addSkill = (e) => {
     if (e.key === "Enter" && inputValue.trim() !== "") {
@@ -67,6 +66,8 @@ const Profile = () => {
     } catch (error) {
       console.log(error);
     }
+    setEdit(!edit);
+    window.location.reload();
   };
 
   useEffect(() => {
@@ -79,7 +80,6 @@ const Profile = () => {
           }
         );
         setProfile(profile.data);
-        let profileData = profile.data;
       } catch (error) {
         console.log(error);
       }
@@ -94,7 +94,6 @@ const Profile = () => {
           headers: { Authorization: `Bearer ${token}` },
         });
         setUser(user.data);
-        let meData = user.data;
       } catch (error) {
         console.log(error);
       }
@@ -106,11 +105,11 @@ const Profile = () => {
     <div className="flex justify-center bg-orange-400 h-[calc(100vh-1px)] overflow-hidden">
       <div className="flex flex-col items-center rounded-lg border-1 border-orange-500 shadow-lg m-6 p-3 h-[94%] w-113.5 overflow-hidden font-mono bg-orange-400/80">
         <h1 className="text-4xl font-bold mt-4 mb-2">Profile Page</h1>
-        <p className="text-md ">Welcome to {meData.name} profile!</p>
+        <p className="text-md ">Welcome to {user.name} profile!</p>
         <div className="my-3 flex flex-col items-center">
           <div className="bg-black rounded-full w-15 h-15 mb-2"></div>
-          <p>{meData.name}</p>
-          <p>{meData.email}</p>
+          <p>{user.name}</p>
+          <p>{user.email}</p>
         </div>
         <div className="flex flex-col items-end">
           {role === "Freelancer" ? (
@@ -193,13 +192,25 @@ const Profile = () => {
               <>
                 <div className="flex flex-col items-center border-2 border-orange-500 w-sm p-5 my-2">
                   {/* Freelancer */}
-                  <p>Title: {profileData.title}</p>
-                  <p>About me </p>
-                  <p>{profileData.aboutMe}</p>
-                  <p>Expected hourly rate: {profileData.expectedRate}</p>
-                  <p>Experience: {profileData.experience} </p>
-                  <p>Skills </p>
-                  <p>{profileData.skills + ""}</p>
+                  {profile ? (
+                    <>
+                      <p>Title: {profile.title}</p>
+                      <p>About me </p>
+                      <p>{profile.aboutMe}</p>
+                      <p>Expected hourly rate: {profile.expectedRate}</p>
+                      <p>Experience: {profile.experience} </p>
+                      <p>Skills </p>
+                      <p>{profile.skills + ""}</p>
+                    </>
+                  ) : (
+                    <>
+                      <p>Title: </p>
+                      <p>About me </p>
+                      <p>Expected hourly rate: </p>
+                      <p>Experience: </p>
+                      <p>Skills </p>
+                    </>
+                  )}
                 </div>
                 <div
                   onClick={() => setEdit(!edit)}
@@ -210,14 +221,7 @@ const Profile = () => {
               </>
             )
           ) : (
-            <div className="flex flex-col items-center">
-              {/* Client */}
-              <p className="">Company Name </p>
-
-              <p className="">Description </p>
-              <p className="">Company Size </p>
-              <p className="">Payment Method Added </p>
-            </div>
+            <></>
           )}
         </div>
         <div className="flex flex-col items-center m-6 p-3 h-screen font-mono ">

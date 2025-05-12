@@ -48,6 +48,8 @@ export const getMyUpdatedInfo = async (req, res) => {
     const profile = await Profile.findOne({ user: req.user._id });
     res.json(profile);
   } catch (error) {
-    throw new Error(error);
+    res.json({
+      message: "Error while fetching profile",
+    });
   }
 };
