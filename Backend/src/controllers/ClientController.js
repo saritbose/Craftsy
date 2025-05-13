@@ -61,3 +61,13 @@ export const deleteJob = async (req, res) => {
     throw new Error(error);
   }
 };
+
+export const deleteApplicant = async (req, res) => {
+  try {
+    const { jobId, applicantId } = req.params;
+    await Job.findByIdAndUpdate(jobId, { $pull: { applicants: applicantId } });
+    res.json({ message: "Applicant deleted successfully" });
+  } catch (error) {
+    throw new Error(error);
+  }
+};

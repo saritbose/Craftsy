@@ -10,14 +10,25 @@ const JobPosts = ({ title, jobId, applicants }) => {
   const backend_url = import.meta.env.VITE_BACKEND_URL;
 
   const handleEdit = async () => {};
-  const handleDelete = async () => {
+  const handleDeleteJob = async () => {
     try {
-      const res = await axios.delete(
-        `${backend_url}/api/client/del-job/${jobId}`,
+      await axios.delete(`${backend_url}/api/client/del-job/${jobId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleDeleteApplicant = async (applicantId, jobId) => {
+    try {
+      await axios.delete(
+        `${backend_url}/api/client/del-applicant/${jobId}/${applicantId}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
+      window.location.reload();
     } catch (error) {
       console.log(error);
     }
@@ -31,6 +42,10 @@ const JobPosts = ({ title, jobId, applicants }) => {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
+      if (res.data === "No applicants found") {
+        setViewApplicants([]);
+        return;
+      }
       setViewApplicants(res.data);
       setOpenApplicants(!openApplicants);
     } catch (error) {
@@ -67,26 +82,34 @@ const JobPosts = ({ title, jobId, applicants }) => {
             </button>
             {openApplicants ? (
               <div className="absolute -bottom-2 left-45 w-32 h-34 bg-white border-0 rounded-md shadow-lg p-2">
-                {viewApplicants.map((applicant) => (
-                  <div
-                    onClick={() => setOpenApplicants(false)}
-                    key={applicant._id}
-                    className="flex justify-between py-0.5 text-sm overflow-y-auto
+                {Array.isArray(viewApplicants) && viewApplicants.length > 0 ? (
+                  viewApplicants.map((applicant) => (
+                    <div
+                      onClick={() => setOpenApplicants(false)}
+                      key={applicant._id}
+                      className="flex justify-between border-2 my-1 px-1 shadow-lg border-neutral-50 text-sm overflow-y-auto
                     text-orange-400 overflow-x-hidden scrollbar-hide"
-                  >
-                    <Link
-                      to={`/profile/${applicant._id}`}
-                      className="hover:text-orange-600"
                     >
-                      {/*  // Add the link to the applicant's profile */}
-                      {applicant.name}
-                    </Link>
-                    <div className="gap-1 flex">
-                      <Check className="w-4 hover:text-orange-600" />
-                      <Plus className="w-4 rotate-45 hover:text-orange-600" />
+                      <Link
+                        to={`/profile/${applicant._id}`}
+                        className="hover:text-orange-600"
+                      >
+                        {applicant.name}
+                      </Link>
+
+                      <Plus
+                        onClick={() =>
+                          handleDeleteApplicant(applicant._id, jobId)
+                        }
+                        className="w-4 rotate-45 text-red-500 hover:text-red-700 cursor-pointer"
+                      />
                     </div>
+                  ))
+                ) : (
+                  <div className="flex justify-center items-center text-center h-full w-full text-sm text-gray-500">
+                    No applications yet.
                   </div>
-                ))}
+                )}
               </div>
             ) : (
               <></>
@@ -104,7 +127,7 @@ const JobPosts = ({ title, jobId, applicants }) => {
             Edit
           </div>
           <div
-            onClick={handleDelete}
+            onClick={handleDeleteJob}
             className="text-orange-300 hover:text-orange-500 cursor-pointer"
           >
             Delete

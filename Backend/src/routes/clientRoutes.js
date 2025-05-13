@@ -3,6 +3,7 @@ import authUser from "../middleware/auth.js";
 import role from "../middleware/role.js";
 import {
   addJob,
+  deleteApplicant,
   deleteJob,
   editJob,
   getApplicants,
@@ -16,5 +17,10 @@ clientRoutes.get("/get-jobs", authUser, getJobs);
 clientRoutes.get("/get-applicants/:jobId", authUser, getApplicants);
 clientRoutes.put("/edit-job", authUser, editJob);
 clientRoutes.delete("/del-job/:jobId", authUser, deleteJob);
+clientRoutes.delete(
+  "/del-applicant/:jobId/:applicantId",
+  authUser,
+  deleteApplicant
+);
 
 export default clientRoutes;
