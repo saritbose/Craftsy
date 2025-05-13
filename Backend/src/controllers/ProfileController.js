@@ -3,7 +3,7 @@ import User from "../models/User.js";
 
 export const getMyInfo = async (req, res) => {
   try {
-    const user = await User.findById(req.user?._id).select("name email role");
+    const user = await User.findById(req.user?._id);
     res.json(user);
   } catch (error) {
     throw new Error(error);
@@ -12,7 +12,6 @@ export const getMyInfo = async (req, res) => {
 
 export const updateMyProfile = async (req, res) => {
   const { title, aboutMe, expectedRate, experience, skills } = req.body;
-  console.log(req.body);
 
   let profile = await Profile.findOne({ user: req.user._id });
   //create a new profile if it doesn't exist

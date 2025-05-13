@@ -3,7 +3,7 @@ import { Textarea } from "@/components/ui/textarea";
 import axios from "axios";
 import { X } from "lucide-react";
 import React, { useEffect, useState } from "react";
-import { set } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const [user, setUser] = useState("");
@@ -15,6 +15,7 @@ const Profile = () => {
   const [experience, setExperience] = useState("");
   const [inputValue, setInputValue] = useState("");
   const [skills, setSkills] = useState([]);
+  const navigate = useNavigate();
   const role = localStorage.getItem("role");
   const token = localStorage.getItem("token");
   const backend_url = import.meta.env.VITE_BACKEND_URL;
@@ -102,8 +103,8 @@ const Profile = () => {
   }, []);
 
   return (
-    <div className="flex justify-center bg-orange-400 h-[calc(100vh-1px)] overflow-hidden">
-      <div className="flex flex-col items-center rounded-lg border-1 border-orange-500 shadow-lg m-6 p-3 h-[94%] w-113.5 overflow-hidden font-mono bg-orange-400/80">
+    <div className="flex justify-center bg-orange-400 h-calc(100vh-1px) ">
+      <div className="flex flex-col items-center rounded-lg border-1 border-orange-500 shadow-lg m-6 p-3 h-[94%] w-113.5 font-mono bg-orange-400/80">
         <h1 className="text-4xl font-bold mt-4 mb-2">Profile Page</h1>
         <p className="text-md ">Welcome to {user.name} profile!</p>
         <div className="my-3 flex flex-col items-center">
@@ -115,7 +116,7 @@ const Profile = () => {
           {role === "Freelancer" ? (
             edit ? (
               <>
-                <div className="flex flex-col gap-3 items-stretch border-2 border-orange-500 w-sm p-5 my-2">
+                <div className="flex flex-col gap-3 border-2 items-stretch shadow-lg border-orange-500 w-sm p-5 my-2">
                   {/* Freelancer */}
                   <p className="flex gap-2 items-center">
                     Title:{" "}
@@ -130,7 +131,7 @@ const Profile = () => {
                     <Textarea
                       value={aboutMe}
                       onChange={(e) => setAboutMe(e.target.value)}
-                      className="w-full text-left"
+                      className="w-full"
                     />
                   </p>
                   <p className="flex gap-2 items-center text-nowrap">
@@ -190,17 +191,28 @@ const Profile = () => {
               </>
             ) : (
               <>
-                <div className="flex flex-col items-center border-2 border-orange-500 w-sm p-5 my-2">
+                <div className="flex flex-col items-center text-center border-2 shadow-lg border-orange-500 w-sm p-5 my-2">
                   {/* Freelancer */}
                   {profile ? (
                     <>
-                      <p>Title: {profile.title}</p>
-                      <p>About me </p>
-                      <p>{profile.aboutMe}</p>
-                      <p>Expected hourly rate: {profile.expectedRate}</p>
-                      <p>Experience: {profile.experience} </p>
-                      <p>Skills </p>
-                      <p>{profile.skills + ""}</p>
+                      <p>
+                        <span className="font-semibold">Title: </span>
+                        {profile.title}
+                      </p>
+                      <p className="font-semibold mt-2">About me </p>
+                      <p className="text-sm">{profile.aboutMe}</p>
+                      <p className="mt-2">
+                        <span className="font-semibold">
+                          Expected hourly rate:
+                        </span>
+                        {profile.expectedRate}
+                      </p>
+                      <p>
+                        <span className="font-semibold">Experience: </span>
+                        {profile.experience}
+                      </p>
+                      <p className="font-semibold mt-2">Skills </p>
+                      <p>{profile.skills + "."}</p>
                     </>
                   ) : (
                     <>
@@ -224,7 +236,7 @@ const Profile = () => {
             <></>
           )}
         </div>
-        <div className="flex flex-col items-center m-6 p-3 h-screen font-mono ">
+        <div className="flex flex-col items-center text-center text-nowrap m-6 p-3 font-mono ">
           <p className="text-md hover:text-popover">
             You can add more features in the future.
           </p>
@@ -232,6 +244,12 @@ const Profile = () => {
             Thank you for using our application!
           </p>
           <p className="text-md hover:text-popover">Have a great day!</p>
+        </div>
+        <div
+          onClick={() => navigate(-1)}
+          className="text-sm cursor-pointer hover:text-white"
+        >
+          Go Back
         </div>
       </div>
     </div>

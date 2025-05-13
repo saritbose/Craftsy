@@ -10,11 +10,10 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
+  const navigate = useNavigate();
   const backend_url = import.meta.env.VITE_BACKEND_URL;
 
   const handleSubmit = async (e) => {
-    const navigate = useNavigate();
-
     e.preventDefault();
     const formData = { name, email, password, role };
     try {
@@ -23,6 +22,7 @@ const Register = () => {
         formData
       );
       const role = res.data.role;
+      console.log(res.data);
 
       if (role === "Client") {
         navigate("/client/dashboard");

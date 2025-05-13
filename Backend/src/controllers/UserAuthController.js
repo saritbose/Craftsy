@@ -2,29 +2,34 @@ import User from "../models/User.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-const createToken = (id, role) => {
+const createToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET_TOKEN, { expiresIn: "7d" });
 };
 
 export const loginUser = async (req, res) => {
   const { email, password } = req.body;
+  if (!email || !password) {
+    return res.json({ success: false, message: "All fields are required." });
+  }
   const user = await User.findOne({ email });
   if (!user) {
     return res.json({ success: false, message: "User not found." });
   }
   try {
-    const verify = bcrypt.compare(password, user.password);
-    if (verify) {
-      const token = createToken(user._id);
-      console.log("Successfully logged in.");
-
-      return res.json({
-        success: true,
-        message: "User logged in.",
-        token,
-        role: user.role,
-      });
+    const verify = await bcrypt.compare(password, user.password);
+    if (!verify) {
+      return res.json({ success: false, message: "Invalid password." });
     }
+
+    const token = createToken(user._id);
+    console.log("Successfully logged in.");
+
+    return res.json({
+      success: true,
+      message: "User logged in.",
+      token,
+      role: user.role,
+    });
   } catch (error) {
     return res.json({ success: false, message: error.message });
   }
@@ -50,9 +55,9 @@ export const registerUser = async (req, res) => {
       success: true,
       message: "User registered.",
       token,
-      role: user.role,
+      role: newUser.role,
     });
   } catch (error) {
-    return res.json({ success: false, message: error.message });
+    return res.json({ success: false, message: "Registered Failed" });
   }
 };
