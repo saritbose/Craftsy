@@ -103,10 +103,18 @@ const Profile = () => {
   }, []);
 
   return (
-    <div className="flex justify-center bg-orange-400 h-calc(100vh-1px) ">
-      <div className="flex flex-col items-center rounded-lg border-1 border-orange-500 shadow-lg m-6 p-3 h-[94%] w-113.5 font-mono bg-orange-400/80">
+    <div
+      className={`flex justify-center bg-orange-400 ${
+        role === "Freelancer" ? "h-full" : "h-screen"
+      }`}
+    >
+      <div
+        className={`flex flex-col items-center rounded-lg border-1 border-orange-500 shadow-lg m-6 p-3 w-113.5 font-mono bg-orange-400/80 ${
+          role === "Freelancer" ? "h-full" : "h-calc(100vh - 2rem)"
+        }`}
+      >
         <h1 className="text-4xl font-bold mt-4 mb-2">Profile Page</h1>
-        <p className="text-md ">Welcome to {user.name} profile!</p>
+        <p className="text-md ">Welcome to {user.name}'s profile!</p>
         <div className="my-3 flex flex-col items-center">
           <div className="bg-black rounded-full w-15 h-15 mb-2"></div>
           <p>{user.name}</p>
