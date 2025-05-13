@@ -1,5 +1,6 @@
 import JobPosts from "@/Component/JobPosts";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import axios from "axios";
 import {
   AlignJustify,
@@ -16,6 +17,8 @@ import { Link, useNavigate } from "react-router-dom";
 const ClientDashboard = () => {
   const [nav, setNav] = useState(false);
   const [jobs, setJobs] = useState([]);
+  const [search, setSearch] = useState(false);
+  const [filter, setFilter] = useState("");
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const backend_url = import.meta.env.VITE_BACKEND_URL;
@@ -124,13 +127,27 @@ const ClientDashboard = () => {
           <div className="hover:text-orange-300">Messages</div>
         </div>
         <div className="flex items-center gap-5 mx-2">
-          <Search className="mr-2" />
+          <div className="relative mt-1">
+            <Search
+              values={search}
+              onClick={() => setSearch(!search)}
+              className={search ? "absolute right-2 top-1" : "block"}
+            />
+            {search && (
+              <Input
+                className="w-60 rounded-full pl-5"
+                placeholder="Find your postings..."
+                value={filter}
+                onChange={(e) => setFilter(e.target.value)}
+              />
+            )}
+          </div>
           <CircleHelp className="hidden md:block" />
           <Bell className="hidden md:block" />
           <div className="group relative">
             <Button className="rounded-full h-8 hidden md:block lg:hidden" />
             <div className="hidden group-hover:flex flex-col absolute right-0 top-8 bg-white mt-1 py-2 px-2 w-32 text-sm border shadow-md">
-              <Link to={"/login"} className="text-center p-2  w-fit">
+              <Link to={"/profile"} className="text-center p-2  w-fit">
                 My Profile
               </Link>
               <div
@@ -151,7 +168,7 @@ const ClientDashboard = () => {
           <div className="m-5">Invoices</div>
           <div className="my-5 mx-3 flex flex-col gap-3">
             <Link
-              to={"/login"}
+              to={"/profile"}
               className="hover:bg-orange-400 hover:text-white text-center p-2 rounded-3xl w-fit"
             >
               My Profile
@@ -173,9 +190,18 @@ const ClientDashboard = () => {
             </Button>
           </div>
           <div className="my-5">
-            {jobs.map((job) => (
-              <JobPosts key={job._id} title={job.title} jobId={job._id} />
-            ))}
+            {jobs
+              .filter((job) =>
+                job.title.toLowerCase().includes(filter.toLowerCase())
+              )
+              .map((job) => (
+                <JobPosts
+                  key={job._id}
+                  title={job.title}
+                  jobId={job._id}
+                  applicants={job.applicants}
+                />
+              ))}
           </div>
         </div>
       </div>

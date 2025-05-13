@@ -34,7 +34,7 @@ export default function App() {
       />
       <Route path="/client/post-job" element={<PostJob />} /> // Client can post
       a job
-      <Route path="/freelancer/job/:id" element={<JobDetails />} /> //
+      <Route path="/freelancer/job/:id" element={<JobDetails />} />
       Freelancer can view job details
       <Route path="/profile" element={<Profile />} />
       <Route path="/*" element={<NotFound />} />

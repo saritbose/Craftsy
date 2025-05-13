@@ -1,7 +1,7 @@
 import axios from "axios";
 import React from "react";
 
-const JobPosts = ({ title, jobId }) => {
+const JobPosts = ({ title, jobId, applicants }) => {
   const token = localStorage.getItem("token");
   const backend_url = import.meta.env.VITE_BACKEND_URL;
 
@@ -28,7 +28,11 @@ const JobPosts = ({ title, jobId }) => {
         Open/In Progress/Completed
       </p>
       <p className="text-gray-500 mt-1 mb-1.5">
-        Proposals:<span className="text-neutral-500"> (Num) Applicants</span>
+        Proposals:
+        <span className="text-neutral-500">
+          {" "}
+          {applicants.length} Applicants
+        </span>
       </p>
       <div className="hidden text-xs w-[95%] ml-5 group-hover:flex justify-between font-light">
         <div className="flex justify-between gap-2">

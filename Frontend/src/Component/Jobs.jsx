@@ -18,7 +18,6 @@ const Jobs = ({
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const backend_url = import.meta.env.VITE_BACKEND_URL;
-  const applied = applicants.length;
 
   const handleJobDetail = () => {
     navigate(`/freelancer/job/${jobId}`, {
@@ -86,7 +85,7 @@ const Jobs = ({
       </p>
       <p className="text-gray-500 mt-1 mb-4">
         Proposals:
-        <span className="text-neutral-500"> {applied} Applicants</span>
+        <span className="text-neutral-500">{applicants.length} Applicants</span>
       </p>
       <button
         onClick={handleApply}

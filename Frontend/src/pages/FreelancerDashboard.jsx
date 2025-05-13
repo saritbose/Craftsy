@@ -1,5 +1,6 @@
 import Jobs from "@/Component/Jobs";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import axios from "axios";
 import {
@@ -17,6 +18,8 @@ import { Link, useNavigate } from "react-router-dom";
 const FreelancerDashboard = () => {
   const [nav, setNav] = useState(false);
   const [jobs, setJobs] = useState([]);
+  const [search, setSearch] = useState(false);
+  const [searchText, setSearchText] = useState("");
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const backend_url = import.meta.env.VITE_BACKEND_URL;
@@ -135,7 +138,20 @@ const FreelancerDashboard = () => {
           <div className="hover:text-orange-300">Messages</div>
         </div>
         <div className="flex items-center gap-5 mx-2">
-          <Search className="mr-2" />
+          <div className="relative mt-1">
+            <Search
+              onClick={() => setSearch(!search)}
+              className={search ? "absolute right-2 top-1" : "block"}
+            />
+            {search && (
+              <Input
+                placeholder="Search for jobs..."
+                value={searchText}
+                onChange={(e) => setSearchText(e.target.value)}
+                className="w-60 h-9 rounded-full pl-5"
+              />
+            )}
+          </div>
           <CircleHelp className="hidden md:block" />
           <Bell className="hidden md:block" />
           <div className="group relative">
@@ -156,7 +172,7 @@ const FreelancerDashboard = () => {
       </div>
       <div className=" relative lg:flex items-baseline justify-between h-screen overflow-y-auto scrollbar-hide">
         {/* SideBar */}
-        <div className="hidden lg:block border-r-2 h-screen w-[15%] fixed top-15 left-0">
+        <div className="hidden lg:block border-r-2 h-screen w-[20%] fixed top-15 left-0">
           <div className="m-5">Browse Jobs</div>
           <div className="m-5">Your Applications</div>
           <div className="m-5">Ongoing Work</div>
@@ -177,7 +193,7 @@ const FreelancerDashboard = () => {
           </div>
         </div>
         {/* Job boards */}
-        <div className="mx-2 mt-15 lg:mt-0 flex-1 z-10 lg:absolute top-10 left-56 right-71 scrollbar-hide">
+        <div className=" mt-15 lg:mt-0 flex-1 z-10 lg:absolute top-10 left-56 right-71 scrollbar-hide">
           <p className="font-medium my-5 text-xl">Jobs you might like</p>
           <Tabs defaultValue="bestmatches">
             <TabsList className="bg-white">
@@ -193,21 +209,25 @@ const FreelancerDashboard = () => {
               <hr className="w-vw mt-2" />
               <div>
                 {/* Jobs */}
-                {jobs.map((job) => (
-                  <Jobs
-                    key={job._id}
-                    jobId={job._id}
-                    date={job.createdAt}
-                    skills={job.skills}
-                    title={job.title}
-                    description={job.description}
-                    structure={job.pricing.structure}
-                    budget={job.pricing.budget}
-                    experience={job.experience}
-                    location={job.location}
-                    applicants={job.applicants}
-                  />
-                ))}
+                {jobs
+                  .filter((job) =>
+                    job.title.toLowerCase().includes(searchText.toLowerCase())
+                  )
+                  .map((job) => (
+                    <Jobs
+                      key={job._id}
+                      jobId={job._id}
+                      date={job.createdAt}
+                      skills={job.skills}
+                      title={job.title}
+                      description={job.description}
+                      structure={job.pricing.structure}
+                      budget={job.pricing.budget}
+                      experience={job.experience}
+                      location={job.location}
+                      applicants={job.applicants}
+                    />
+                  ))}
               </div>
             </TabsContent>
             <TabsContent value="mostrecent">
@@ -218,21 +238,26 @@ const FreelancerDashboard = () => {
               <hr className="w-1vw mt-2" />
               <div>
                 {/* Jobs */}
-                {jobs.map((job) => (
-                  <Jobs
-                    key={job._id}
-                    jobId={job._id}
-                    date={job.createdAt}
-                    skills={job.skills}
-                    title={job.title}
-                    description={job.description}
-                    structure={job.pricing.structure}
-                    budget={job.pricing.budget}
-                    experience={job.experience}
-                    location={job.location}
-                    applicants={job.applicants}
-                  />
-                ))}
+                {[...jobs]
+                  .filter((job) =>
+                    job.title.toLowerCase().includes(searchText.toLowerCase())
+                  )
+                  .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+                  .map((job) => (
+                    <Jobs
+                      key={job._id}
+                      jobId={job._id}
+                      date={job.createdAt}
+                      skills={job.skills}
+                      title={job.title}
+                      description={job.description}
+                      structure={job.pricing.structure}
+                      budget={job.pricing.budget}
+                      experience={job.experience}
+                      location={job.location}
+                      applicants={job.applicants}
+                    />
+                  ))}
               </div>
             </TabsContent>
             <TabsContent value="savedjobs" className="text-gray-600 my-3">
@@ -241,7 +266,7 @@ const FreelancerDashboard = () => {
           </Tabs>
         </div>
         {/* Filters */}
-        <div className="hidden lg:block border-l-2 h-screen w-[20%] fixed top-15 right-0">
+        <div className="hidden lg:block border-l-2 h-screen w-[25%] fixed top-15 right-0">
           <div className="m-5">Filters</div>
           <div className="m-5">...</div>
           <div className="m-5">...</div>
