@@ -52,3 +52,16 @@ export const getMyUpdatedInfo = async (req, res) => {
     });
   }
 };
+
+export const getUserProfile = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const user = await User.findOne({ _id: id }).populate("profile");
+    if (!user) {
+      return res.json({ message: "User not found" });
+    }
+    res.json(user);
+  } catch (error) {
+    return res.json({ message: "Error while fetching user" });
+  }
+};

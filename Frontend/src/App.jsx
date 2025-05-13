@@ -9,6 +9,7 @@ import PostJob from "./pages/PostAJob";
 import ProtectedRoutes from "./Component/ProtectedRoutes";
 import JobDetails from "./pages/JobDetails";
 import Profile from "./pages/Profile";
+import PublicProfile from "./pages/PublicProfile";
 
 export default function App() {
   return (
@@ -37,6 +38,7 @@ export default function App() {
       <Route path="/freelancer/job/:id" element={<JobDetails />} />
       Freelancer can view job details
       <Route path="/profile" element={<Profile />} />
+      <Route path="/profile/:id" element={<PublicProfile />} />
       <Route path="/*" element={<NotFound />} />
     </Routes>
   );

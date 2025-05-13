@@ -35,6 +35,22 @@ export const getJobs = async (req, res) => {
   }
 };
 
+export const getApplicants = async (req, res) => {
+  const jobId = req.params.jobId;
+  try {
+    const job = await Job.findById(jobId).populate("applicants");
+    if (!job) {
+      return res.json({ message: "Job not found" });
+    }
+    if (job.applicants.length === 0) {
+      return res.json({ message: "No applicants found" });
+    }
+    res.json(job.applicants);
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
 // Edit job function is not implemented yet
 export const editJob = async () => {};
 
