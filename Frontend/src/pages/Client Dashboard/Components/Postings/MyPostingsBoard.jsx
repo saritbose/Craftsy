@@ -9,6 +9,17 @@ const MyPostingsBoard = ({ searchText }) => {
   const token = localStorage.getItem("token");
   const backend_url = import.meta.env.VITE_BACKEND_URL;
 
+  const handleDelete = async (jobId) => {
+    try {
+      await axios.delete(`${backend_url}/api/client/del-job/${jobId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setJobs((prev) => prev.filter((job) => job._id !== jobId));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     const fetchJobs = async () => {
       try {
@@ -42,6 +53,7 @@ const MyPostingsBoard = ({ searchText }) => {
               title={job.title}
               jobId={job._id}
               applicants={job.applicants}
+              onDelete={handleDelete}
             />
           ))}
       </div>

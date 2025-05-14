@@ -81,8 +81,6 @@ export const editJob = async (req, res) => {
     if (!updatedJob) {
       return res.json({ message: "Job not found" });
     }
-    console.log(updatedJob);
-
     res.json(updatedJob);
   } catch (error) {
     throw new Error(error);
@@ -90,8 +88,10 @@ export const editJob = async (req, res) => {
 };
 
 export const deleteJob = async (req, res) => {
+  const jobId = req.params.jobId;
   try {
-    await Job.findByIdAndDelete(req.params.jobId);
+    await Job.findByIdAndDelete(jobId);
+    res.json({ message: "Job deleted successfully" });
   } catch (error) {
     throw new Error(error);
   }

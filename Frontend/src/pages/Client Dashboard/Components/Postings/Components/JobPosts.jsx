@@ -3,7 +3,7 @@ import { Check, Plus } from "lucide-react";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-const JobPosts = ({ title, jobId, applicants }) => {
+const JobPosts = ({ title, jobId, applicants, onDelete }) => {
   const [openApplicants, setOpenApplicants] = useState(false);
   const [viewApplicants, setViewApplicants] = useState([]);
   const navigate = useNavigate();
@@ -11,14 +11,7 @@ const JobPosts = ({ title, jobId, applicants }) => {
   const backend_url = import.meta.env.VITE_BACKEND_URL;
 
   const handleDeleteJob = async () => {
-    try {
-      await axios.delete(`${backend_url}/api/client/del-job/${jobId}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      window.location.reload();
-    } catch (error) {
-      console.log(error);
-    }
+    onDelete(jobId);
   };
 
   const handleSelectedApplicant = async (applicantId, jobId) => {

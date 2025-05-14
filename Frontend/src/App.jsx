@@ -1,15 +1,15 @@
 import { Route, Routes } from "react-router-dom";
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import FreelancerDashboard from "./pages/FreelancerDashboard";
-import ClientDashboard from "./pages/ClientDashboard";
-import NotFound from "./pages/NotFound";
-import PostJob from "./pages/PostAJob";
+import Home from "./pages/Home/Home";
+import Login from "./pages/Users/Login";
+import Register from "./pages/Users/Register";
+import FreelancerDashboard from "./pages/Freelancer Dashboard/FreelancerDashboard";
 import ProtectedRoutes from "./Component/ProtectedRoutes";
 import JobDetails from "./pages/JobDetails";
-import Profile from "./pages/Profile";
-import PublicProfile from "./pages/PublicProfile";
+import ClientDashboard from "./pages/Client Dashboard/ClientDashboard";
+import Profile from "./pages/Users/Profiles/Profile";
+import PublicProfile from "./pages/Users/Profiles/PublicProfile";
+import NotFound from "./pages/Error Page/NotFound";
+import PostAJob from "./pages/PostAJob";
 
 export default function App() {
   return (
@@ -45,7 +45,7 @@ export default function App() {
         path="/client/post-job"
         element={
           <ProtectedRoutes requiredRole="Client">
-            <PostJob />
+            <PostAJob />
           </ProtectedRoutes>
         }
       />
@@ -53,7 +53,7 @@ export default function App() {
         path="/client/edit-job/:id"
         element={
           <ProtectedRoutes requiredRole="Client">
-            <PostJob />
+            <PostAJob />
           </ProtectedRoutes>
         }
       />

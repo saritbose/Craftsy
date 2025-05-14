@@ -171,10 +171,20 @@ const ClientDashboard = () => {
       </div>
       <div className=" relative lg:flex items-baseline justify-between h-screen overflow-y-auto scrollbar-hide">
         {/* SideBar */}
-        <div className="hidden lg:block border-r-2 h-screen w-[20%] fixed top-15 left-0">
-          <div className="m-5">My Postings</div>
-          <div className="m-5">Ongoing Projects</div>
-          <div className="m-5">Invoices</div>
+        <div className="hidden lg:block border-r-2 h-screen w-[15%] fixed top-15 left-0">
+          <div className="m-5">
+            <button onClick={() => setCurrentTab("myPostings")}>
+              My Postings
+            </button>
+          </div>
+          <div className="m-5">
+            <button onClick={() => setCurrentTab("ongoingProjects")}>
+              Ongoing Projects
+            </button>
+          </div>
+          <div className="m-5">
+            <button onClick={() => setCurrentTab("invoices")}>Invoices</button>
+          </div>
           <div className="my-5 mx-3 flex flex-col gap-3">
             <Link
               to={"/profile"}

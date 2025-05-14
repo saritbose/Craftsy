@@ -179,7 +179,7 @@ const FreelancerDashboard = () => {
       </div>
       <div className=" relative lg:flex items-baseline justify-between h-screen overflow-y-auto scrollbar-hide">
         {/* SideBar */}
-        <div className="hidden lg:block border-r-2 h-screen w-[20%] fixed top-15 left-0">
+        <div className="hidden lg:block border-r-2 h-screen w-[14%] fixed top-15 left-0">
           <div className="m-5">
             <button onClick={() => setCurrentTab("jobBoard")}>
               Browse Jobs
@@ -216,7 +216,7 @@ const FreelancerDashboard = () => {
         {/* Job boards */}
         {renderTab()}
         {/* Filters */}
-        <div className="hidden lg:block border-l-2 h-screen w-[25%] fixed top-15 right-0">
+        <div className="hidden lg:block border-l-2 h-screen w-[18%] fixed top-15 right-0">
           <div className="m-5">Filters</div>
           <div className="flex items-center justify-center ">
             <p className="font-extralight font-mono text-gray-700 text-center my-5 text-xl">
