@@ -10,6 +10,7 @@ const JobPosts = ({ title, jobId, applicants }) => {
   const backend_url = import.meta.env.VITE_BACKEND_URL;
 
   const handleEditJob = async () => {};
+
   const handleDeleteJob = async () => {
     try {
       await axios.delete(`${backend_url}/api/client/del-job/${jobId}`, {
