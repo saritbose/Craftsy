@@ -17,14 +17,14 @@ import { Link, useNavigate } from "react-router-dom";
 const ClientDashboard = () => {
   const [nav, setNav] = useState(false);
   const [search, setSearch] = useState(false);
-  const [filter, setFilter] = useState("");
+  const [searchText, setSearchText] = useState("");
   const [currentTab, setCurrentTab] = useState("myPostings");
   const navigate = useNavigate();
 
   const renderTab = () => {
     switch (currentTab) {
       case "myPostings":
-        return <MyPostingsBoard filter={filter} />;
+        return <MyPostingsBoard searchText={searchText} />;
       case "ongoingProjects":
         return <ExtraTabs />;
       case "invoices":
@@ -146,8 +146,8 @@ const ClientDashboard = () => {
               <Input
                 className="w-60 rounded-full pl-5"
                 placeholder="Find your postings..."
-                value={filter}
-                onChange={(e) => setFilter(e.target.value)}
+                value={searchText}
+                onChange={(e) => setSearchText(e.target.value)}
               />
             )}
           </div>

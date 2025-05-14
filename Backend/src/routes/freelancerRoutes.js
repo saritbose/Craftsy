@@ -9,8 +9,10 @@ import {
 
 const freelancerRoutes = Router();
 
-freelancerRoutes.get("/get-jobs", authUser, getJobs);
-freelancerRoutes.post("/apply-to-job/:jobId", authUser, addApplicant);
-freelancerRoutes.get("/me", authUser, getMyInfo);
+freelancerRoutes.use(authUser, role("Freelancer"));
+
+freelancerRoutes.get("/get-jobs", getJobs);
+freelancerRoutes.post("/apply-to-job/:jobId", addApplicant);
+freelancerRoutes.get("/me", getMyInfo);
 
 export default freelancerRoutes;

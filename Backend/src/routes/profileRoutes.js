@@ -9,9 +9,11 @@ import {
 
 const profileRoutes = Router();
 
-profileRoutes.get("/me", authUser, getMyInfo);
-profileRoutes.post("/myprofile", authUser, updateMyProfile);
-profileRoutes.get("/updatedinfo", authUser, getMyUpdatedInfo);
-profileRoutes.get("/userprofile/:id", authUser, getUserProfile);
+profileRoutes.use(authUser);
+
+profileRoutes.get("/me", getMyInfo);
+profileRoutes.post("/myprofile", updateMyProfile);
+profileRoutes.get("/updatedinfo", getMyUpdatedInfo);
+profileRoutes.get("/userprofile/:id", getUserProfile);
 
 export default profileRoutes;

@@ -26,6 +26,14 @@ export default function App() {
         }
       />
       <Route
+        path="/freelancer/job/:id"
+        element={
+          <ProtectedRoutes requiredRole="Freelancer">
+            <JobDetails />
+          </ProtectedRoutes>
+        }
+      />
+      <Route
         path="/client/dashboard"
         element={
           <ProtectedRoutes requiredRole="Client">
@@ -33,10 +41,22 @@ export default function App() {
           </ProtectedRoutes>
         }
       />
-      <Route path="/client/post-job" element={<PostJob />} /> // Client can post
-      a job
-      <Route path="/freelancer/job/:id" element={<JobDetails />} />
-      Freelancer can view job details
+      <Route
+        path="/client/post-job"
+        element={
+          <ProtectedRoutes requiredRole="Client">
+            <PostJob />
+          </ProtectedRoutes>
+        }
+      />
+      <Route
+        path="/client/edit-job/:id"
+        element={
+          <ProtectedRoutes requiredRole="Client">
+            <PostJob />
+          </ProtectedRoutes>
+        }
+      />
       <Route path="/profile" element={<Profile />} />
       <Route path="/profile/:id" element={<PublicProfile />} />
       <Route path="/*" element={<NotFound />} />

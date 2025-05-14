@@ -2,8 +2,10 @@ import User from "../models/User.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-const createToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET_TOKEN, { expiresIn: "7d" });
+const createToken = (id, role) => {
+  return jwt.sign({ id, role }, process.env.JWT_SECRET_TOKEN, {
+    expiresIn: "7d",
+  });
 };
 
 export const loginUser = async (req, res) => {
@@ -21,7 +23,7 @@ export const loginUser = async (req, res) => {
       return res.json({ success: false, message: "Invalid password." });
     }
 
-    const token = createToken(user._id);
+    const token = createToken(user._id, user.role);
     console.log("Successfully logged in.");
 
     return res.json({
@@ -50,7 +52,7 @@ export const registerUser = async (req, res) => {
       role: role,
     });
     await newUser.save();
-    const token = createToken(newUser._id);
+    const token = createToken(newUser._id, newUser.role);
     return res.json({
       success: true,
       message: "User registered.",

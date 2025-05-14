@@ -8,25 +8,21 @@ import {
   deleteJob,
   editJob,
   getApplicants,
+  getJob,
   getJobs,
 } from "../controllers/ClientController.js";
 
 const clientRoutes = Router();
 
-clientRoutes.post("/post-job", authUser, addJob);
-clientRoutes.get("/get-jobs", authUser, getJobs);
-clientRoutes.get("/get-applicants/:jobId", authUser, getApplicants);
-clientRoutes.put("/edit-job", authUser, editJob);
-clientRoutes.delete("/del-job/:jobId", authUser, deleteJob);
-clientRoutes.put(
-  "/del-applicant/:jobId/:applicantId",
-  authUser,
-  deleteApplicant
-);
-clientRoutes.put(
-  "/accept-applicant/:jobId/:applicantId",
-  authUser,
-  acceptApplicant
-);
+clientRoutes.use(authUser, role("Client"));
+
+clientRoutes.post("/post-job", addJob);
+clientRoutes.get("/get-jobs", getJobs);
+clientRoutes.get("/get-job/:id", getJob);
+clientRoutes.get("/get-applicants/:jobId", getApplicants);
+clientRoutes.put("/edit-job/:id", editJob);
+clientRoutes.delete("/del-job/:jobId", deleteJob);
+clientRoutes.put("/del-applicant/:jobId/:applicantId", deleteApplicant);
+clientRoutes.put("/accept-applicant/:jobId/:applicantId", acceptApplicant);
 
 export default clientRoutes;

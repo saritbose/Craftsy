@@ -4,9 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-const MyPostingsBoard = ({ filter }) => {
+const MyPostingsBoard = ({ searchText }) => {
   const [jobs, setJobs] = useState([]);
-
   const token = localStorage.getItem("token");
   const backend_url = import.meta.env.VITE_BACKEND_URL;
 
@@ -35,7 +34,7 @@ const MyPostingsBoard = ({ filter }) => {
       <div className="my-5">
         {jobs
           .filter((job) =>
-            job.title.toLowerCase().includes(filter.toLowerCase())
+            job.title.toLowerCase().includes(searchText.toLowerCase())
           )
           .map((job) => (
             <JobPosts

@@ -1,15 +1,14 @@
 import axios from "axios";
 import { Check, Plus } from "lucide-react";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const JobPosts = ({ title, jobId, applicants }) => {
   const [openApplicants, setOpenApplicants] = useState(false);
   const [viewApplicants, setViewApplicants] = useState([]);
+  const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const backend_url = import.meta.env.VITE_BACKEND_URL;
-
-  const handleEditJob = async () => {};
 
   const handleDeleteJob = async () => {
     try {
@@ -146,7 +145,7 @@ const JobPosts = ({ title, jobId, applicants }) => {
         </div>
         <div className="flex justify-between gap-2">
           <div
-            onClick={handleEditJob}
+            onClick={() => navigate(`/client/edit-job/${jobId}`)}
             className="text-orange-300 hover:text-orange-500 cursor-pointer"
           >
             Edit

@@ -10,8 +10,8 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import axios from "axios";
 import { Box, ChevronLeft, X } from "lucide-react";
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import countries from "world-countries";
 
 const PostAJob = () => {
@@ -23,10 +23,11 @@ const PostAJob = () => {
   const [skills, setSkills] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [location, setLocation] = useState("");
-
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const backend_url = import.meta.env.VITE_BACKEND_URL;
+  const { id } = useParams();
+  const isEditMode = Boolean(id);
 
   // Fetching country data from the world-countries package
   const countryOptions = countries.map((country) => ({
@@ -57,20 +58,49 @@ const PostAJob = () => {
       skills,
       location,
     };
+
     try {
-      const res = await axios.post(
-        `${backend_url}/api/client/post-job`,
-        jobData,
-        {
+      if (isEditMode) {
+        await axios.put(`${backend_url}/api/client/edit-job/${id}`, jobData, {
           headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      console.log(res.data);
+        });
+      } else {
+        await axios.post(`${backend_url}/api/client/post-job`, jobData, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+      }
     } catch (error) {
-      console.log("Error posting job:", error);
+      console.log("Error posting job", error);
     }
     navigate(-1);
   };
+
+  useEffect(() => {
+    if (isEditMode) {
+      const fetchOldJobData = async () => {
+        try {
+          const res = await axios.get(
+            `${backend_url}/api/client/get-job/${id}`,
+            {
+              headers: { Authorization: `Bearer ${token}` },
+            }
+          );
+          setTitle(res.data.title);
+          setDescription(res.data.description);
+          setBudget(res.data.pricing.budget);
+          setStructure(res.data.pricing.structure);
+          setLevel(res.data.experience);
+          setSkills(res.data.skills);
+          setLocation(res.data.location);
+
+          console.log(res.data);
+        } catch (error) {
+          console.log("Error fetching job details", error);
+        }
+      };
+      fetchOldJobData();
+    }
+  }, [id]);
 
   return (
     <div className="bg-orange-400">
@@ -128,7 +158,10 @@ const PostAJob = () => {
                   placeholder="Budget"
                   className="rounded-r-none w-auto"
                 />
-                <Select onValueChange={(e) => setStructure(e)}>
+                <Select
+                  value={structure}
+                  onValueChange={(e) => setStructure(e)}
+                >
                   <SelectTrigger className="w-lg border-l rounded-l-none">
                     <SelectValue placeholder="Structure" />
                   </SelectTrigger>
@@ -145,7 +178,7 @@ const PostAJob = () => {
               <p className="text-white text-left ml-2 mb-1 text-sm font-mono">
                 Experience Level
               </p>
-              <Select onValueChange={(e) => setLevel(e)}>
+              <Select value={level} onValueChange={(e) => setLevel(e)}>
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Level" />
                 </SelectTrigger>
@@ -190,7 +223,7 @@ const PostAJob = () => {
               <p className="text-white text-left ml-2 mb-1 text-sm font-mono">
                 Location
               </p>
-              <Select onValueChange={(e) => setLocation(e)}>
+              <Select value={location} onValueChange={(e) => setLocation(e)}>
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Country" />
                 </SelectTrigger>
@@ -210,7 +243,7 @@ const PostAJob = () => {
             onClick={handleSubmit}
             className="bg-orange-400 w-full rounded-lg py-5 mb-5 shadow-md hover:bg-orange-600"
           >
-            POST
+            {isEditMode ? "SAVE" : "POST"}
           </Button>
         </div>
       </div>

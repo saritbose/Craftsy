@@ -35,6 +35,16 @@ export const getJobs = async (req, res) => {
   }
 };
 
+export const getJob = async (req, res) => {
+  const id = req.params.id;
+  try {
+    const job = await Job.findById(id);
+    res.json(job);
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
 export const getApplicants = async (req, res) => {
   const jobId = req.params.jobId;
   try {
@@ -51,8 +61,33 @@ export const getApplicants = async (req, res) => {
   }
 };
 
-// Edit job function is not implemented yet
-export const editJob = async () => {};
+export const editJob = async (req, res) => {
+  const id = req.params.id;
+  const updateData = {
+    ...req.body,
+    pricing: {
+      structure: req.body.structure,
+      budget: req.body.budget,
+    },
+    experience: req.body.level,
+  };
+  delete updateData.structure;
+  delete updateData.budget;
+  delete updateData.level;
+  try {
+    const updatedJob = await Job.findByIdAndUpdate(id, updateData, {
+      new: true,
+    });
+    if (!updatedJob) {
+      return res.json({ message: "Job not found" });
+    }
+    console.log(updatedJob);
+
+    res.json(updatedJob);
+  } catch (error) {
+    throw new Error(error);
+  }
+};
 
 export const deleteJob = async (req, res) => {
   try {
