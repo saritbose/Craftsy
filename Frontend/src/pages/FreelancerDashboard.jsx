@@ -1,4 +1,4 @@
-import ExtraFreelancerTabs from "@/Component/ExtraFreelancerTabs";
+import ExtraTabs from "@/Component/ExtraTabs";
 import JobBoard from "@/Component/JobBoard";
 import YourApplications from "@/Component/YourApplications";
 import { Button } from "@/components/ui/button";
@@ -29,9 +29,9 @@ const FreelancerDashboard = () => {
       case "applications":
         return <YourApplications searchText={searchText} />;
       case "ongoingWork":
-        return <ExtraFreelancerTabs />;
+        return <ExtraTabs />;
       case "earnings":
-        return <ExtraFreelancerTabs />;
+        return <ExtraTabs />;
       default:
         return <></>;
     }

@@ -1,6 +1,6 @@
 import React from "react";
 
-const ExtraFreelancerTabs = () => {
+const ExtraTabs = () => {
   return (
     <div className=" mt-15 lg:mt-0 flex-1 z-10 lg:absolute top-10 left-56 right-71 scrollbar-hide text-wrap">
       <div className="flex items-center justify-center mt-50">
@@ -12,4 +12,4 @@ const ExtraFreelancerTabs = () => {
   );
 };
 
-export default ExtraFreelancerTabs;
+export default ExtraTabs;

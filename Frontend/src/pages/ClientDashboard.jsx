@@ -1,7 +1,7 @@
-import JobPosts from "@/Component/JobPosts";
+import ExtraTabs from "@/Component/ExtraTabs";
+import MyPostingsBoard from "@/Component/MyPostingsBoard";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import axios from "axios";
 import {
   AlignJustify,
   Bell,
@@ -11,31 +11,28 @@ import {
   Search,
   X,
 } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 const ClientDashboard = () => {
   const [nav, setNav] = useState(false);
-  const [jobs, setJobs] = useState([]);
   const [search, setSearch] = useState(false);
   const [filter, setFilter] = useState("");
+  const [currentTab, setCurrentTab] = useState("myPostings");
   const navigate = useNavigate();
-  const token = localStorage.getItem("token");
-  const backend_url = import.meta.env.VITE_BACKEND_URL;
 
-  useEffect(() => {
-    const fetchJobs = async () => {
-      try {
-        const res = await axios.get(`${backend_url}/api/client/get-jobs`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        setJobs(res.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchJobs();
-  }, []);
+  const renderTab = () => {
+    switch (currentTab) {
+      case "myPostings":
+        return <MyPostingsBoard filter={filter} />;
+      case "ongoingProjects":
+        return <ExtraTabs />;
+      case "invoices":
+        return <ExtraTabs />;
+      default:
+        return <></>;
+    }
+  };
 
   const logout = () => {
     navigate("/");
@@ -51,9 +48,21 @@ const ClientDashboard = () => {
             <>
               <X className="sm:hidden m-2" />
               <div className="fixed top-14 left-0 bg-white w-[50%] border-2 shadow-md">
-                <div className="m-5">My Postings</div>
-                <div className="m-5">Ongoing Projects</div>
-                <div className="m-5">Invoices</div>
+                <div className="m-5">
+                  <button onClick={() => setCurrentTab("myPostings")}>
+                    My Postings
+                  </button>
+                </div>
+                <div className="m-5">
+                  <button onClick={() => setCurrentTab("ongoingProjects")}>
+                    Ongoing Projects
+                  </button>
+                </div>
+                <div className="m-5">
+                  <button onClick={() => setCurrentTab("invoices")}>
+                    Invoices
+                  </button>
+                </div>
                 <hr className="w-full bg-neutral-400 " />
                 <div className="my-5 mx-3 flex flex-col gap-3">
                   <Link
@@ -162,7 +171,7 @@ const ClientDashboard = () => {
       </div>
       <div className=" relative lg:flex items-baseline justify-between h-screen overflow-y-auto scrollbar-hide">
         {/* SideBar */}
-        <div className="hidden lg:block border-r-2 h-screen w-[15%] fixed top-15 left-0">
+        <div className="hidden lg:block border-r-2 h-screen w-[20%] fixed top-15 left-0">
           <div className="m-5">My Postings</div>
           <div className="m-5">Ongoing Projects</div>
           <div className="m-5">Invoices</div>
@@ -182,28 +191,7 @@ const ClientDashboard = () => {
           </div>
         </div>
         {/* Client boards */}
-        <div className="mx-2 mt-15 lg:mt-0 flex-1 z-10 lg:absolute top-10 left-43 lg:left-58 right-0 scrollbar-hide">
-          <div className="flex justify-between items-baseline">
-            <p className="font-medium lg:my-5 text-2xl">My Posted Jobs</p>
-            <Button className="rounded-xl hover:bg-orange-400 bg-orange-500 shadow-lg">
-              <Link to={"/client/post-job"}>Post a Job</Link>
-            </Button>
-          </div>
-          <div className="my-5">
-            {jobs
-              .filter((job) =>
-                job.title.toLowerCase().includes(filter.toLowerCase())
-              )
-              .map((job) => (
-                <JobPosts
-                  key={job._id}
-                  title={job.title}
-                  jobId={job._id}
-                  applicants={job.applicants}
-                />
-              ))}
-          </div>
-        </div>
+        {renderTab()}
       </div>
     </div>
   );
