@@ -62,6 +62,32 @@ export const deleteJob = async (req, res) => {
   }
 };
 
+export const acceptApplicant = async (req, res) => {
+  try {
+    console.log("Accepting applicant");
+    console.log(req.params);
+
+    const { jobId, applicantId } = req.params;
+    console.log(jobId, applicantId);
+
+    const job = await Job.findById(jobId);
+    if (!job) {
+      return res.json({ message: "Job not found" });
+    }
+    if (job.applicants.includes(applicantId)) {
+      await Job.findByIdAndUpdate(jobId, {
+        $pull: { applicants: applicantId },
+        $push: { selected: applicantId },
+      });
+      return res.json({ message: "Applicant accepted successfully" });
+    } else {
+      return res.json({ message: "Applicant not found" });
+    }
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
 export const deleteApplicant = async (req, res) => {
   try {
     const { jobId, applicantId } = req.params;

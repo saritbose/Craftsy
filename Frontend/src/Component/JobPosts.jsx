@@ -20,6 +20,21 @@ const JobPosts = ({ title, jobId, applicants }) => {
     }
   };
 
+  const handleSelectedApplicant = async (applicantId, jobId) => {
+    try {
+      await axios.put(
+        `${backend_url}/api/client/accept-applicant/${jobId}/${applicantId}`,
+        {},
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      window.location.reload();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const handleDeleteApplicant = async (applicantId, jobId) => {
     try {
       await axios.delete(
@@ -96,13 +111,20 @@ const JobPosts = ({ title, jobId, applicants }) => {
                       >
                         {applicant.name}
                       </Link>
-
-                      <Plus
-                        onClick={() =>
-                          handleDeleteApplicant(applicant._id, jobId)
-                        }
-                        className="w-4 rotate-45 text-red-500 hover:text-red-700 cursor-pointer"
-                      />
+                      <div className="flex gap-1">
+                        <Check
+                          onClick={() =>
+                            handleSelectedApplicant(applicant._id, jobId)
+                          }
+                          className="w-4 text-green-500 hover:text-green-700 cursor-pointer"
+                        />
+                        <Plus
+                          onClick={() =>
+                            handleDeleteApplicant(applicant._id, jobId)
+                          }
+                          className="w-4 rotate-45 text-red-500 hover:text-red-700 cursor-pointer"
+                        />
+                      </div>
                     </div>
                   ))
                 ) : (

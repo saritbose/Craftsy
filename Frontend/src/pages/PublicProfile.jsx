@@ -19,7 +19,6 @@ const PublicProfile = () => {
           }
         );
         setUser(user.data);
-        console.log(user.data);
       } catch (error) {
         console.log(error);
       }

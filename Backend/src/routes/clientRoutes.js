@@ -2,6 +2,7 @@ import { Router } from "express";
 import authUser from "../middleware/auth.js";
 import role from "../middleware/role.js";
 import {
+  acceptApplicant,
   addJob,
   deleteApplicant,
   deleteJob,
@@ -21,6 +22,11 @@ clientRoutes.delete(
   "/del-applicant/:jobId/:applicantId",
   authUser,
   deleteApplicant
+);
+clientRoutes.put(
+  "/accept-applicant/:jobId/:applicantId",
+  authUser,
+  acceptApplicant
 );
 
 export default clientRoutes;
