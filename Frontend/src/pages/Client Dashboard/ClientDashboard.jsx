@@ -1,5 +1,5 @@
 import ExtraTabs from "@/Component/ExtraTabs";
-import MyPostingsBoard from "@/Component/MyPostingsBoard";
+import MyPostingsBoard from "./Components/Postings/MyPostingsBoard";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import YourAppliedJobs from "./YourAppliedJobs";
+import YourAppliedJobs from "./Components/YourAppliedJobs";
 
 const YourApplications = ({ searchText }) => {
   const [jobs, setJobs] = useState([]);

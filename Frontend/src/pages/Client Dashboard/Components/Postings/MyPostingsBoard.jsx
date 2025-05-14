@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import JobPosts from "./JobPosts";
+import JobPosts from "./Components/JobPosts";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import axios from "axios";

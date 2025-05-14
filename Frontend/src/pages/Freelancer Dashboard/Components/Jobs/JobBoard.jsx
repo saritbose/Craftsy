@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import Jobs from "@/Component/Jobs";
+import Jobs from "./Components/Jobs";
 import axios from "axios";
 
 const JobBoard = ({ searchText }) => {

@@ -1,6 +1,6 @@
 import ExtraTabs from "@/Component/ExtraTabs";
-import JobBoard from "@/Component/JobBoard";
-import YourApplications from "@/Component/YourApplications";
+import JobBoard from "./Components/Jobs/JobBoard";
+import YourApplications from "./Components/Applications/YourApplications";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {

@@ -1,6 +1,6 @@
-import Advantages from "@/Component/Advantages";
-import Testimonials from "@/Component/Testimonials";
-import TrendingServices from "@/Component/TrendingServices";
+import Advantages from "./Components/Advantages";
+import Testimonials from "./Components/Testimonials";
+import TrendingServices from "./Components/TrendingServices";
 import {
   Accordion,
   AccordionContent,
