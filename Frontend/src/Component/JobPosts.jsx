@@ -9,12 +9,13 @@ const JobPosts = ({ title, jobId, applicants }) => {
   const token = localStorage.getItem("token");
   const backend_url = import.meta.env.VITE_BACKEND_URL;
 
-  const handleEdit = async () => {};
+  const handleEditJob = async () => {};
   const handleDeleteJob = async () => {
     try {
       await axios.delete(`${backend_url}/api/client/del-job/${jobId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
+      window.location.reload();
     } catch (error) {
       console.log(error);
     }
@@ -37,8 +38,9 @@ const JobPosts = ({ title, jobId, applicants }) => {
 
   const handleDeleteApplicant = async (applicantId, jobId) => {
     try {
-      await axios.delete(
+      await axios.put(
         `${backend_url}/api/client/del-applicant/${jobId}/${applicantId}`,
+        {},
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -143,7 +145,7 @@ const JobPosts = ({ title, jobId, applicants }) => {
         </div>
         <div className="flex justify-between gap-2">
           <div
-            onClick={handleEdit}
+            onClick={handleEditJob}
             className="text-orange-300 hover:text-orange-500 cursor-pointer"
           >
             Edit

@@ -69,11 +69,11 @@ const Jobs = ({
         {`${description.slice(0, 50)}...`}
         <span className="text-orange-400 underline">more</span>
       </p>
-      <div className="flex gap-2">
+      <div className="flex gap-2 flex-wrap mt-3">
         {skills.map((skill, index) => (
           <p
             key={index}
-            className="rounded-2xl bg-neutral-200 w-fit px-3 py-0.5 mb-4 my-3 text-neutral-500"
+            className="rounded-2xl bg-neutral-200 w-fit px-3 py-1 mb-2 text-neutral-500"
           >
             {skill}
           </p>

@@ -18,7 +18,7 @@ clientRoutes.get("/get-jobs", authUser, getJobs);
 clientRoutes.get("/get-applicants/:jobId", authUser, getApplicants);
 clientRoutes.put("/edit-job", authUser, editJob);
 clientRoutes.delete("/del-job/:jobId", authUser, deleteJob);
-clientRoutes.delete(
+clientRoutes.put(
   "/del-applicant/:jobId/:applicantId",
   authUser,
   deleteApplicant

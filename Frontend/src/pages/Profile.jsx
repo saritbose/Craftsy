@@ -105,7 +105,7 @@ const Profile = () => {
   return (
     <div
       className={`flex justify-center bg-orange-400 ${
-        role === "Freelancer" ? "h-full" : "h-screen"
+        role === "Freelancer" ? "h-full min-h-screen" : "h-screen"
       }`}
     >
       <div

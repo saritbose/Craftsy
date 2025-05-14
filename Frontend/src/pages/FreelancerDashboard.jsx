@@ -1,8 +1,8 @@
-import Jobs from "@/Component/Jobs";
+import ExtraFreelancerTabs from "@/Component/ExtraFreelancerTabs";
+import JobBoard from "@/Component/JobBoard";
+import YourApplications from "@/Component/YourApplications";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import axios from "axios";
 import {
   AlignJustify,
   Bell,
@@ -12,31 +12,30 @@ import {
   Search,
   X,
 } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 const FreelancerDashboard = () => {
   const [nav, setNav] = useState(false);
-  const [jobs, setJobs] = useState([]);
+  const [currentTab, setCurrentTab] = useState("jobBoard");
   const [search, setSearch] = useState(false);
   const [searchText, setSearchText] = useState("");
   const navigate = useNavigate();
-  const token = localStorage.getItem("token");
-  const backend_url = import.meta.env.VITE_BACKEND_URL;
 
-  useEffect(() => {
-    const fetchJobs = async () => {
-      try {
-        const res = await axios.get(`${backend_url}/api/client/get-jobs`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        setJobs(res.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchJobs();
-  }, []);
+  const renderTab = () => {
+    switch (currentTab) {
+      case "jobBoard":
+        return <JobBoard searchText={searchText} />;
+      case "applications":
+        return <YourApplications searchText={searchText} />;
+      case "ongoingWork":
+        return <ExtraFreelancerTabs />;
+      case "earnings":
+        return <ExtraFreelancerTabs />;
+      default:
+        return <></>;
+    }
+  };
 
   const logout = () => {
     navigate("/");
@@ -54,16 +53,24 @@ const FreelancerDashboard = () => {
               <X className="sm:hidden m-2" />
               <div className="fixed top-14 left-0 bg-white w-[50%] border-2 shadow-md">
                 <div className="m-5">
-                  <Link to={"/freelancer/dashboard"}>Browse Jobs</Link>
+                  <button onClick={() => setCurrentTab("jobBoard")}>
+                    Browse Jobs
+                  </button>
                 </div>
                 <div className="m-5">
-                  <Link to={"/freelancer/applications"}>Your Applications</Link>
-                </div>{" "}
-                <div className="m-5">
-                  <Link to={"/freelancer/ongoing-work"}>Ongoing Work</Link>
+                  <button onClick={() => setCurrentTab("applications")}>
+                    Your Applications
+                  </button>
                 </div>
                 <div className="m-5">
-                  <Link to={"/freelancer/earnings"}>Earnings</Link>
+                  <button onClick={() => setCurrentTab("ongoingWork")}>
+                    Ongoing Work
+                  </button>
+                </div>
+                <div className="m-5">
+                  <button onClick={() => setCurrentTab("earnings")}>
+                    Earnings
+                  </button>
                 </div>
                 <hr className="w-full bg-neutral-400 " />
                 <div className="my-5 mx-3 flex flex-col gap-3">
@@ -173,10 +180,24 @@ const FreelancerDashboard = () => {
       <div className=" relative lg:flex items-baseline justify-between h-screen overflow-y-auto scrollbar-hide">
         {/* SideBar */}
         <div className="hidden lg:block border-r-2 h-screen w-[20%] fixed top-15 left-0">
-          <div className="m-5">Browse Jobs</div>
-          <div className="m-5">Your Applications</div>
-          <div className="m-5">Ongoing Work</div>
-          <div className="m-5">Earnings</div>
+          <div className="m-5">
+            <button onClick={() => setCurrentTab("jobBoard")}>
+              Browse Jobs
+            </button>
+          </div>
+          <div className="m-5">
+            <button onClick={() => setCurrentTab("applications")}>
+              Your Applications
+            </button>
+          </div>
+          <div className="m-5">
+            <button onClick={() => setCurrentTab("ongoingWork")}>
+              Ongoing Work
+            </button>
+          </div>
+          <div className="m-5">
+            <button onClick={() => setCurrentTab("earnings")}>Earnings</button>
+          </div>
           <div className="my-5 mx-3 flex flex-col gap-3">
             <Link
               to={"/profile"}
@@ -193,87 +214,14 @@ const FreelancerDashboard = () => {
           </div>
         </div>
         {/* Job boards */}
-        <div className=" mt-15 lg:mt-0 flex-1 z-10 lg:absolute top-10 left-56 right-71 scrollbar-hide">
-          <p className="font-medium my-5 text-xl">Jobs you might like</p>
-          <Tabs defaultValue="bestmatches">
-            <TabsList className="bg-white">
-              <TabsTrigger value="bestmatches">Best Matches</TabsTrigger>
-              <TabsTrigger value="mostrecent">Most Recent</TabsTrigger>
-              <TabsTrigger value="savedjobs">Saved Jobs</TabsTrigger>
-            </TabsList>
-            <TabsContent value="bestmatches">
-              <p className="text-gray-600 my-3">
-                Browse jobs that match your experience to a client's hiring
-                preferences. Ordered by most relevant.
-              </p>
-              <hr className="w-vw mt-2" />
-              <div>
-                {/* Jobs */}
-                {jobs
-                  .filter((job) =>
-                    job.title.toLowerCase().includes(searchText.toLowerCase())
-                  )
-                  .map((job) => (
-                    <Jobs
-                      key={job._id}
-                      jobId={job._id}
-                      date={job.createdAt}
-                      skills={job.skills}
-                      title={job.title}
-                      description={job.description}
-                      structure={job.pricing.structure}
-                      budget={job.pricing.budget}
-                      experience={job.experience}
-                      location={job.location}
-                      applicants={job.applicants}
-                    />
-                  ))}
-              </div>
-            </TabsContent>
-            <TabsContent value="mostrecent">
-              <p className="text-gray-600 my-3">
-                Browse the most recent jobs that match your skills and profile
-                description to the skills clients are looking for.
-              </p>
-              <hr className="w-1vw mt-2" />
-              <div>
-                {/* Jobs */}
-                {[...jobs]
-                  .filter((job) =>
-                    job.title.toLowerCase().includes(searchText.toLowerCase())
-                  )
-                  .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-                  .map((job) => (
-                    <Jobs
-                      key={job._id}
-                      jobId={job._id}
-                      date={job.createdAt}
-                      skills={job.skills}
-                      title={job.title}
-                      description={job.description}
-                      structure={job.pricing.structure}
-                      budget={job.pricing.budget}
-                      experience={job.experience}
-                      location={job.location}
-                      applicants={job.applicants}
-                    />
-                  ))}
-              </div>
-            </TabsContent>
-            <TabsContent value="savedjobs" className="text-gray-600 my-3">
-              Feature still not available.
-            </TabsContent>
-          </Tabs>
-        </div>
+        {renderTab()}
         {/* Filters */}
         <div className="hidden lg:block border-l-2 h-screen w-[25%] fixed top-15 right-0">
           <div className="m-5">Filters</div>
-          <div className="m-5">...</div>
-          <div className="m-5">...</div>
-          <div className="m-5">...</div>
-          <div className="my-5 mx-5 flex flex-col gap-3">
-            <div>...</div>
-            <div>...</div>
+          <div className="flex items-center justify-center ">
+            <p className="font-extralight font-mono text-gray-700 text-center my-5 text-xl">
+              Feature still not available.
+            </p>
           </div>
         </div>
       </div>
