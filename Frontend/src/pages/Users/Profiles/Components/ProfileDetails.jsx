@@ -1,4 +1,11 @@
 import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import axios from "axios";
 import { X } from "lucide-react";
@@ -33,7 +40,7 @@ const ProfileDetails = ({ id, isEditMode, onSubmit }) => {
     const profileData = {
       title,
       aboutMe,
-      rate,
+      rate: Number(rate),
       experience,
       skills,
     };
@@ -57,7 +64,7 @@ const ProfileDetails = ({ id, isEditMode, onSubmit }) => {
           setExperience(res.data.experience);
           setSkills(res.data.skills);
         } catch (error) {
-          console.log("Error fetching profile details", error);
+          console.error("Error fetching profile details: ", error);
         }
       };
       fetchOldJobData();
@@ -73,7 +80,7 @@ const ProfileDetails = ({ id, isEditMode, onSubmit }) => {
           <Input
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="w-full"
+            className="w-full cursor-pointer"
           />
         </p>
         <p>
@@ -81,24 +88,32 @@ const ProfileDetails = ({ id, isEditMode, onSubmit }) => {
           <Textarea
             value={aboutMe}
             onChange={(e) => setAboutMe(e.target.value)}
-            className="w-full"
+            className="w-full cursor-pointer"
           />
         </p>
         <p className="flex gap-2 items-center text-nowrap">
           Expected hourly rate:{" "}
           <Input
+            type="number"
             value={rate}
             onChange={(e) => setRate(e.target.value)}
-            className="w-full"
+            className="w-full cursor-pointer"
           />
         </p>
         <p className="flex gap-2 items-center text-nowrap">
           Experience level:{" "}
-          <Input
-            value={experience}
-            onChange={(e) => setExperience(e.target.value)}
-            className="w-full"
-          />
+          <Select value={experience} onValueChange={setExperience}>
+            <SelectTrigger className="w-full cursor-pointer">
+              <SelectValue placeholder="Experience" />
+            </SelectTrigger>
+            <SelectContent className="bg-orange-300">
+              <SelectItem value="noexperience">No Experience</SelectItem>
+              <SelectItem value="entrylevel">Entry-level</SelectItem>
+              <SelectItem value="beginner">Beginner</SelectItem>
+              <SelectItem value="intermediate">Intermediate</SelectItem>
+              <SelectItem value="expert">Expert</SelectItem>
+            </SelectContent>
+          </Select>
         </p>
         <div>
           <p>Skills</p>
@@ -106,6 +121,7 @@ const ProfileDetails = ({ id, isEditMode, onSubmit }) => {
             <Input
               type="text"
               placeholder="Enter your skills."
+              className="cursor-pointer"
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               onKeyDown={addSkill}
@@ -113,14 +129,14 @@ const ProfileDetails = ({ id, isEditMode, onSubmit }) => {
             {skills.map((skill, index) => (
               <div
                 key={index}
-                className=" bg-orange-500 rounded-full px-3 py-1 flex items-center gap-2 group"
+                className=" bg-orange-500 rounded-full px-3 py-1 flex items-center gap-2 group cursor-pointer"
               >
                 {skill}
                 <button
-                  className="bg-orange-500 hidden group-hover:block"
+                  className="bg-orange-500 hidden group-hover:block cursor-pointer"
                   onClick={() => removeSkill(index)}
                 >
-                  <X className="hover:text-white w-4" />
+                  <X className="hover:text-white w-4 cursor-pointer" />
                 </button>
               </div>
             ))}

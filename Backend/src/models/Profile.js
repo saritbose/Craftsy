@@ -14,7 +14,7 @@ const profileSchema = new mongoose.Schema(
       required: true,
     },
     expectedRate: {
-      type: String,
+      type: Number,
       required: true,
     },
     experience: {

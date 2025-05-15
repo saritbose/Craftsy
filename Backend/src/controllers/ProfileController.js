@@ -4,19 +4,19 @@ import User from "../models/User.js";
 export const userInfo = async (req, res) => {
   try {
     const user = await User.findById(req.user?._id);
-    res.json(user);
+    return res.status(200).json(user);
   } catch (error) {
-    throw new Error(error);
+    return res.status(404).json({ success: false, message: "User not found" });
   }
 };
 
 export const profileInfo = async (req, res) => {
   try {
     const profile = await Profile.findOne({ user: req.user._id });
-    res.json(profile);
+    return res.status(200).json(profile);
   } catch (error) {
-    res.json({
-      message: "Error while fetching profile",
+    return res.status(404).json({
+      message: "Profile not found",
     });
   }
 };
@@ -31,26 +31,28 @@ export const updateProfile = async (req, res) => {
       profile = new Profile({
         title,
         aboutMe,
-        expectedRate: rate,
+        expectedRate: Number(rate),
         experience,
         skills,
         user: req.user._id,
       });
+      await profile.save();
+      await User.findByIdAndUpdate(req.user._id, { profile: profile._id });
     } catch (error) {
-      console.log(error);
+      return res
+        .status(400)
+        .json({ success: false, message: "All fields required" });
     }
-  }
-  //update the profile if it exists
-  else {
+  } else {
+    //update the profile if it exists
     profile.title = title;
     profile.aboutMe = aboutMe;
-    profile.expectedRate = rate;
+    profile.expectedRate = Number(rate);
     profile.experience = experience;
     profile.skills = skills;
+    await profile.save();
   }
-  await profile.save();
-  await User.findByIdAndUpdate(req.user._id, { profile: profile._id });
-  res.json(profile);
+  return res.status(200).json(profile);
 };
 
 export const getUserProfile = async (req, res) => {
@@ -58,10 +60,14 @@ export const getUserProfile = async (req, res) => {
   try {
     const profile = await Profile.findById(id);
     if (!profile) {
-      return res.json({ message: "Profile not found" });
+      return res
+        .status(404)
+        .json({ success: false, message: "Profile not found" });
     }
-    res.json(profile);
+    return res.json(profile);
   } catch (error) {
-    return res.json({ message: "Error while fetching user" });
+    return res
+      .status(500)
+      .json({ success: false, message: "Error while fetching profile" });
   }
 };

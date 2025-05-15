@@ -20,7 +20,7 @@ const PublicProfile = () => {
         );
         setUser(user.data);
       } catch (error) {
-        console.log(error);
+        console.error("Failed to fetch data: ", error);
       }
     };
     fetchUser();

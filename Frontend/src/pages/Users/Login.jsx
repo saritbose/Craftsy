@@ -5,6 +5,7 @@ import axios from "axios";
 import { Box, ChevronLeft } from "lucide-react";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -17,17 +18,27 @@ const Login = () => {
     const formData = { email, password };
     try {
       const res = await axios.post(`${backend_url}/api/user/login`, formData);
+      toast.success("Login successful!");
       const role = res.data.role;
-
+      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("role", role);
       if (role === "Client") {
         navigate("/client/dashboard");
       } else {
         navigate("/freelancer/dashboard");
       }
-      localStorage.setItem("token", res.data.token);
-      localStorage.setItem("role", role);
     } catch (error) {
-      throw new Error(error);
+      if (error.response) {
+        const status = error.response.status;
+        if (status === 400 || status === 404) {
+          toast.error("Invalid email or password");
+        } else {
+          toast.error("Something went wrong.Try again later");
+        }
+      } else {
+        toast.error("Network error. Please check your connection.");
+      }
+      console.error(error);
     }
   };
 
@@ -38,7 +49,10 @@ const Login = () => {
         Home page
       </Link>
       <div className="flex flex-col items-center justify-center min-h-screen pb-32">
-        <Link to={"/"} className="flex gap-3 justify-center my-5 text-white">
+        <Link
+          to={"/"}
+          className="flex gap-3 justify-center my-5 text-white font-mono font-bold"
+        >
           <Box />
           Craftsy
         </Link>
@@ -58,7 +72,7 @@ const Login = () => {
                 placeholder="Enter your Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="rounded-lg text-black"
+                className="rounded-lg text-black cursor-pointer"
               />
             </div>
             <div className="mb-3">
@@ -69,26 +83,28 @@ const Login = () => {
                 placeholder="Enter Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="rounded-lg text-black"
+                className="rounded-lg text-black cursor-pointer"
               />
             </div>
             <div className="flex justify-between items-center mb-10 px-3 -translate-y-1">
               <div className="text-xs flex ">
-                <Checkbox className="border-2 border-orange-400" />
+                <Checkbox className="border-2 border-orange-400 cursor-pointer" />
                 <label className="mx-2 text-white">Remember me</label>
               </div>
-              <div className="text-xs text-orange-500">Forgot password?</div>
+              <div className="text-xs text-orange-500 cursor-pointer">
+                Forgot password?
+              </div>
             </div>
           </div>
           <Button
             onClick={handleSubmit}
-            className="bg-orange-400 w-full rounded-lg py-5 shadow-md hover:bg-orange-600"
+            className="bg-orange-400 w-full cursor-pointer rounded-lg py-5 shadow-md hover:bg-orange-600"
           >
             Sign in
           </Button>
           <p className="my-5 text-xs text-white font-mono">
             Don't have an account?
-            <Link to={"/register"} className="text-orange-500">
+            <Link to={"/register"} className="text-orange-500 cursor-pointer">
               Sign up
             </Link>
           </p>

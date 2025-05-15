@@ -11,29 +11,30 @@ const createToken = (id, role) => {
 export const loginUser = async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {
-    return res.json({ success: false, message: "All fields are required." });
+    return res
+      .status(400)
+      .json({ success: false, message: "All fields are required." });
   }
   const user = await User.findOne({ email });
   if (!user) {
-    return res.json({ success: false, message: "User not found." });
+    return res.status(404).json({ success: false, message: "User not found." });
   }
   try {
     const verify = await bcrypt.compare(password, user.password);
     if (!verify) {
-      return res.json({ success: false, message: "Invalid password." });
+      return res
+        .status(400)
+        .json({ success: false, message: "Invalid password." });
     }
-
     const token = createToken(user._id, user.role);
-    console.log("Successfully logged in.");
-
-    return res.json({
+    return res.status(200).json({
       success: true,
       message: "User logged in.",
       token,
       role: user.role,
     });
   } catch (error) {
-    return res.json({ success: false, message: error.message });
+    return res.status(500).json({ success: false, message: error.message });
   }
 };
 
@@ -41,7 +42,9 @@ export const registerUser = async (req, res) => {
   const { name, email, password, role } = req.body;
   const user = await User.findOne({ email });
   if (user) {
-    return res.json({ success: false, message: "User already registered." });
+    return res
+      .status(400)
+      .json({ success: false, message: "User already registered." });
   }
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -53,13 +56,13 @@ export const registerUser = async (req, res) => {
     });
     await newUser.save();
     const token = createToken(newUser._id, newUser.role);
-    return res.json({
+    return res.status(200).json({
       success: true,
       message: "User registered.",
       token,
       role: newUser.role,
     });
   } catch (error) {
-    return res.json({ success: false, message: "Registered Failed" });
+    return res.status(500).json({ success: false, message: error.message });
   }
 };

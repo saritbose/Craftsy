@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import ProfileDetails from "./Components/ProfileDetails";
+import { toast } from "react-toastify";
 
 const Profile = () => {
   const [user, setUser] = useState("");
@@ -22,9 +23,12 @@ const Profile = () => {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      window.location.reload();
+      toast.success("Profile updated.");
+      setTimeout(() => {
+        window.location.reload();
+      }, 1500);
     } catch (error) {
-      console.log(error);
+      toast.error("Profile not updated. Try again!");
     }
   };
 
@@ -36,7 +40,7 @@ const Profile = () => {
         });
         setUser(user.data);
       } catch (error) {
-        console.log(error);
+        console.error("Failed to fetch user info: ", error);
       }
     };
     fetchUser();
@@ -53,7 +57,7 @@ const Profile = () => {
         );
         setProfile(profile.data);
       } catch (error) {
-        console.log(error);
+        console.error("Failed to fetch profile info: ", error);
       }
     };
     fetchProfile();
@@ -101,8 +105,8 @@ const Profile = () => {
                       <p className="mt-2">
                         <span className="font-semibold">
                           Expected hourly rate:
-                        </span>
-                        {profile.rate}
+                        </span>{" "}
+                        {profile.expectedRate}
                       </p>
                       <p>
                         <span className="font-semibold">Experience: </span>
@@ -122,7 +126,9 @@ const Profile = () => {
                   )}
                 </div>
                 <div
-                  onClick={() => navigate(`/edit-profile/${profile._id}`)}
+                  onClick={() =>
+                    navigate(`/edit-profile/${profile?._id || user._id}`)
+                  }
                   className="w-fit px-2 hover:text-white cursor-pointer"
                 >
                   Edit

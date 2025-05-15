@@ -3,6 +3,7 @@ import axios from "axios";
 import { CircleChevronLeft } from "lucide-react";
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const JobDetails = () => {
   const token = localStorage.getItem("token");
@@ -31,9 +32,19 @@ const JobDetails = () => {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      console.log(res.data);
+      toast.success("Application sent.");
     } catch (error) {
-      console.log(error);
+      if (error.response) {
+        const status = error.response.status;
+        if (status === 400) {
+          toast.error("Application already sent.");
+        } else {
+          toast.error("Application not sent.");
+        }
+      } else {
+        toast.error("Network error. Please check your connection.");
+      }
+      console.error(error);
     }
   };
 
@@ -44,7 +55,7 @@ const JobDetails = () => {
           <div className="text-4xl font-medium text-white">{title}</div>
           <CircleChevronLeft
             onClick={() => navigate(-1)}
-            className="w-4 text-orange-700 hover:text-white"
+            className="w-4 text-orange-700 hover:text-white cursor-pointer"
           />
         </div>
         <div className="text-xs my-1">{date.split("T")[0]}</div>
@@ -79,7 +90,7 @@ const JobDetails = () => {
         </div>
         <Button
           onClick={handleApply}
-          className="mt-4 bg-orange-500 text-black font-extrabold hover:bg-orange-600 hover:text-white"
+          className="mt-4 bg-orange-500 text-black font-extrabold hover:bg-orange-600 hover:text-white cursor-pointer"
         >
           Apply
         </Button>

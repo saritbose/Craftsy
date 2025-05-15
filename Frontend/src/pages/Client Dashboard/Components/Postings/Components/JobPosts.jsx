@@ -2,6 +2,7 @@ import axios from "axios";
 import { Check, Plus } from "lucide-react";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const JobPosts = ({ title, jobId, applicants, onDelete }) => {
   const [openApplicants, setOpenApplicants] = useState(false);
@@ -23,9 +24,12 @@ const JobPosts = ({ title, jobId, applicants, onDelete }) => {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      window.location.reload();
+      toast.success("Freelancer accepted.");
+      setTimeout(() => {
+        window.location.reload();
+      }, 1500);
     } catch (error) {
-      console.log(error);
+      toast.error("Something went wrong. Freelancer not accepted!");
     }
   };
 
@@ -38,9 +42,12 @@ const JobPosts = ({ title, jobId, applicants, onDelete }) => {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      window.location.reload();
+      toast.success("Freelancer rejected.");
+      setTimeout(() => {
+        window.location.reload();
+      }, 1500);
     } catch (error) {
-      console.log(error);
+      toast.error("Something went wrong. Freelancer not rejected!");
     }
   };
 
@@ -59,7 +66,7 @@ const JobPosts = ({ title, jobId, applicants, onDelete }) => {
       setViewApplicants(res.data);
       setOpenApplicants(!openApplicants);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -67,9 +74,6 @@ const JobPosts = ({ title, jobId, applicants, onDelete }) => {
     <div className="border-1 rounded-md pt-5 pb-1.5 px-4 group hover:bg-neutral-100 hover:shadow-lg">
       <p className="text-xl font-semibold group-hover:text-orange-400">
         {title}
-      </p>
-      <p className="text-neutral-800 text-xs my-2">
-        Open/In Progress/Completed
       </p>
       <p className="text-gray-500 mt-1 mb-1.5">
         Proposals:

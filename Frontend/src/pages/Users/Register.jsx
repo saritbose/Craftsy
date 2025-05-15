@@ -4,6 +4,7 @@ import axios from "axios";
 import { Box, ChevronLeft } from "lucide-react";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -21,18 +22,27 @@ const Register = () => {
         `${backend_url}/api/user/register`,
         formData
       );
+      toast.success("Register successful!");
       const role = res.data.role;
-      console.log(res.data);
-
+      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("role", role);
       if (role === "Client") {
         navigate("/client/dashboard");
       } else {
         navigate("/freelancer/dashboard");
       }
-      localStorage.setItem("token", res.data.token);
-      localStorage.setItem("role", role);
     } catch (error) {
-      throw new Error(error);
+      if (error.response) {
+        const status = error.response.status;
+        if (status === 400) {
+          toast.error("Already registered");
+        } else {
+          toast.error("Something went wrong.Try again later");
+        }
+      } else {
+        toast.error("Network error. Please check your connection.");
+      }
+      console.error(error);
     }
   };
 
@@ -43,7 +53,10 @@ const Register = () => {
         Home page
       </Link>
       <div className="flex flex-col items-center justify-center min-h-screen pb-32">
-        <Link to={"/"} className="flex gap-3 justify-center my-5 text-white">
+        <Link
+          to={"/"}
+          className="flex gap-3 justify-center my-5 text-white font-mono font-bold"
+        >
           <Box />
           Craftsy
         </Link>
@@ -63,7 +76,7 @@ const Register = () => {
                 placeholder="Enter your Name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="rounded-lg text-black"
+                className="rounded-lg text-black cursor-pointer"
               />
             </div>
             <div className="my-3">
@@ -74,7 +87,7 @@ const Register = () => {
                 placeholder="Enter your Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="rounded-lg text-black"
+                className="rounded-lg text-black cursor-pointer"
               />
             </div>
             <div className="mb-3">
@@ -85,7 +98,7 @@ const Register = () => {
                 placeholder="Enter Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="rounded-lg text-black"
+                className="rounded-lg text-black cursor-pointer"
               />
             </div>
             <div>
@@ -96,7 +109,7 @@ const Register = () => {
                 <button
                   onClick={() => setRole("Client")}
                   disabled={role === "Client"}
-                  className={`bg-orange-300 p-2 w-1/2 rounded-2xl font-semibold font-mono text-white ${
+                  className={`bg-orange-300 p-2 w-1/2 cursor-pointer rounded-2xl font-semibold font-mono text-white ${
                     role === "Client" ? "bg-orange-400" : "bg-orange-200"
                   }`}
                 >
@@ -105,7 +118,7 @@ const Register = () => {
                 <button
                   onClick={() => setRole("Freelancer")}
                   disabled={role === "Freelancer"}
-                  className={`bg-orange-300 p-2 w-1/2 rounded-2xl font-semibold font-mono text-white ${
+                  className={`bg-orange-300 p-2 w-1/2 cursor-pointer rounded-2xl font-semibold font-mono text-white ${
                     role === "Freelancer" ? "bg-orange-400" : "bg-orange-200"
                   }`}
                 >
@@ -116,13 +129,13 @@ const Register = () => {
           </div>
           <Button
             onClick={handleSubmit}
-            className="bg-orange-400 w-full rounded-lg py-5 shadow-md hover:bg-orange-600"
+            className="bg-orange-400 w-full cursor-pointer rounded-lg py-5 shadow-md hover:bg-orange-600"
           >
             Sign up
           </Button>
           <p className="my-5 text-xs text-white font-mono">
             Don't have an account?
-            <Link to={"/login"} className="text-orange-500">
+            <Link to={"/login"} className="text-orange-500 cursor-pointer">
               Sign in
             </Link>
           </p>

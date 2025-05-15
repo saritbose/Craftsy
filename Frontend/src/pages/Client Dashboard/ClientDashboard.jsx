@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const ClientDashboard = () => {
   const [nav, setNav] = useState(false);
@@ -35,6 +36,7 @@ const ClientDashboard = () => {
   };
 
   const logout = () => {
+    toast.success("Logged out!");
     navigate("/");
     localStorage.removeItem("token");
     localStorage.removeItem("role");
@@ -46,20 +48,29 @@ const ClientDashboard = () => {
         <div onClick={() => setNav(!nav)} className="md:hidden">
           {nav === true ? (
             <>
-              <X className="sm:hidden m-2" />
+              <X className="sm:hidden m-2 cursor-pointer" />
               <div className="fixed top-14 left-0 bg-white w-[50%] border-2 shadow-md">
                 <div className="m-5">
-                  <button onClick={() => setCurrentTab("myPostings")}>
+                  <button
+                    onClick={() => setCurrentTab("myPostings")}
+                    className="cursor-pointer hover:text-orange-400"
+                  >
                     My Postings
                   </button>
                 </div>
                 <div className="m-5">
-                  <button onClick={() => setCurrentTab("ongoingProjects")}>
+                  <button
+                    onClick={() => setCurrentTab("ongoingProjects")}
+                    className="cursor-pointer hover:text-orange-400"
+                  >
                     Ongoing Projects
                   </button>
                 </div>
                 <div className="m-5">
-                  <button onClick={() => setCurrentTab("invoices")}>
+                  <button
+                    onClick={() => setCurrentTab("invoices")}
+                    className="cursor-pointer hover:text-orange-400"
+                  >
                     Invoices
                   </button>
                 </div>
@@ -73,7 +84,7 @@ const ClientDashboard = () => {
                   </Link>
                   <div
                     onClick={logout}
-                    className="hover:bg-orange-400 hover:text-white text-center p-2 rounded-3xl w-fit"
+                    className="hover:bg-orange-400 hover:text-white text-center p-2 rounded-3xl w-fit cursor-pointer"
                   >
                     Log out
                   </div>
@@ -81,87 +92,107 @@ const ClientDashboard = () => {
               </div>
             </>
           ) : (
-            <AlignJustify className="md:hidden m-2" />
+            <AlignJustify className="md:hidden m-2 cursor-pointer" />
           )}
         </div>
-        <Link to={"/"}>Craftsy</Link>
+        <Link to={"/"} className="font-mono font-bold">
+          Craftsy
+        </Link>
         <div className="hidden md:flex gap-5 items-center">
           <div className="group relative">
-            <div className="flex hover:text-orange-300">
+            <div className="flex hover:text-orange-300 cursor-pointer">
               Find talent <ChevronDown className="translate-y-0.5" />
             </div>
             <div className="hidden group-hover:block absolute bg-white mt-1 py-2 w-64 text-sm border rounded-xl shadow-md">
-              <p className="pb-1 px-3 hover:bg-gray-100">Find talent</p>
-              <p className="pb-2 px-3 hover:bg-gray-100">
+              <p className="pb-1 px-3 hover:bg-gray-100 cursor-pointer">
+                Find talent
+              </p>
+              <p className="pb-2 px-3 hover:bg-gray-100 cursor-pointer">
                 Applications & offers
               </p>
               <hr className="w-1vw pb-1 " />
               <p className="pb-1 px-3 text-neutral-400">
                 Reach more freelancers
               </p>
-              <p className="pb-1 px-3 hover:bg-gray-100 flex gap-1">
+              <p className="pb-1 px-3 hover:bg-gray-100 flex gap-1 cursor-pointer">
                 Promote with ads
                 <ExternalLink className="w-4 h-6" />
               </p>
-              <p className="pb-1 px-3 hover:bg-gray-100">Direct Contracts</p>
+              <p className="pb-1 px-3 hover:bg-gray-100 cursor-pointer">
+                Direct Contracts
+              </p>
             </div>
           </div>
           <div className="group relative">
-            <div className="flex hover:text-orange-300">
+            <div className="flex hover:text-orange-300 cursor-pointer">
               Freelancers <ChevronDown className="translate-y-0.5" />
             </div>
             <div className="hidden group-hover:block absolute bg-white mt-1 py-2 w-64 text-sm border rounded-xl shadow-md">
-              <p className="pb-2 px-3 hover:bg-gray-100">
+              <p className="pb-2 px-3 hover:bg-gray-100 cursor-pointer">
                 Your active contracts
               </p>
-              <p className="pb-2 px-3 hover:bg-gray-100">Contract history</p>
-              <p className="pb-2 px-3 hover:bg-gray-100">Review diary</p>
+              <p className="pb-2 px-3 hover:bg-gray-100 cursor-pointer">
+                Contract history
+              </p>
+              <p className="pb-2 px-3 hover:bg-gray-100 cursor-pointer">
+                Review diary
+              </p>
             </div>
           </div>
           <div className="group relative">
-            <div className="flex hover:text-orange-300">
+            <div className="flex hover:text-orange-300 cursor-pointer">
               Reports <ChevronDown className="translate-y-0.5" />
             </div>
             <div className="hidden group-hover:block absolute bg-white mt-1 py-2 w-64 text-sm border rounded-xl shadow-md">
-              <p className="pb-2 px-3 hover:bg-gray-100">Financial overview</p>
-              <p className="pb-2 px-3 hover:bg-gray-100">Your reports</p>
-              <p className="pb-2 px-3 hover:bg-gray-100">
+              <p className="pb-2 px-3 hover:bg-gray-100 cursor-pointer">
+                Financial overview
+              </p>
+              <p className="pb-2 px-3 hover:bg-gray-100 cursor-pointer">
+                Your reports
+              </p>
+              <p className="pb-2 px-3 hover:bg-gray-100 cursor-pointer">
                 Transactions and invoices
               </p>
               <hr className="w-1vw pb-1 " />
               <p className="pb-2 px-2 text-neutral-400">Payments</p>
-              <p className="pb-2 px-3 hover:bg-gray-100">Purchase coins</p>
+              <p className="pb-2 px-3 hover:bg-gray-100 cursor-pointer">
+                Purchase coins
+              </p>
             </div>
           </div>
-          <div className="hover:text-orange-300">Messages</div>
+          <div className="hover:text-orange-300 cursor-pointer">Messages</div>
         </div>
         <div className="flex items-center gap-5 mx-2">
           <div className="relative mt-1">
             <Search
-              values={search}
               onClick={() => setSearch(!search)}
-              className={search ? "absolute right-2 top-1" : "block"}
+              className={`cursor-pointer ${
+                search ? "absolute right-2 top-1" : "block"
+              }`}
             />
             {search && (
               <Input
-                className="w-60 rounded-full pl-5"
+                className="w-60 rounded-full pl-5 cursor-pointer"
                 placeholder="Find your postings..."
                 value={searchText}
                 onChange={(e) => setSearchText(e.target.value)}
               />
             )}
           </div>
-          <CircleHelp className="hidden md:block" />
-          <Bell className="hidden md:block" />
+          <CircleHelp className="hidden md:block cursor-pointer" />
+          <Bell className="hidden md:block cursor-pointer" />
           <div className="group relative">
-            <Button className="rounded-full h-8 hidden md:block lg:hidden" />
+            <Button className="rounded-full h-8 hidden md:block lg:hidden cursor-pointer" />
             <div className="hidden group-hover:flex flex-col absolute right-0 top-8 bg-white mt-1 py-2 px-2 w-32 text-sm border shadow-md">
-              <Link to={"/profile"} className="text-center p-2  w-fit">
+              <Link
+                to={"/profile"}
+                className="text-center p-2 w-fit hover:text-orange-400"
+              >
                 My Profile
               </Link>
               <div
                 onClick={logout}
-                className="text-center p-2  w-fit cursor-pointer"
+                className="text-center p-2  w-fit cursor-pointer hover:text-orange-400"
               >
                 Log out
               </div>
@@ -173,17 +204,28 @@ const ClientDashboard = () => {
         {/* SideBar */}
         <div className="hidden lg:block border-r-2 h-screen w-[15%] fixed top-15 left-0">
           <div className="m-5">
-            <button onClick={() => setCurrentTab("myPostings")}>
+            <button
+              onClick={() => setCurrentTab("myPostings")}
+              className="cursor-pointer hover:text-orange-400"
+            >
               My Postings
             </button>
           </div>
           <div className="m-5">
-            <button onClick={() => setCurrentTab("ongoingProjects")}>
+            <button
+              onClick={() => setCurrentTab("ongoingProjects")}
+              className="cursor-pointer hover:text-orange-400"
+            >
               Ongoing Projects
             </button>
           </div>
           <div className="m-5">
-            <button onClick={() => setCurrentTab("invoices")}>Invoices</button>
+            <button
+              onClick={() => setCurrentTab("invoices")}
+              className="cursor-pointer hover:text-orange-400"
+            >
+              Invoices
+            </button>
           </div>
           <div className="my-5 mx-3 flex flex-col gap-3">
             <Link
@@ -194,7 +236,7 @@ const ClientDashboard = () => {
             </Link>
             <div
               onClick={logout}
-              className="hover:bg-orange-400 hover:text-white text-center p-2 rounded-3xl w-fit"
+              className="hover:bg-orange-400 hover:text-white text-center p-2 rounded-3xl w-fit cursor-pointer"
             >
               Log out
             </div>

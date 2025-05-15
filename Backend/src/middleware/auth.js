@@ -3,7 +3,9 @@ import jwt from "jsonwebtoken";
 const authUser = async (req, res, next) => {
   const authHeader = req.headers.authorization;
   if (!authHeader || !authHeader.startsWith("Bearer")) {
-    return res.json({ success: false, message: "Authorization Denied" });
+    return res
+      .status(403)
+      .json({ success: false, message: "Authorization Denied" });
   }
   const token = authHeader.split(" ")[1];
 
@@ -13,7 +15,7 @@ const authUser = async (req, res, next) => {
 
     next();
   } catch (error) {
-    res.json({ success: false, message: error.message });
+    res.status(500).json({ success: false, message: error.message });
   }
 };
 

@@ -3,6 +3,7 @@ import JobPosts from "./Components/JobPosts";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const MyPostingsBoard = ({ searchText }) => {
   const [jobs, setJobs] = useState([]);
@@ -14,9 +15,16 @@ const MyPostingsBoard = ({ searchText }) => {
       await axios.delete(`${backend_url}/api/client/del-job/${jobId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
+      toast.success("Job deleted successfully");
       setJobs((prev) => prev.filter((job) => job._id !== jobId));
     } catch (error) {
-      console.log(error);
+      if (error.response) {
+        const status = error.response.status;
+        toast.error("Job not deleted. Try again!");
+      } else {
+        toast.error("Network error. Please check your connection.");
+      }
+      console.error(error);
     }
   };
 
@@ -28,7 +36,7 @@ const MyPostingsBoard = ({ searchText }) => {
         });
         setJobs(res.data);
       } catch (error) {
-        console.log(error);
+        console.error("Failed to fetch jobs: ", error);
       }
     };
     fetchJobs();

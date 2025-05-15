@@ -2,6 +2,7 @@ import axios from "axios";
 import { MapPin } from "lucide-react";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Jobs = ({
   jobId,
@@ -45,9 +46,19 @@ const Jobs = ({
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      console.log(res.data);
+      toast.success("Application sent.");
     } catch (error) {
-      console.log(error);
+      if (error.response) {
+        const status = error.response.status;
+        if (status === 400) {
+          toast.error("Application already sent.");
+        } else {
+          toast.error("Application not sent.");
+        }
+      } else {
+        toast.error("Network error. Please check your connection.");
+      }
+      console.error(error);
     }
   };
 
@@ -89,7 +100,7 @@ const Jobs = ({
       </p>
       <button
         onClick={handleApply}
-        className="bg-orange-300 p-1.5 px-3 rounded-3xl hover:text-white hover:bg-orange-400"
+        className="bg-orange-300 p-1.5 px-3 rounded-3xl hover:text-white hover:bg-orange-400 cursor-pointer"
       >
         Apply
       </button>

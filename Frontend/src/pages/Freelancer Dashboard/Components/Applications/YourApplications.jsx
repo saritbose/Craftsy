@@ -20,7 +20,7 @@ const YourApplications = ({ searchText }) => {
         });
         setJobs(job.data);
       } catch (error) {
-        console.log(error);
+        console.error("Failed to fetch data: ", error);
       }
     };
     fetchJobs();

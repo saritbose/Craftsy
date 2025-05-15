@@ -16,7 +16,7 @@ const JobBoard = ({ searchText }) => {
         });
         setJobs(res.data);
       } catch (error) {
-        console.log(error);
+        console.error("Failed to fetch jobs: ", error);
       }
     };
     fetchJobs();

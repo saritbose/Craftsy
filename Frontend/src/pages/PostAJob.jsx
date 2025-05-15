@@ -12,6 +12,7 @@ import axios from "axios";
 import { Box, ChevronLeft, X } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import countries from "world-countries";
 
 const PostAJob = () => {
@@ -53,7 +54,7 @@ const PostAJob = () => {
       title,
       description,
       structure,
-      budget,
+      budget: Number(budget),
       level,
       skills,
       location,
@@ -64,13 +65,25 @@ const PostAJob = () => {
         await axios.put(`${backend_url}/api/client/edit-job/${id}`, jobData, {
           headers: { Authorization: `Bearer ${token}` },
         });
+        toast.success("Job edited successfully");
       } else {
         await axios.post(`${backend_url}/api/client/post-job`, jobData, {
           headers: { Authorization: `Bearer ${token}` },
         });
+        toast.success("Job added successfully");
       }
     } catch (error) {
-      console.log("Error posting job", error);
+      if (error.response) {
+        const status = error.response.status;
+        if (status === 400 || status === 404) {
+          toast.error("Didn't work. Try Again!");
+        } else {
+          toast.error("Something went wrong.Try again later");
+        }
+      } else {
+        toast.error("Network error. Please check your connection.");
+      }
+      console.error(error);
     }
     navigate(-1);
   };
@@ -92,10 +105,8 @@ const PostAJob = () => {
           setLevel(res.data.experience);
           setSkills(res.data.skills);
           setLocation(res.data.location);
-
-          console.log(res.data);
         } catch (error) {
-          console.log("Error fetching job details", error);
+          console.error("Failed to fetch job data: ", error);
         }
       };
       fetchOldJobData();
@@ -113,7 +124,10 @@ const PostAJob = () => {
         Return
       </Link>
       <div className="flex flex-col items-center justify-center min-h-screen pb-32">
-        <Link to={"/"} className="flex gap-3 justify-center my-5 ">
+        <Link
+          to={"/"}
+          className="flex gap-3 justify-center my-5 font-mono font-bold"
+        >
           <Box />
           Craftsy
         </Link>
@@ -133,7 +147,7 @@ const PostAJob = () => {
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="Role"
-                className="rounded-lg "
+                className="rounded-lg  cursor-pointer"
               />
             </div>
             <div className="mb-3">
@@ -144,7 +158,7 @@ const PostAJob = () => {
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="Enter the job description"
-                className="rounded-lg  h-auto"
+                className="rounded-lg  h-auto cursor-pointer"
               />
             </div>
             <div className="mb-3">
@@ -153,16 +167,17 @@ const PostAJob = () => {
               </p>
               <div className="flex">
                 <Input
+                  type="number"
                   value={budget}
                   onChange={(e) => setBudget(e.target.value)}
                   placeholder="Budget"
-                  className="rounded-r-none w-auto"
+                  className="rounded-r-none w-auto cursor-pointer"
                 />
                 <Select
                   value={structure}
                   onValueChange={(e) => setStructure(e)}
                 >
-                  <SelectTrigger className="w-lg border-l rounded-l-none">
+                  <SelectTrigger className="w-lg border-l rounded-l-none cursor-pointer">
                     <SelectValue placeholder="Structure" />
                   </SelectTrigger>
                   <SelectContent className="bg-orange-300">
@@ -179,7 +194,7 @@ const PostAJob = () => {
                 Experience Level
               </p>
               <Select value={level} onValueChange={(e) => setLevel(e)}>
-                <SelectTrigger className="w-full">
+                <SelectTrigger className="w-full cursor-pointer">
                   <SelectValue placeholder="Level" />
                 </SelectTrigger>
                 <SelectContent className="bg-orange-300">
@@ -195,10 +210,11 @@ const PostAJob = () => {
               <p className="text-white text-left ml-2 mb-1 text-sm font-mono">
                 Skills Required
               </p>
-              <div className="flex flex-wrap gap-2 mt-2">
+              <div className="flex flex-wrap gap-2 mt-2 ">
                 <Input
                   type="text"
                   placeholder="Enter skills required"
+                  className="cursor-pointer"
                   value={inputValue}
                   onChange={(e) => setInputValue(e.target.value)}
                   onKeyDown={addSkill}
@@ -224,7 +240,7 @@ const PostAJob = () => {
                 Location
               </p>
               <Select value={location} onValueChange={(e) => setLocation(e)}>
-                <SelectTrigger className="w-full">
+                <SelectTrigger className="w-full cursor-pointer">
                   <SelectValue placeholder="Country" />
                 </SelectTrigger>
                 <SelectContent className="bg-orange-300">
@@ -241,7 +257,7 @@ const PostAJob = () => {
           </div>
           <Button
             onClick={handleSubmit}
-            className="bg-orange-400 w-full rounded-lg py-5 mb-5 shadow-md hover:bg-orange-600"
+            className="bg-orange-400 w-full rounded-lg py-5 mb-5 shadow-md hover:bg-orange-600 cursor-pointer"
           >
             {isEditMode ? "SAVE" : "POST"}
           </Button>

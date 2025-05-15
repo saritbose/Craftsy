@@ -25,13 +25,13 @@ const NotFound = () => {
           <Button
             onClick={() => navigate(-1)}
             variant="outline"
-            className="bg-neutral-800 hover:bg-neutral-700 text-white border-neutral-700 w-full sm:w-auto"
+            className="bg-neutral-800 hover:bg-neutral-700 text-white border-neutral-700 w-full sm:w-auto cursor-pointer"
           >
             Go Back
           </Button>
           <Button
             onClick={() => navigate("/")}
-            className="bg-orange-400 hover:bg-orange-600 text-white w-full sm:w-auto"
+            className="bg-orange-400 hover:bg-orange-600 text-white w-full sm:w-auto cursor-pointer"
           >
             <Home className="mr-2 h-4 w-4" />
             Back to Home

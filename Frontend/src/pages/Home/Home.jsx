@@ -24,21 +24,75 @@ import { Link } from "react-router-dom";
 const Home = () => {
   const [nav, setNav] = useState(false);
 
+  const testimonials = [
+    {
+      name: "Maya Patel",
+      title: "Startup Founder",
+      text: "The platform made it so easy to find skilled freelancers. I posted my project and got connected with top talent within hours.",
+    },
+    {
+      name: "James O'Neill",
+      title: "Product Manager at Techsyne",
+      text: "I’ve hired multiple developers here and every project has been smooth, professional, and on-time. Highly recommend.",
+    },
+    {
+      name: "Arjun Mehta",
+      title: "E-commerce Store Owner",
+      text: "This site helped me scale my business fast. Reliable freelancers, clear communication, and fair pricing.",
+    },
+    {
+      name: "Lara Kim",
+      title: "Creative Director",
+      text: "After trying other platforms, this one felt personal. I actually found someone who understood my vision.",
+    },
+    {
+      name: "Daniel Ross",
+      title: "CTO at ByteStack",
+      text: "What stood out to me was the quality of talent. The developer I hired delivered production-ready code in days.",
+    },
+    {
+      name: "Sofia Li",
+      title: "App Startup Founder",
+      text: "From UI/UX to backend integrations, I got everything done under one roof. This platform is a game-changer.",
+    },
+    {
+      name: "Marco De Luca",
+      title: "Digital Marketer",
+      text: "Professional, fast, and affordable — found my go-to freelancer here and never looked back.",
+    },
+    {
+      name: "Emma Johnson",
+      title: "Indie SaaS Creator",
+      text: "As a solo founder, I needed reliable help fast. This platform delivered freelancers who cared about the outcome.",
+    },
+  ];
+
   return (
     <div className="overflow-hidden">
       {/* Header */}
       <div className="flex justify-between m-2">
         <div className="flex gap-1 p-2">
           <Box />
-          <Link to={"/"} className="hidden sm:block">
+          <Link
+            to={"/"}
+            className="hidden font-mono font-bold sm:block cursor-pointer"
+          >
             Craftsy
           </Link>
         </div>
         <div className="hidden md:flex gap-8 p-2">
-          <div>How It Works</div>
-          <div>Categories</div>
-          <div>Find a Designer</div>
-          <div>Studio</div>
+          <div className="cursor-pointer">
+            <Link>How It Works</Link>
+          </div>
+          <div className="cursor-pointer">
+            <Link>Browse Categories</Link>
+          </div>
+          <div className="cursor-pointer">
+            <Link>Find Freelancers</Link>
+          </div>
+          <div className="cursor-pointer">
+            <Link>Post a Job</Link>
+          </div>
         </div>
         <div className="sm:flex gap-6 relative">
           <Link
@@ -56,12 +110,20 @@ const Home = () => {
           <div onClick={() => setNav(!nav)}>
             {nav === true ? (
               <>
-                <X className="sm:hidden m-2" />
+                <X className="sm:hidden m-2 cursor-pointer" />
                 <div className="fixed top-14 right-0 bg-white w-[50%] border-2 shadow-md">
-                  <div className="m-5">Find talent</div>
-                  <div className="m-5">Find Work</div>
-                  <div className="m-5">Why Craftsy</div>
-                  <div className="m-5">What's new</div>
+                  <div className="m-5 cursor-pointer">
+                    <Link to={"/findtalent"}>Find talent</Link>
+                  </div>
+                  <div className="m-5 cursor-pointer">
+                    <Link to={"/findwork"}>Find Work</Link>
+                  </div>
+                  <div className="m-5 cursor-pointer">
+                    <Link to={"/whyus"}>Why Craftsy</Link>
+                  </div>
+                  <div className="m-5 cursor-pointer">
+                    <Link to={"/new"}>What's new</Link>
+                  </div>
                   <hr className="w-full bg-neutral-400 " />
                   <div className="my-5 mx-3 flex flex-col gap-3">
                     <Link
@@ -80,7 +142,7 @@ const Home = () => {
                 </div>
               </>
             ) : (
-              <AlignJustify className="sm:hidden m-2" />
+              <AlignJustify className="sm:hidden m-2 cursor-pointer" />
             )}
           </div>
         </div>
@@ -91,17 +153,17 @@ const Home = () => {
       <div className="flex flex-col sm:flex-row">
         <div className=" w-full sm:w-1/2 px-6 py-10 lg:-translate-y-25 flex flex-col justify-center">
           <h1 className="text-3xl sm:text-5xl font-bold mb-4">
-            World Class <span className="text-blue-600">Design At</span> Your
-            Service
+            Elite Freelancers.{" "}
+            <span className="text-blue-600"> On Demand.</span> No Compromises.
           </h1>
           <p className="text-gray-600 mb-6">
-            Find great talent. Build your business. Take your career to the next
-            level.
+            Discover top-tier talent for every job — from code to content. Start
+            projects instantly. Hire with confidence.
           </p>
           <div className="flex flex-col sm:flex-row gap-3">
             <input
               type="text"
-              placeholder="Logo,Website,Branding..."
+              placeholder="React, UI/UX, Copywriting..."
               className="hidden sm:block rounded-4xl border border-gray-300 w-full sm:w-auto flex-1 pl-5"
             />
             <Link
@@ -164,12 +226,11 @@ const Home = () => {
         </div>
         <div className=" w-full sm:w-1/2 px-6 py-10 flex flex-col justify-center">
           <h1 className="text-3xl sm:text-5xl font-semibold mb-4">
-            Two Ways To Get Design
+            Two Ways to Hire Freelancers
           </h1>
           <p className="text-gray-900 mb-6">
-            Our tried-and-true creative process makes design magic. With our
-            global community that loves to collaborate, we'll turn your great
-            ideas.
+            Whether you need a quick task done or want to review multiple
+            proposals — we’ve got options to match your workflow.
           </p>
           <div className="flex flex-col">
             <Accordion type="single" collapsible>
@@ -179,12 +240,12 @@ const Home = () => {
                     <div className="rounded-full w-9 h-10 p-2 font-bold text-center bg-orange-100 text-orange-700">
                       1
                     </div>
-                    <div className="ml-3 font-bold">Work Directly</div>
+                    <div className="ml-3 font-bold">Hire Directly</div>
                   </div>
                 </AccordionTrigger>
                 <AccordionContent className="ml-12">
-                  Invite our entire creative community to participate in your
-                  project Designers submit ideas and you pick your favourite.
+                  Browse profiles, compare portfolios, and hire the perfect
+                  freelancer in minutes.
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
@@ -195,12 +256,12 @@ const Home = () => {
                     <div className="rounded-full w-9 h-10 p-2 font-bold text-center bg-orange-100 text-orange-700">
                       2
                     </div>
-                    <div className="ml-3 font-bold">Start a Contest</div>
+                    <div className="ml-3 font-bold">Post a Job</div>
                   </div>
                 </AccordionTrigger>
                 <AccordionContent className="ml-12">
-                  Invite our entire creative community to participate in your
-                  project Designers submit ideas and you pick your favourite.
+                  Describe your project and let qualified freelancers come to
+                  you with offers. Choose the best fit.
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
@@ -211,9 +272,11 @@ const Home = () => {
               >
                 Get Started
               </Link>
-              <div className=" flex gap-1 px-6 py-3 hover:underline">
+              <div className=" flex gap-1 px-6 py-3 cursor-pointer hover:underline">
                 How it Works
-                <ArrowRight />
+                <Link>
+                  <ArrowRight />
+                </Link>
               </div>
             </div>
           </div>
@@ -248,49 +311,52 @@ const Home = () => {
           What Our Happy User Says
         </div>
         <div className="flex flex-col items-center justify-center md:flex-row md:flex-wrap mx-5 gap-10">
-          <Testimonials />
-          <Testimonials />
-          <Testimonials />
-          <Testimonials />
-          <Testimonials />
-          <Testimonials />
+          {testimonials.map((t, index) => (
+            <div key={index}>
+              <Testimonials name={t.name} title={t.title} text={t.text} />
+            </div>
+          ))}
         </div>
       </div>
 
       {/* Footer */}
       <div className="bg-black">
-        <div className="flex text-center justify-evenly gap-10 py-10 px-10 text-white text-xs">
-          <div className="text-left">
-            <div className="mb-7 text-neutral-400 hover:underline">Company</div>
-            <div className="mb-3 hover:underline">About</div>
-            <div className="mb-3 hover:underline">Contact</div>
-            <div className="mb-3 hover:underline">Careers</div>
-          </div>
-          <div className="text-left">
-            <div className="mb-7 text-neutral-400 hover:underline">
-              Design Service
+        <Link>
+          <div className="flex text-center justify-evenly gap-10 py-10 px-10 text-white text-xs">
+            <div className="text-left">
+              <div className="mb-7 text-neutral-400 hover:underline">
+                Company
+              </div>
+              <div className="mb-3 hover:underline">About</div>
+              <div className="mb-3 hover:underline">Contact</div>
+              <div className="mb-3 hover:underline">Careers</div>
             </div>
-            <div className="mb-3 hover:underline">1 to 1 Projects</div>
-            <div className="mb-3 hover:underline">Any Hire</div>
-            <div className="mb-3 hover:underline">Inspiration</div>
-          </div>
-          <div className="text-left">
-            <div className="mb-7 text-neutral-400 hover:underline">
-              Freelancer
+            <div className="text-left">
+              <div className="mb-7 text-neutral-400 hover:underline">
+                Design Service
+              </div>
+              <div className="mb-3 hover:underline">1 to 1 Projects</div>
+              <div className="mb-3 hover:underline">Any Hire</div>
+              <div className="mb-3 hover:underline">Inspiration</div>
             </div>
-            <div className="mb-3 hover:underline">Categories</div>
-            <div className="mb-3 hover:underline">Projects</div>
-            <div className="mb-3 hover:underline">Contests</div>
-          </div>
-          <div className="text-left">
-            <div className="mb-7 text-neutral-400 hover:underline">
-              Resources
+            <div className="text-left">
+              <div className="mb-7 text-neutral-400 hover:underline">
+                Freelancer
+              </div>
+              <div className="mb-3 hover:underline">Categories</div>
+              <div className="mb-3 hover:underline">Projects</div>
+              <div className="mb-3 hover:underline">Contests</div>
             </div>
-            <div className="mb-3 hover:underline">Help & Support</div>
-            <div className="mb-3 hover:underline">Success stories</div>
-            <div className="mb-3 hover:underline">Affiliate programme</div>
+            <div className="text-left">
+              <div className="mb-7 text-neutral-400 hover:underline">
+                Resources
+              </div>
+              <div className="mb-3 hover:underline">Help & Support</div>
+              <div className="mb-3 hover:underline">Success stories</div>
+              <div className="mb-3 hover:underline">Affiliate programme</div>
+            </div>
           </div>
-        </div>
+        </Link>
         <hr className="w-[90%] md:w-[94%] h-0 bg-neutral-400 translate-x-7" />
         <div className="text-white flex justify-between py-3 px-7 pb-5">
           <div className="flex text-xs text-neutral-400">
