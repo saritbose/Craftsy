@@ -1,81 +1,52 @@
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import axios from "axios";
-import { X } from "lucide-react";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import ProfileDetails from "./Components/ProfileDetails";
 
 const Profile = () => {
   const [user, setUser] = useState("");
-  const [profile, setProfile] = useState("");
-  const [edit, setEdit] = useState(false);
-  const [title, setTitle] = useState("");
-  const [aboutMe, setAboutMe] = useState("");
-  const [expectedRate, setRate] = useState("");
-  const [experience, setExperience] = useState("");
-  const [inputValue, setInputValue] = useState("");
-  const [skills, setSkills] = useState([]);
+  const [profile, setProfile] = useState(null);
   const navigate = useNavigate();
   const role = localStorage.getItem("role");
   const token = localStorage.getItem("token");
   const backend_url = import.meta.env.VITE_BACKEND_URL;
+  const { profileId } = useParams();
+  const isEditMode = Boolean(profileId);
 
-  const addSkill = (e) => {
-    if (e.key === "Enter" && inputValue.trim() !== "") {
-      e.preventDefault(); // Prevent form submission
-      setSkills([...skills, inputValue.trim()]); // Add the skill to the array
-      setInputValue("");
-    }
-  };
-
-  const removeSkill = (index) => {
-    setSkills(skills.filter((_, i) => i !== index)); // Remove the skill from the array
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const profileData = {
-      title,
-      aboutMe,
-      expectedRate,
-      experience,
-      skills,
-    };
-
-    // Check if any of the fields are empty
-    if (
-      !title &&
-      !aboutMe &&
-      !expectedRate &&
-      !experience &&
-      skills.length === 0
-    ) {
-      setEdit(!edit);
-    } else if (!title || !aboutMe || !expectedRate || !experience) {
-      alert("Please fill in all fields.");
-      return;
-    }
-
+  const handleSubmit = async (profileData) => {
     try {
-      const res = await axios.post(
-        `${backend_url}/api/profile/myprofile`,
+      await axios.post(
+        `${backend_url}/api/profile/updateprofile`,
         profileData,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
+      window.location.reload();
     } catch (error) {
       console.log(error);
     }
-    setEdit(!edit);
-    window.location.reload();
   };
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const user = await axios.get(`${backend_url}/api/profile/userinfo`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setUser(user.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchUser();
+  }, []);
 
   useEffect(() => {
     const fetchProfile = async () => {
       try {
         const profile = await axios.get(
-          `${backend_url}/api/profile/updatedinfo`,
+          `${backend_url}/api/profile/profileinfo`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -86,20 +57,6 @@ const Profile = () => {
       }
     };
     fetchProfile();
-  }, []);
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const user = await axios.get(`${backend_url}/api/profile/me`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        setUser(user.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchUser();
   }, []);
 
   return (
@@ -120,87 +77,19 @@ const Profile = () => {
           <p>{user.name}</p>
           <p>{user.email}</p>
         </div>
+        {/* Profile Details */}
         <div className="flex flex-col items-end">
           {role === "Freelancer" ? (
-            edit ? (
-              <>
-                <div className="flex flex-col gap-3 border-2 items-stretch shadow-lg border-orange-500 w-sm p-5 my-2">
-                  {/* Freelancer */}
-                  <p className="flex gap-2 items-center">
-                    Title:{" "}
-                    <Input
-                      value={title}
-                      onChange={(e) => setTitle(e.target.value)}
-                      className="w-full"
-                    />
-                  </p>
-                  <p>
-                    About me
-                    <Textarea
-                      value={aboutMe}
-                      onChange={(e) => setAboutMe(e.target.value)}
-                      className="w-full"
-                    />
-                  </p>
-                  <p className="flex gap-2 items-center text-nowrap">
-                    Expected hourly rate:{" "}
-                    <Input
-                      value={expectedRate}
-                      onChange={(e) => setRate(e.target.value)}
-                      className="w-full"
-                    />
-                  </p>
-                  <p className="flex gap-2 items-center text-nowrap">
-                    Experience level:{" "}
-                    <Input
-                      value={experience}
-                      onChange={(e) => setExperience(e.target.value)}
-                      className="w-full"
-                    />
-                  </p>
-                  <div>
-                    <p>Skills</p>
-                    <div className="flex flex-wrap gap-2 mt-2">
-                      <Input
-                        type="text"
-                        placeholder="Enter your skills."
-                        value={inputValue}
-                        onChange={(e) => setInputValue(e.target.value)}
-                        onKeyDown={addSkill}
-                      />
-                      {skills.map((skill, index) => (
-                        <div
-                          key={index}
-                          className=" bg-orange-500 rounded-full px-3 py-1 flex items-center gap-2 group"
-                        >
-                          {skill}
-                          <button
-                            className="bg-orange-500 hidden group-hover:block"
-                            onClick={() => removeSkill(index)}
-                          >
-                            <X className="hover:text-white w-4" />
-                          </button>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-                <div className="flex gap-50 px-2 text-nowrap">
-                  <div className="hover:text-white cursor-pointer">
-                    Change Password
-                  </div>
-                  <div
-                    onClick={handleSubmit}
-                    className="hover:text-white cursor-pointer"
-                  >
-                    Save
-                  </div>
-                </div>
-              </>
+            isEditMode ? (
+              <ProfileDetails
+                id={profileId}
+                isEditMode={isEditMode}
+                onSubmit={handleSubmit}
+              />
             ) : (
               <>
                 <div className="flex flex-col items-center text-center border-2 shadow-lg border-orange-500 w-sm p-5 my-2">
-                  {/* Freelancer */}
+                  {/* Freelancer | Accessing the current user profile */}
                   {profile ? (
                     <>
                       <p>
@@ -213,7 +102,7 @@ const Profile = () => {
                         <span className="font-semibold">
                           Expected hourly rate:
                         </span>
-                        {profile.expectedRate}
+                        {profile.rate}
                       </p>
                       <p>
                         <span className="font-semibold">Experience: </span>
@@ -233,7 +122,7 @@ const Profile = () => {
                   )}
                 </div>
                 <div
-                  onClick={() => setEdit(!edit)}
+                  onClick={() => navigate(`/edit-profile/${profile._id}`)}
                   className="w-fit px-2 hover:text-white cursor-pointer"
                 >
                   Edit

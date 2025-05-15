@@ -37,7 +37,7 @@ const PostAJob = () => {
 
   const addSkill = (e) => {
     if (e.key === "Enter" && inputValue.trim() !== "") {
-      e.preventDefault(); // Prevent form submission
+      e.preventDefault();
       setSkills([...skills, inputValue.trim()]); // Add the skill to the array
       setInputValue("");
     }

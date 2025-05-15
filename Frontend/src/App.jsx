@@ -58,6 +58,7 @@ export default function App() {
         }
       />
       <Route path="/profile" element={<Profile />} />
+      <Route path="/edit-profile/:profileId" element={<Profile />} />
       <Route path="/profile/:id" element={<PublicProfile />} />
       <Route path="/*" element={<NotFound />} />
     </Routes>

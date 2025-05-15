@@ -1,7 +1,7 @@
 import Profile from "../models/Profile.js";
 import User from "../models/User.js";
 
-export const getMyInfo = async (req, res) => {
+export const userInfo = async (req, res) => {
   try {
     const user = await User.findById(req.user?._id);
     res.json(user);
@@ -10,8 +10,19 @@ export const getMyInfo = async (req, res) => {
   }
 };
 
-export const updateMyProfile = async (req, res) => {
-  const { title, aboutMe, expectedRate, experience, skills } = req.body;
+export const profileInfo = async (req, res) => {
+  try {
+    const profile = await Profile.findOne({ user: req.user._id });
+    res.json(profile);
+  } catch (error) {
+    res.json({
+      message: "Error while fetching profile",
+    });
+  }
+};
+
+export const updateProfile = async (req, res) => {
+  const { title, aboutMe, rate, experience, skills } = req.body;
 
   let profile = await Profile.findOne({ user: req.user._id });
   //create a new profile if it doesn't exist
@@ -20,7 +31,7 @@ export const updateMyProfile = async (req, res) => {
       profile = new Profile({
         title,
         aboutMe,
-        expectedRate,
+        expectedRate: rate,
         experience,
         skills,
         user: req.user._id,
@@ -33,7 +44,7 @@ export const updateMyProfile = async (req, res) => {
   else {
     profile.title = title;
     profile.aboutMe = aboutMe;
-    profile.expectedRate = expectedRate;
+    profile.expectedRate = rate;
     profile.experience = experience;
     profile.skills = skills;
   }
@@ -42,25 +53,14 @@ export const updateMyProfile = async (req, res) => {
   res.json(profile);
 };
 
-export const getMyUpdatedInfo = async (req, res) => {
-  try {
-    const profile = await Profile.findOne({ user: req.user._id });
-    res.json(profile);
-  } catch (error) {
-    res.json({
-      message: "Error while fetching profile",
-    });
-  }
-};
-
 export const getUserProfile = async (req, res) => {
   const { id } = req.params;
   try {
-    const user = await User.findOne({ _id: id }).populate("profile");
-    if (!user) {
-      return res.json({ message: "User not found" });
+    const profile = await Profile.findById(id);
+    if (!profile) {
+      return res.json({ message: "Profile not found" });
     }
-    res.json(user);
+    res.json(profile);
   } catch (error) {
     return res.json({ message: "Error while fetching user" });
   }
