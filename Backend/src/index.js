@@ -10,7 +10,12 @@ import profileRoutes from "./routes/profileRoutes.js";
 connectDB(); //connecting mongoDB
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://craftsy.vercel.app",
+    credentials: true,
+  })
+);
 const port = process.env.PORT;
 
 //routes setup
