@@ -171,7 +171,7 @@ const PostAJob = () => {
                   value={budget}
                   onChange={(e) => setBudget(e.target.value)}
                   placeholder="Budget"
-                  className="rounded-r-none w-auto cursor-pointer"
+                  className="rounded-r-none w-auto cursor-pointer no-spinner"
                 />
                 <Select
                   value={structure}

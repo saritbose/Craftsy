@@ -27,8 +27,9 @@ export const addJob = async (req, res) => {
 };
 
 export const getJobs = async (req, res) => {
+  const clientId = req.user?._id;
   try {
-    const allJobs = await Job.find();
+    const allJobs = await Job.find({ client: clientId });
     return res.status(200).json(allJobs);
   } catch (error) {
     return res

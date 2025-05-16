@@ -97,7 +97,7 @@ const ProfileDetails = ({ id, isEditMode, onSubmit }) => {
             type="number"
             value={rate}
             onChange={(e) => setRate(e.target.value)}
-            className="w-full cursor-pointer"
+            className="w-full cursor-pointer no-spinner"
           />
         </p>
         <p className="flex gap-2 items-center text-nowrap">
