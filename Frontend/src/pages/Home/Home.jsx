@@ -24,6 +24,7 @@ import { Link } from "react-router-dom";
 const Home = () => {
   const [nav, setNav] = useState(false);
 
+  // Hard Coded Testimonials
   const testimonials = [
     {
       name: "Maya Patel",

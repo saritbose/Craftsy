@@ -4,6 +4,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import ProfileDetails from "./Components/ProfileDetails";
 import { toast } from "react-toastify";
 
+// Profile for Freelancer, currently not available for Clients
+
 const Profile = () => {
   const [user, setUser] = useState("");
   const [profile, setProfile] = useState("");
@@ -12,7 +14,7 @@ const Profile = () => {
   const token = localStorage.getItem("token");
   const backend_url = import.meta.env.VITE_BACKEND_URL;
   const { profileId } = useParams();
-  const isEditMode = Boolean(profileId);
+  const isEditMode = Boolean(profileId); // Checking if On Edit Mode or not
 
   const handleSubmit = async (profileData) => {
     try {
@@ -23,7 +25,7 @@ const Profile = () => {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      toast.success("Profile updated.");
+      toast.success("Profile updated."); // Profile Updated Notification
       setTimeout(() => {
         window.location.reload();
       }, 1500);
@@ -35,6 +37,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
+        // Fetching user details
         const user = await axios.get(`${backend_url}/api/profile/userinfo`, {
           headers: { Authorization: `Bearer ${token}` },
         });
@@ -49,6 +52,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
+        // Fetching profile details
         const profile = await axios.get(
           `${backend_url}/api/profile/profileinfo`,
           {
@@ -62,7 +66,6 @@ const Profile = () => {
     };
     fetchProfile();
   }, []);
-  console.log(profile.profileBg);
 
   return (
     <div

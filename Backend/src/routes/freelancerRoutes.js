@@ -9,10 +9,10 @@ import {
 
 const freelancerRoutes = Router();
 
-freelancerRoutes.use(authUser, role("Freelancer"));
+freelancerRoutes.use(authUser, role("Freelancer")); // using authentication for all routes and role Freelancer for only access to freelancers
 
-freelancerRoutes.get("/get-jobs", getJobs);
-freelancerRoutes.post("/apply-to-job/:jobId", addApplicant);
-freelancerRoutes.get("/me", getMyInfo);
+freelancerRoutes.get("/get-jobs", getJobs); // geting all jobs
+freelancerRoutes.post("/apply-to-job/:jobId", addApplicant); // applying to job
+freelancerRoutes.get("/me", getMyInfo); // getting freelancer info
 
 export default freelancerRoutes;

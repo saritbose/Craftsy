@@ -61,12 +61,15 @@ const PostAJob = () => {
     };
 
     try {
+      // On Edit Mode
       if (isEditMode) {
         await axios.put(`${backend_url}/api/client/edit-job/${id}`, jobData, {
           headers: { Authorization: `Bearer ${token}` },
         });
         toast.success("Job edited successfully");
-      } else {
+      }
+      // Normally Adding
+      else {
         await axios.post(`${backend_url}/api/client/post-job`, jobData, {
           headers: { Authorization: `Bearer ${token}` },
         });
@@ -90,6 +93,7 @@ const PostAJob = () => {
 
   useEffect(() => {
     if (isEditMode) {
+      // Fetching Job Data
       const fetchOldJobData = async () => {
         try {
           const res = await axios.get(

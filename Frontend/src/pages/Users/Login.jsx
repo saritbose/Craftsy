@@ -17,11 +17,14 @@ const Login = () => {
     e.preventDefault();
     const formData = { email, password };
     try {
+      // Logging In
       const res = await axios.post(`${backend_url}/api/user/login`, formData);
-      toast.success("Login successful!");
+      toast.success("Login successful!"); // Logged In Notification
       const role = res.data.role;
+      // Setting data in local storage for easy access
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("role", role);
+      // Checking role to determine dashboards
       if (role === "Client") {
         navigate("/client/dashboard");
       } else {

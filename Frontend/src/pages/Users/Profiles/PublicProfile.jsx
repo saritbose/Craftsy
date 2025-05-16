@@ -2,6 +2,8 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
+// This PAGE is seen by Clients while checking about Applicants
+
 const PublicProfile = () => {
   const { id } = useParams();
   const [profile, setProfile] = useState("");
@@ -12,6 +14,7 @@ const PublicProfile = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
+        // Fetching User data and Profile data
         const user = await axios.get(
           `${backend_url}/api/profile/userprofile/${id}`,
           {

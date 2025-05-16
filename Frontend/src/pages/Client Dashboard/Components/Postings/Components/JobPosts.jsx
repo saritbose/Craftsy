@@ -12,11 +12,12 @@ const JobPosts = ({ title, jobId, applicants, onDelete }) => {
   const backend_url = import.meta.env.VITE_BACKEND_URL;
 
   const handleDeleteJob = async () => {
-    onDelete(jobId);
+    onDelete(jobId); // Deleting job (Nested)
   };
 
   const handleSelectedApplicant = async (applicantId, jobId) => {
     try {
+      // Accepting an applicant
       await axios.put(
         `${backend_url}/api/client/accept-applicant/${jobId}/${applicantId}`,
         {},
@@ -35,6 +36,7 @@ const JobPosts = ({ title, jobId, applicants, onDelete }) => {
 
   const handleDeleteApplicant = async (applicantId, jobId) => {
     try {
+      // Rejecting an applicant
       await axios.put(
         `${backend_url}/api/client/del-applicant/${jobId}/${applicantId}`,
         {},
@@ -53,6 +55,7 @@ const JobPosts = ({ title, jobId, applicants, onDelete }) => {
 
   const handleApplicants = async () => {
     try {
+      // Fetching all applicants
       const res = await axios.get(
         `${backend_url}/api/client/get-applicants/${jobId}`,
         {

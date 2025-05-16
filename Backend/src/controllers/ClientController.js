@@ -1,5 +1,7 @@
 import Job from "../models/Job.js";
 
+// Posting a job
+
 export const addJob = async (req, res) => {
   const { title, description, structure, budget, level, skills, location } =
     req.body;
@@ -17,7 +19,7 @@ export const addJob = async (req, res) => {
       skills: skills,
       location: location,
     });
-    await newJob.save();
+    await newJob.save(); // Job posted
     return res
       .status(201)
       .json({ success: true, message: "Job successfully added" });
@@ -26,10 +28,12 @@ export const addJob = async (req, res) => {
   }
 };
 
+// Finding all jobs posted by each clients individually
+
 export const getJobs = async (req, res) => {
   const clientId = req.user?._id;
   try {
-    const allJobs = await Job.find({ client: clientId });
+    const allJobs = await Job.find({ client: clientId }); // Finding with client IDs
     return res.status(200).json(allJobs);
   } catch (error) {
     return res
@@ -37,6 +41,8 @@ export const getJobs = async (req, res) => {
       .json({ success: false, message: "No jobs available" });
   }
 };
+
+// Finding a job by ID
 
 export const getJob = async (req, res) => {
   const id = req.params.id;
@@ -47,6 +53,8 @@ export const getJob = async (req, res) => {
     return res.status(404).json({ success: false, message: "Job not found" });
   }
 };
+
+// Getting all applicants info
 
 export const getApplicants = async (req, res) => {
   const jobId = req.params.jobId;
@@ -65,6 +73,8 @@ export const getApplicants = async (req, res) => {
       .json({ success: false, message: "Error while fetching applicants" });
   }
 };
+
+// Editing a job
 
 export const editJob = async (req, res) => {
   const id = req.params.id;
@@ -92,6 +102,8 @@ export const editJob = async (req, res) => {
   }
 };
 
+// Deleting a job
+
 export const deleteJob = async (req, res) => {
   const jobId = req.params.jobId;
   try {
@@ -101,6 +113,8 @@ export const deleteJob = async (req, res) => {
     return res.status(400).json({ success: false, message: "Job not deleted" });
   }
 };
+
+// Accepting an applicant
 
 export const acceptApplicant = async (req, res) => {
   try {
@@ -126,6 +140,8 @@ export const acceptApplicant = async (req, res) => {
       .json({ success: false, message: "Applicant not accepted" });
   }
 };
+
+// Rejecting an applicant
 
 export const deleteApplicant = async (req, res) => {
   try {

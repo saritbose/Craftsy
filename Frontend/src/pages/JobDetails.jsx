@@ -25,6 +25,7 @@ const JobDetails = () => {
 
   const handleApply = async () => {
     try {
+      // Applying to a job
       const res = await axios.post(
         `${backend_url}/api/freelancer/apply-to-job/${jobId}`,
         null,

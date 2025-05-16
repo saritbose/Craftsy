@@ -10,7 +10,7 @@ import {
 
 const profileRoutes = Router();
 
-profileRoutes.use(authUser);
+profileRoutes.use(authUser); // using authentication for all routes
 
 profileRoutes.get("/userinfo", userInfo); // get user details
 profileRoutes.get("/profileinfo", profileInfo); // get profile details

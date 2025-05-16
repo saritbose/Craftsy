@@ -1,6 +1,8 @@
 import Job from "../models/Job.js";
 import User from "../models/User.js";
 
+// Getting all jobs
+
 export const getJobs = async (req, res) => {
   try {
     const allJobs = await Job.find();
@@ -12,6 +14,8 @@ export const getJobs = async (req, res) => {
   }
 };
 
+// Finding a user
+
 export const getMyInfo = async (req, res) => {
   try {
     const user = await User.findById(req.user._id);
@@ -21,10 +25,13 @@ export const getMyInfo = async (req, res) => {
   }
 };
 
+// Applying to a job
+
 export const addApplicant = async (req, res) => {
   const jobId = req.params.jobId;
   const applicantId = req.user?._id;
   try {
+    // searching for the job
     const job = await Job.findById(jobId);
     if (!job) {
       return res.status(404).json({ success: false, message: "Job not found" });
@@ -38,8 +45,8 @@ export const addApplicant = async (req, res) => {
         .status(400)
         .json({ success: false, message: "Already applied." });
     }
-    job.applicants.push(applicantId);
-    await job.save();
+    job.applicants.push(applicantId); // applying
+    await job.save(); // application done
     return res
       .status(201)
       .json({ success: true, message: "Applied successfully." });

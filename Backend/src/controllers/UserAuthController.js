@@ -2,11 +2,15 @@ import User from "../models/User.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
+// creating tokens using IDs and Roles
+
 const createToken = (id, role) => {
   return jwt.sign({ id, role }, process.env.JWT_SECRET_TOKEN, {
     expiresIn: "7d",
   });
 };
+
+// User Logging In feature
 
 export const loginUser = async (req, res) => {
   const { email, password } = req.body;
@@ -15,11 +19,14 @@ export const loginUser = async (req, res) => {
       .status(400)
       .json({ success: false, message: "All fields are required." });
   }
+
+  // checking for user in the database
   const user = await User.findOne({ email });
   if (!user) {
     return res.status(404).json({ success: false, message: "User not found." });
   }
   try {
+    // verifying correct password
     const verify = await bcrypt.compare(password, user.password);
     if (!verify) {
       return res
@@ -38,8 +45,12 @@ export const loginUser = async (req, res) => {
   }
 };
 
+// User Registering feature
+
 export const registerUser = async (req, res) => {
   const { name, email, password, role } = req.body;
+
+  // checking for user in the database
   const user = await User.findOne({ email });
   if (user) {
     return res
@@ -54,7 +65,7 @@ export const registerUser = async (req, res) => {
       password: hashedPassword,
       role: role,
     });
-    await newUser.save();
+    await newUser.save(); // creating a new user model
     const token = createToken(newUser._id, newUser.role);
     return res.status(200).json({
       success: true,

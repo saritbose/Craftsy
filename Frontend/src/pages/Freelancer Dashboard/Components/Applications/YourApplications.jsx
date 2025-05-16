@@ -9,6 +9,7 @@ const YourApplications = ({ searchText }) => {
   const backend_url = import.meta.env.VITE_BACKEND_URL;
 
   useEffect(() => {
+    // Fetching user and job
     const fetchJobs = async () => {
       try {
         const user = await axios.get(`${backend_url}/api/freelancer/me`, {

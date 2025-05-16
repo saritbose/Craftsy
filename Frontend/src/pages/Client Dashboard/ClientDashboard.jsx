@@ -26,6 +26,7 @@ const ClientDashboard = () => {
   const token = localStorage.getItem("token");
   const backend_url = import.meta.env.VITE_BACKEND_URL;
 
+  // Tabs changing features
   const renderTab = () => {
     switch (currentTab) {
       case "myPostings":
@@ -39,6 +40,7 @@ const ClientDashboard = () => {
     }
   };
 
+  // Logout Feature
   const logout = () => {
     toast.success("Logged out!");
     navigate("/");
@@ -49,6 +51,7 @@ const ClientDashboard = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
+        // Fetching profile info
         const profile = await axios.get(
           `${backend_url}/api/profile/profileinfo`,
           {

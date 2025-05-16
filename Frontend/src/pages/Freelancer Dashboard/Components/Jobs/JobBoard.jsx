@@ -11,6 +11,7 @@ const JobBoard = ({ searchText }) => {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
+        // Fetching all jobs
         const res = await axios.get(`${backend_url}/api/freelancer/get-jobs`, {
           headers: { Authorization: `Bearer ${token}` },
         });

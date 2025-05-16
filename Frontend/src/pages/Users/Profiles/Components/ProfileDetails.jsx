@@ -52,6 +52,7 @@ const ProfileDetails = ({ id, isEditMode, onSubmit }) => {
     if (isEditMode) {
       const fetchOldJobData = async () => {
         try {
+          // Fetching profile data with IDs
           const res = await axios.get(
             `${backend_url}/api/profile/userprofile/${id}`,
             {

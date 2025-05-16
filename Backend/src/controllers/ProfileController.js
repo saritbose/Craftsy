@@ -1,6 +1,8 @@
 import Profile from "../models/Profile.js";
 import User from "../models/User.js";
 
+// Finding a user
+
 export const userInfo = async (req, res) => {
   try {
     const user = await User.findById(req.user?._id);
@@ -9,6 +11,8 @@ export const userInfo = async (req, res) => {
     return res.status(404).json({ success: false, message: "User not found" });
   }
 };
+
+// Finding a user profile
 
 export const profileInfo = async (req, res) => {
   try {
@@ -25,6 +29,8 @@ export const profileInfo = async (req, res) => {
     });
   }
 };
+
+// Managing a profile
 
 export const updateProfile = async (req, res) => {
   const { title, aboutMe, rate, experience, skills } = req.body;
@@ -52,6 +58,8 @@ export const updateProfile = async (req, res) => {
   }
 };
 
+// Creating a basic profile
+
 export const updateProfileColor = async (req, res) => {
   const { bgColor } = req.body;
   try {
@@ -75,6 +83,8 @@ export const updateProfileColor = async (req, res) => {
       .json({ success: false, message: "Something went wrong" });
   }
 };
+
+// Finding a profile through ID
 
 export const getUserProfile = async (req, res) => {
   const { id } = req.params;

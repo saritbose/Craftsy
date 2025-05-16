@@ -12,10 +12,11 @@ const MyPostingsBoard = ({ searchText }) => {
 
   const handleDelete = async (jobId) => {
     try {
+      // Deleting a job
       await axios.delete(`${backend_url}/api/client/del-job/${jobId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      toast.success("Job deleted successfully");
+      toast.success("Job deleted successfully"); // Deleted
       setJobs((prev) => prev.filter((job) => job._id !== jobId));
     } catch (error) {
       if (error.response) {
@@ -30,6 +31,7 @@ const MyPostingsBoard = ({ searchText }) => {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
+        // Fetching jobs posted by user (Client)
         const res = await axios.get(`${backend_url}/api/client/get-jobs`, {
           headers: { Authorization: `Bearer ${token}` },
         });

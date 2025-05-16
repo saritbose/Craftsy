@@ -18,15 +18,18 @@ const Register = () => {
     e.preventDefault();
     const formData = { name, email, password, role };
     try {
+      // Registering
       const res = await axios.post(
         `${backend_url}/api/user/register`,
         formData
       );
-      toast.success("Register successful!");
+      toast.success("Register successful!"); // Registered Notification
       const role = res.data.role;
+      // Setting data in local storage for easy access
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("role", role);
       try {
+        // Creating a random profile colour
         const profileBg = async () => {
           const codes = "0123456789abcdef";
           let bgColor = "#";
@@ -45,6 +48,7 @@ const Register = () => {
       } catch (error) {
         console.error(error);
       }
+      // Checking role to determine dashboards
       if (role === "Client") {
         navigate("/client/dashboard");
       } else {

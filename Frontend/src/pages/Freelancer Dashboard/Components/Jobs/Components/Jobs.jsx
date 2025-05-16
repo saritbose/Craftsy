@@ -39,6 +39,7 @@ const Jobs = ({
 
   const handleApply = async () => {
     try {
+      // Applying to jobs
       const res = await axios.post(
         `${backend_url}/api/freelancer/apply-to-job/${jobId}`,
         null,
@@ -46,7 +47,7 @@ const Jobs = ({
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      toast.success("Application sent.");
+      toast.success("Application sent."); // Applied
     } catch (error) {
       if (error.response) {
         const status = error.response.status;

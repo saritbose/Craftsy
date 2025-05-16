@@ -2,6 +2,7 @@ import { Home, LoaderCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 
+// Error Page
 const NotFound = () => {
   const navigate = useNavigate();
 

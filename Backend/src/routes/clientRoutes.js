@@ -14,15 +14,15 @@ import {
 
 const clientRoutes = Router();
 
-clientRoutes.use(authUser, role("Client"));
+clientRoutes.use(authUser, role("Client")); // using authentication for all routes and role Client for only access to clients
 
-clientRoutes.post("/post-job", addJob);
-clientRoutes.get("/get-jobs", getJobs);
-clientRoutes.get("/get-job/:id", getJob);
-clientRoutes.get("/get-applicants/:jobId", getApplicants);
-clientRoutes.put("/edit-job/:id", editJob);
-clientRoutes.delete("/del-job/:jobId", deleteJob);
-clientRoutes.put("/del-applicant/:jobId/:applicantId", deleteApplicant);
-clientRoutes.put("/accept-applicant/:jobId/:applicantId", acceptApplicant);
+clientRoutes.post("/post-job", addJob); // posting jobs
+clientRoutes.get("/get-jobs", getJobs); // getting all the posted jobs
+clientRoutes.get("/get-job/:id", getJob); // getting specific job
+clientRoutes.get("/get-applicants/:jobId", getApplicants); // getting all applicants for a specific job
+clientRoutes.put("/edit-job/:id", editJob); // editing a job
+clientRoutes.delete("/del-job/:jobId", deleteJob); // deleting a job
+clientRoutes.put("/del-applicant/:jobId/:applicantId", deleteApplicant); // rejecting an applicant
+clientRoutes.put("/accept-applicant/:jobId/:applicantId", acceptApplicant); // accepting an applicant
 
 export default clientRoutes;

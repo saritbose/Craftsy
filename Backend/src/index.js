@@ -7,12 +7,13 @@ import clientRoutes from "./routes/clientRoutes.js";
 import freelancerRoutes from "./routes/freelancerRoutes.js";
 import profileRoutes from "./routes/profileRoutes.js";
 
-connectDB();
+connectDB(); //connecting mongoDB
 const app = express();
 app.use(express.json());
 app.use(cors());
 const port = process.env.PORT;
 
+//routes setup
 app.use("/api/user", userRoutes);
 app.use("/api/profile", profileRoutes);
 app.use("/api/client", clientRoutes);
