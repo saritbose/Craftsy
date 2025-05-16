@@ -176,11 +176,7 @@ const Home = () => {
           </div>
         </div>
         <div className="w-full sm:w-[55%] sm:h-2/4">
-          <img
-            src="/Picccky.png"
-            loading="lazy"
-            className="w-full h-full px-5 pt-2"
-          />
+          <img src="/Picccky.png" className="w-full h-full px-5 pt-2" />
         </div>
       </div>
 
@@ -226,7 +222,6 @@ const Home = () => {
         <div className="w-full sm:w-[55%] sm:h-2/4">
           <img
             src="/Picccky2.png"
-            loading="lazy"
             className="w-full h-full px-5 sm:translate-y-5"
           />
         </div>
