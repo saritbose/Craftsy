@@ -19,7 +19,6 @@ const MyPostingsBoard = ({ searchText }) => {
       setJobs((prev) => prev.filter((job) => job._id !== jobId));
     } catch (error) {
       if (error.response) {
-        const status = error.response.status;
         toast.error("Job not deleted. Try again!");
       } else {
         toast.error("Network error. Please check your connection.");

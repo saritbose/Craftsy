@@ -26,6 +26,25 @@ const Register = () => {
       const role = res.data.role;
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("role", role);
+      try {
+        const profileBg = async () => {
+          const codes = "0123456789abcdef";
+          let bgColor = "#";
+          for (let i = 0; i < 6; i++) {
+            bgColor += codes[Math.floor(Math.random() * 16)];
+          }
+          const bg = await axios.post(
+            `${backend_url}/api/profile/updateprofilecolor`,
+            { bgColor },
+            {
+              headers: { Authorization: `Bearer ${res.data.token}` },
+            }
+          );
+        };
+        profileBg();
+      } catch (error) {
+        console.error(error);
+      }
       if (role === "Client") {
         navigate("/client/dashboard");
       } else {

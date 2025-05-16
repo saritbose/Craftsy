@@ -11,16 +11,20 @@ import {
   Search,
   X,
 } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 const ClientDashboard = () => {
   const [nav, setNav] = useState(false);
   const [search, setSearch] = useState(false);
   const [searchText, setSearchText] = useState("");
   const [currentTab, setCurrentTab] = useState("myPostings");
+  const [profile, setProfile] = useState("");
   const navigate = useNavigate();
+  const token = localStorage.getItem("token");
+  const backend_url = import.meta.env.VITE_BACKEND_URL;
 
   const renderTab = () => {
     switch (currentTab) {
@@ -41,6 +45,24 @@ const ClientDashboard = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("role");
   };
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const profile = await axios.get(
+          `${backend_url}/api/profile/profileinfo`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+        setProfile(profile.data);
+      } catch (error) {
+        console.error("Failed to fetch profile info: ", error);
+      }
+    };
+    fetchProfile();
+  }, []);
+
   return (
     <div className="p-3 relative h-screen overflow-hidden">
       {/* Header */}
@@ -162,7 +184,7 @@ const ClientDashboard = () => {
           </div>
           <div className="hover:text-orange-300 cursor-pointer">Messages</div>
         </div>
-        <div className="flex items-center gap-5 mx-2">
+        <div className="flex items-center gap-4 mx-2">
           <div className="relative mt-1">
             <Search
               onClick={() => setSearch(!search)}
@@ -172,7 +194,7 @@ const ClientDashboard = () => {
             />
             {search && (
               <Input
-                className="w-60 rounded-full pl-5 cursor-pointer"
+                className="w-60 h-9 md:w-40 lg:w-60 rounded-full pl-5 cursor-pointer"
                 placeholder="Find your postings..."
                 value={searchText}
                 onChange={(e) => setSearchText(e.target.value)}
@@ -182,7 +204,14 @@ const ClientDashboard = () => {
           <CircleHelp className="hidden md:block cursor-pointer" />
           <Bell className="hidden md:block cursor-pointer" />
           <div className="group relative">
-            <Button className="rounded-full h-8 hidden md:block lg:hidden cursor-pointer" />
+            <Button
+              style={{ backgroundColor: profile.profileBg }}
+              className="rounded-full mr-1 w-10 h-10 hidden md:block lg:hidden cursor-pointer"
+            >
+              <span className="text-black">
+                {profile?.user?.name.charAt(0).toUpperCase()}
+              </span>
+            </Button>
             <div className="hidden group-hover:flex flex-col absolute right-0 top-8 bg-white mt-1 py-2 px-2 w-32 text-sm border shadow-md">
               <Link
                 to={"/profile"}

@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 const PublicProfile = () => {
   const { id } = useParams();
-  const [user, setUser] = useState("");
+  const [profile, setProfile] = useState("");
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const backend_url = import.meta.env.VITE_BACKEND_URL;
@@ -18,7 +18,7 @@ const PublicProfile = () => {
             headers: { Authorization: `Bearer ${token}` },
           }
         );
-        setUser(user.data);
+        setProfile(user.data);
       } catch (error) {
         console.error("Failed to fetch data: ", error);
       }
@@ -30,32 +30,39 @@ const PublicProfile = () => {
     <div className="flex justify-center bg-orange-400 h-full min-h-screen">
       <div className="flex flex-col items-center rounded-lg border-1 border-orange-500 shadow-lg m-6 p-3 w-113.5 font-mono bg-orange-400/80 h-full">
         <h1 className="text-4xl font-bold mt-4 mb-2">Profile Page</h1>
-        <p className="text-md ">Welcome to {user.name}'s profile!</p>
+        <p className="text-md ">Welcome to {profile.user?.name}'s profile!</p>
         <div className="my-3 flex flex-col items-center">
-          <div className="bg-black rounded-full w-15 h-15 mb-2"></div>
-          <p>{user.name}</p>
-          <p>{user.email}</p>
+          <div
+            style={{ backgroundColor: profile.profileBg }}
+            className="rounded-full w-15 h-15 mb-2 pt-3"
+          >
+            <span className="text-black text-3xl ml-5.5 ">
+              {profile?.user?.name.charAt(0).toUpperCase()}
+            </span>
+          </div>
+          <p>{profile.user?.name}</p>
+          <p>{profile.user?.email}</p>
         </div>
         <div className="flex flex-col items-end">
           <div className="flex flex-col items-center text-center border-2 shadow-lg border-orange-500 w-sm p-5 my-2">
-            {user.profile ? (
+            {profile ? (
               <>
                 <p>
                   <span className="font-semibold">Title: </span>
-                  {user.profile?.title}
+                  {profile.title}
                 </p>
                 <p className="font-semibold mt-2">About me </p>
-                <p className="text-sm">{user.profile?.aboutMe}</p>
+                <p className="text-sm">{profile.aboutMe}</p>
                 <p className="mt-2">
                   <span className="font-semibold">Expected hourly rate:</span>
-                  {user.profile?.expectedRate}
+                  {profile.expectedRate}
                 </p>
                 <p>
                   <span className="font-semibold">Experience: </span>
-                  {user.profile?.experience}
+                  {profile.experience}
                 </p>
                 <p className="font-semibold mt-2">Skills </p>
-                <p>{user.profile?.skills + "."}</p>
+                <p>{profile.skills + "."}</p>
               </>
             ) : (
               <>

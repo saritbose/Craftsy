@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 
 const Profile = () => {
   const [user, setUser] = useState("");
-  const [profile, setProfile] = useState(null);
+  const [profile, setProfile] = useState("");
   const navigate = useNavigate();
   const role = localStorage.getItem("role");
   const token = localStorage.getItem("token");
@@ -62,6 +62,7 @@ const Profile = () => {
     };
     fetchProfile();
   }, []);
+  console.log(profile.profileBg);
 
   return (
     <div
@@ -77,7 +78,14 @@ const Profile = () => {
         <h1 className="text-4xl font-bold mt-4 mb-2">Profile Page</h1>
         <p className="text-md ">Welcome to {user.name}'s profile!</p>
         <div className="my-3 flex flex-col items-center">
-          <div className="bg-black rounded-full w-15 h-15 mb-2"></div>
+          <div
+            style={{ backgroundColor: profile.profileBg }}
+            className="rounded-full w-15 h-15 mb-2 pt-3"
+          >
+            <span className="text-black text-3xl ml-5.5 ">
+              {profile?.user?.name.charAt(0).toUpperCase()}
+            </span>
+          </div>
           <p>{user.name}</p>
           <p>{user.email}</p>
         </div>

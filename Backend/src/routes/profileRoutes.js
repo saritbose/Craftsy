@@ -4,6 +4,7 @@ import {
   getUserProfile,
   profileInfo,
   updateProfile,
+  updateProfileColor,
   userInfo,
 } from "../controllers/ProfileController.js";
 
@@ -15,5 +16,6 @@ profileRoutes.get("/userinfo", userInfo); // get user details
 profileRoutes.get("/profileinfo", profileInfo); // get profile details
 profileRoutes.post("/updateprofile", updateProfile); // create/update profile
 profileRoutes.get("/userprofile/:id", getUserProfile); // client seeing applicants profile
+profileRoutes.post("/updateprofilecolor", updateProfileColor); // giving users a random profile color
 
 export default profileRoutes;
