@@ -48,20 +48,26 @@ Interface for clients to post new jobs, track applicants, and manage listings.
 
 ## 📁 Folder Structure
 
+```
 Craftsy/
 ├── Backend/
-│ └── src/
+│ ├── src/
 │ ├── controllers/
+│ ├── libs/
 │ ├── middleware/
 │ ├── models/
 │ └── routes/
+│
 ├── Frontend/
-│ └── src/
+│ ├── src/
 │ ├── Component/
 │ ├── pages/
 │ └── App.jsx
+│
 ├── screenshots/
+│
 └── README.md
+```
 
 ## 🔮 Future Improvements
 
