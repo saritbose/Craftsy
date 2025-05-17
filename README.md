@@ -6,8 +6,9 @@ Craftsy is a full-stack freelance marketplace designed to seamlessly connect cli
 
 Here’s a quick look at Craftsy in action:
 
-![Home Page](./screenshots/home.png)  
-![Client Dashboard](./screenshots/dashboard.png)
+![Home Page](home-page.png)  
+![Freelancer Dashboard](freelancer-dashboard.png)
+![Client Dashboard](client-dashboard.png)
 
 ## Tech Stack
 
@@ -37,4 +38,3 @@ Here’s a quick look at Craftsy in action:
 ## Contact
 
 Created by Sarit Bose — [LinkedIn](https://linkedin.com/in/sarit-bose) | Email: saritbose26@gmail.com
-
