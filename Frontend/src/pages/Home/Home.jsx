@@ -154,7 +154,7 @@ const Home = () => {
       <div className="flex flex-col sm:flex-row">
         <div className=" w-full sm:w-1/2 px-6 py-10 lg:-translate-y-25 flex flex-col justify-center">
           <h1 className="text-3xl sm:text-5xl font-bold mb-4">
-            Elite Freelancers.{" "}
+            Elite Freelancers.
             <span className="text-blue-600"> On Demand.</span> No Compromises.
           </h1>
           <p className="text-gray-600 mb-6">

@@ -11,10 +11,12 @@ import PublicProfile from "./pages/Users/Profiles/PublicProfile";
 import NotFound from "./pages/Error Page/NotFound";
 import PostAJob from "./pages/PostAJob";
 import { ToastContainer } from "react-toastify";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 
 export default function App() {
   return (
     <>
+      <SpeedInsights />
       <ToastContainer />
       <Routes>
         <Route path="/" element={<Home />} />
